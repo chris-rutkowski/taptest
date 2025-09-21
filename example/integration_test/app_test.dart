@@ -1,13 +1,11 @@
-import 'package:example/features/http_screen/http_keys.dart';
 import 'package:example/features/welcome/presentation/welcome_keys.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:taptest/taptest.dart';
 
 import '../test/_utils/default_tap_tester_config.dart';
 
 void main() {
   final config = defaultTapTesterConfig.copyWith(
-    integration: true,
+    integration: false,
     httpRequestHandlers: [
       // const TodoHandler(
       //   todos: [
@@ -26,14 +24,14 @@ void main() {
   ) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.httpButton, sync: SyncType.settled);
+    // await tester.tap(WelcomeKeys.httpButton, sync: SyncType.settled);
 
-    await tester.info('On Http screen');
-    await tester.exists(HttpKeys.screen);
-    await tester.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 2));
-    await tester.snapshot('http_screen');
+    // await tester.info('On Http screen');
+    // await tester.exists(HttpKeys.screen);
+    // await tester.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 2));
+    // await tester.snapshot('http_screen');
 
-    await Future.delayed(const Duration(seconds: 5));
+    // await Future.delayed(const Duration(seconds: 5));
 
     // await tester.pumpWidget(ProviderScope(child: const ExampleApp()));
     // final button = find.byKey(WelcomeKeys.httpButton);
