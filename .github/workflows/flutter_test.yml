@@ -28,32 +28,32 @@ jobs:
     - name: Get package dependencies
       run: flutter pub get
       working-directory: ./
-      
+
     - name: Get example dependencies
       run: flutter pub get
       working-directory: ./example
-      
+
     - name: Analyze package code
       run: flutter analyze
       working-directory: ./
-      
+
     - name: Analyze example code
       run: flutter analyze
       working-directory: ./example
-      
+
     - name: Run package tests
       run: flutter test
       working-directory: ./
-      
+
     - name: Run example tests
       run: flutter test
       working-directory: ./example
-      
+
     - name: Check formatting
       run: |
-        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
+        find . -name "*.dart" ! -path "./example/*" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
       working-directory: ./
-      
+
     - name: Check example formatting
       run: |
         find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
