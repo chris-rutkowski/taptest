@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
 
 import 'config/config.dart';
-import 'networking/mock_http_overrides.dart';
 import 'private/app_wrapper.dart';
 import 'private/list_extensions.dart';
 import 'private/load_custom_fonts.dart';
@@ -33,7 +31,24 @@ void tapTest(String name, Config config, TapTesterCallback callback) {
   final description = makeTestDescription(name, config);
 
   testWidgets(description, (widgetTester) async {
-    final tester = await TapTester._bootstrap(widgetTester, name, config);
+    final tester = await TapTester._bootstrap(widgetTester, name, false, config);
+
+    try {
+      await callback(tester);
+    } catch (e) {
+      // TODO: consider snapshot on failure
+      rethrow;
+    }
+  });
+}
+
+@isTest
+void tapTestIntegration(String name, Config config, TapTesterCallback callback) {
+  final description = makeTestDescription(name, config);
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  testWidgets(description, (widgetTester) async {
+    final tester = await TapTester._bootstrap(widgetTester, name, true, config);
 
     try {
       await callback(tester);
@@ -59,16 +74,18 @@ final class TapTester {
     this._localeNotifier,
   );
 
-  static Future<TapTester> _bootstrap(WidgetTester widgetTester, String name, Config config) async {
-    widgetTester.view.devicePixelRatio = config.pixelDensity;
-    widgetTester.view.physicalSize = config.screenSize * config.pixelDensity;
+  static Future<TapTester> _bootstrap(WidgetTester widgetTester, String name, bool integration, Config config) async {
+    // widgetTester.view.devicePixelRatio = config.pixelDensity;
+    // widgetTester.view.physicalSize = config.screenSize * config.pixelDensity;
 
-    HttpOverrides.global = MockHttpOverrides(
-      handlers: config.httpRequestHandlers,
-    );
+    // HttpOverrides.global = MockHttpOverrides(
+    //   handlers: config.httpRequestHandlers,
+    // );
 
-    await loadCustomFonts(config.customFonts);
-    await loadMaterialIconsFont();
+    if (!integration) {
+      await loadCustomFonts(config.customFonts);
+      await loadMaterialIconsFont();
+    }
 
     final themeModeNotifier = ValueNotifier<ThemeMode>(config.themeModes.first);
     final localeNotifier = ValueNotifier<Locale>(config.locales.first);

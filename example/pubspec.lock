@@ -488,7 +488,7 @@ packages:
     source: hosted
     version: "2.4.1"
   integration_test:
-    dependency: "direct main"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
