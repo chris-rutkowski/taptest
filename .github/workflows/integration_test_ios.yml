@@ -33,47 +33,15 @@ jobs:
       run: flutter pub get
       working-directory: ./example
 
-    - name: List available iOS simulators
-      run: xcrun simctl list devices
-
-    - name: Create iPhone 16 Pro simulator
-      run: |
-        # Create iPhone 16 Pro simulator if it doesn't exist
-        DEVICE_ID=$(xcrun simctl create "iPhone 16 Pro Test" "iPhone 16 Pro" "iOS-26-0" || echo "")
-        if [ -z "$DEVICE_ID" ]; then
-          # Try to find existing iPhone 16 Pro simulator
-          DEVICE_ID=$(xcrun simctl list devices | grep "iPhone 16 Pro" | head -1 | grep -oE '\([A-Z0-9-]+\)' | tr -d '()')
-        fi
-        echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
-        echo "Created/Found iPhone 16 Pro simulator: $DEVICE_ID"
-
-    - name: Boot iPhone 16 Pro simulator
-      run: |
-        echo "Booting simulator: $DEVICE_ID"
-        xcrun simctl boot $DEVICE_ID || echo "Simulator may already be booted"
-        xcrun simctl list devices | grep "iPhone 16 Pro"
-
-    - name: Wait for simulator to be ready
-      run: |
-        echo "Waiting for simulator to be ready..."
-        timeout=60
-        while [ $timeout -gt 0 ]; do
-          if xcrun simctl list devices | grep "$DEVICE_ID" | grep -q "Booted"; then
-            echo "Simulator is ready!"
-            break
-          fi
-          echo "Waiting for simulator... ($timeout seconds remaining)"
-          sleep 2
-          timeout=$((timeout - 2))
-        done
-        
-        if [ $timeout -le 0 ]; then
-          echo "Timeout waiting for simulator to boot"
-          exit 1
-        fi
+    - name: Start iPhone 16 Pro Simulator
+      uses: futureware-tech/simulator-action@v3
+      with:
+        model: 'iPhone 16 Pro'
+        os_version: '26.0'
+      id: simulator
 
     - name: Run integration tests
-      run: flutter test integration_test -d $DEVICE_ID
+      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
       working-directory: ./example
 
     - name: Upload golden test artifacts
