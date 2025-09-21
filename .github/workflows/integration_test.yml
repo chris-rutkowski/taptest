@@ -1,0 +1,53 @@
+name: Integration test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 15
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get Flutter version
+      id: flutter_version
+      run: echo "version=$(cat flutter-version.txt)" >> $GITHUB_OUTPUT
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutter_version.outputs.version }}
+        cache: true
+
+    - name: Get dependencies
+      run: flutter pub get
+      working-directory: ./example
+
+    # - name: List available iOS simulators
+    #   run: xcrun simctl list devices
+
+    - name: Start iOS Simulator
+      uses: futureware-tech/simulator-action@v3
+      with:
+        model: 'iPhone 16 Pro'
+        os_version: '26.0'
+      id: simulator
+
+    - name: Run integration tests
+      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
+      working-directory: ./example
+
+    - name: Upload snapshot failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: integration_test-failures-ios
+        path: |
+          example/integration_test/failures
+        retention-days: 1

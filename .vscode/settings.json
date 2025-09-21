@@ -1,14 +1,20 @@
 {
     "cSpell.words": [
         "buildlog",
+        "codegen",
+        "futureware",
         "gifs",
+        "goldens",
         "internacionalización",
         "internationalisation",
         "mundo",
         "noto",
         "pubspec",
         "riverpod",
+        "simctl",
         "subosito",
-        "taptest"
+        "taptest",
+        "udid",
+        "xcrun"
     ]
 }

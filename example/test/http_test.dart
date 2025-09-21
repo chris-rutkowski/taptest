@@ -15,7 +15,6 @@ void main() {
   final config = defaultTapTesterConfig.copyWith(
     httpRequestHandlers: [
       const TodoHandler(
-        method: HttpMethod.get,
         todos: [
           TodoDto(id: 1, text: 'From test 1', completed: false),
           TodoDto(id: 2, text: 'From test 2', completed: true),
@@ -49,13 +48,17 @@ void main() {
   });
 }
 
-final class TodoHandler extends MockHttpRequestHandler {
+final class TodoHandler implements MockHttpRequestHandler {
   final List<TodoDto> todos;
 
   const TodoHandler({
-    required HttpMethod method,
     required this.todos,
-  }) : super(method: HttpMethod.get, path: '/todos');
+  });
+
+  @override
+  bool canHandle(Uri uri, HttpMethod method, String path) {
+    return method == HttpMethod.get && uri.path == '/todos';
+  }
 
   @override
   MockHttpResponse? handle(Uri uri, HttpHeaders headers, String? body) {

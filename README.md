@@ -2,9 +2,11 @@ TODO:
 - ci prevent outdated codegen
 - driver tests
 - analytics
-- snapshot more handling
+- snapshots to have device name attached [device]
+- snapshots to have dimensions [width x height]
 - readme
 - check all samples
+- retry
 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.
