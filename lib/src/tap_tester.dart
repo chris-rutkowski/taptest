@@ -63,7 +63,7 @@ final class TapTester {
   static Future<TapTester> _bootstrap(WidgetTester widgetTester, String name, bool integration, Config config) async {
     if (config.integration) {
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-    } else{
+    } else {
       widgetTester.view.devicePixelRatio = config.pixelDensity;
       widgetTester.view.physicalSize = config.screenSize * config.pixelDensity;
     }
