@@ -19,6 +19,8 @@ dependencies:
   go_router:
   http:
   intl:
+  integration_test:
+    sdk: flutter
   json_annotation:
   riverpod_annotation:
   shared_preferences:
