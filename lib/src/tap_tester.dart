@@ -72,7 +72,7 @@ final class TapTester {
       handlers: config.httpRequestHandlers,
     );
 
-    if (!config.integration) {
+    if (!config.integration && false) {
       await loadCustomFonts(config.customFonts);
       await loadMaterialIconsFont();
     }
