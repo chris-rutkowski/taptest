@@ -50,9 +50,11 @@ jobs:
       working-directory: ./example
       
     - name: Check formatting
-      run: dart format --set-exit-if-changed .
+      run: |
+        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
       working-directory: ./
       
     - name: Check example formatting
-      run: dart format --set-exit-if-changed .
+      run: |
+        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
       working-directory: ./example
