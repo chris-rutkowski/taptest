@@ -2,7 +2,8 @@ TODO:
 - ci prevent outdated codegen
 - driver tests
 - analytics
-- snapshot more handling
+- snapshots to have device name attached [device]
+- snapshots to have dimensions [width x height]
 - readme
 - check all samples
 - retry

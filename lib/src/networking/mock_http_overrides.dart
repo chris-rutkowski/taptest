@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:fake_http_client/fake_http_client.dart';
+import 'package:taptest/taptest.dart';
 
 import 'http_method_from_string.dart';
-import 'mock_http_request_handler.dart';
 
 final class MockHttpOverrides extends HttpOverrides {
   final Iterable<MockHttpRequestHandler> handlers;
@@ -26,8 +26,9 @@ class _MockHttpClientWithFallback implements HttpClient {
         final httpMethod = httpMethodFromString(request.method);
 
         for (final handler in _handlers) {
-          if (handler.method != httpMethod) continue;
-          if (handler.path != request.uri.path) continue;
+          if (!handler.shouldHandle(request.uri, httpMethod, request.uri.path)) {
+            continue;
+          }
 
           final response = handler.handle(
             request.uri,
@@ -47,16 +48,20 @@ class _MockHttpClientWithFallback implements HttpClient {
         throw UnimplementedError('No mock handler found');
       });
 
-  bool _hasMockHandler(String method, Uri uri) {
-    final httpMethod = httpMethodFromString(method);
-    return _handlers.any((handler) => handler.method == httpMethod && handler.path == uri.path);
+  bool _hasMockHandler(HttpMethod method, Uri uri) {
+    return _handlers.any(
+      (handler) => handler.shouldHandle(uri, method, uri.path),
+    );
   }
 
   @override
   Future<HttpClientRequest> openUrl(String method, Uri url) {
-    if (_hasMockHandler(method, url)) {
+    final httpMethod = httpMethodFromString(method);
+
+    if (_hasMockHandler(httpMethod, url)) {
       return _fakeClient.openUrl(method, url);
     }
+
     return _defaultClient.openUrl(method, url);
   }
 

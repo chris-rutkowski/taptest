@@ -1,24 +1,21 @@
-import 'package:example/features/http_screen/data/todo_dto.dart';
 import 'package:example/features/http_screen/http_keys.dart';
 import 'package:example/features/welcome/presentation/welcome_keys.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:taptest/taptest.dart';
 
 import '../test/_utils/default_tap_tester_config.dart';
-import '../test/http_test.dart';
 
 void main() {
   final config = defaultTapTesterConfig.copyWith(
     httpRequestHandlers: [
-      const TodoHandler(
-        method: HttpMethod.get,
-        todos: [
-          TodoDto(id: 1, text: 'From test 1', completed: false),
-          TodoDto(id: 2, text: 'From test 2', completed: true),
-          TodoDto(id: 3, text: 'From test 3', completed: false),
-          TodoDto(id: 3, text: 'From test 4', completed: false),
-        ],
-      ),
+      // const TodoHandler(
+      //   todos: [
+      //     TodoDto(id: 1, text: 'From test 1', completed: false),
+      //     TodoDto(id: 2, text: 'From test 2', completed: true),
+      //     TodoDto(id: 3, text: 'From test 3', completed: false),
+      //     TodoDto(id: 3, text: 'From test 4', completed: false),
+      //   ],
+      // ),
     ],
     suite: 'http_integration',
   );
