@@ -55,7 +55,7 @@ final class TodoHandler extends MockHttpRequestHandler {
   const TodoHandler({
     required HttpMethod method,
     required this.todos,
-  }) : super(method: HttpMethod.get, path: '/todos');
+  }) : super(method: HttpMethod.get, path: '/wrong');
 
   @override
   MockHttpResponse? handle(Uri uri, HttpHeaders headers, String? body) {
