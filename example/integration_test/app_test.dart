@@ -5,7 +5,7 @@ import '../test/_utils/default_tap_tester_config.dart';
 
 void main() {
   final config = defaultTapTesterConfig.copyWith(
-    integration: false,
+    integration: true,
     httpRequestHandlers: [
       // const TodoHandler(
       //   todos: [
