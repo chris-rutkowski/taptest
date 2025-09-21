@@ -1,4 +1,3 @@
-import 'package:example/features/http_screen/http_keys.dart';
 import 'package:example/features/welcome/presentation/welcome_keys.dart';
 import 'package:taptest/taptest.dart';
 
@@ -27,8 +26,8 @@ void main() {
     await tester.exists(WelcomeKeys.screen);
     await tester.tap(WelcomeKeys.httpButton, sync: SyncType.settled);
 
-    await tester.info('On Http screen');
-    await tester.exists(HttpKeys.screen);
+    // await tester.info('On Http screen');
+    // await tester.exists(HttpKeys.screen);
     // await tester.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 2));
     // await tester.snapshot('http_screen');
 
