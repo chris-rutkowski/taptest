@@ -102,7 +102,8 @@ final class TapTester {
   void _print(String message, _PrintType type, {bool overwrite = false}) {
     if (overwrite) {
       // ignore: avoid_print
-      print('\x1B[1A\x1B[K${type.emoji} $message');
+      print('${type.emoji} $message');
+      // print('\x1B[1A\x1B[K${type.emoji} $message');
     } else {
       // ignore: avoid_print
       print('${type.emoji} $message');
