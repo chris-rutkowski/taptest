@@ -39,7 +39,7 @@ jobs:
     - name: Create iPhone 16 Pro simulator
       run: |
         # Create iPhone 16 Pro simulator if it doesn't exist
-        DEVICE_ID=$(xcrun simctl create "iPhone 16 Pro Test" "iPhone 16 Pro" "iOS-18-0" || echo "")
+        DEVICE_ID=$(xcrun simctl create "iPhone 16 Pro Test" "iPhone 16 Pro" "iOS-26-0" || echo "")
         if [ -z "$DEVICE_ID" ]; then
           # Try to find existing iPhone 16 Pro simulator
           DEVICE_ID=$(xcrun simctl list devices | grep "iPhone 16 Pro" | head -1 | grep -oE '\([A-Z0-9-]+\)' | tr -d '()')
@@ -73,17 +73,14 @@ jobs:
         fi
 
     - name: Run integration tests
-      run: |
-        echo "Running integration tests on iPhone 16 Pro simulator"
-        flutter test integration_test/app_test.dart -d $DEVICE_ID --update-goldens
+      run: flutter test integration_test -d $DEVICE_ID
       working-directory: ./example
 
-    # - name: Upload golden test artifacts
-    #   if: failure()
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: golden-test-failures-ios
-    #     path: |
-    #       example/test/goldens/
-    #       example/integration_test/
-    #     retention-days: 30
+    - name: Upload golden test artifacts
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: integration_test-failures-ios
+        path: |
+          example/integration_test/failures
+        retention-days: 30
