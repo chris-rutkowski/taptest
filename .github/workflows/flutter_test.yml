@@ -1,0 +1,55 @@
+name: Flutter Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Flutter Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+        cache: true
+        
+    - name: Get package dependencies
+      run: flutter pub get
+      working-directory: ./
+      
+    - name: Get example dependencies
+      run: flutter pub get
+      working-directory: ./example
+      
+    - name: Analyze package code
+      run: flutter analyze
+      working-directory: ./
+      
+    - name: Analyze example code
+      run: flutter analyze
+      working-directory: ./example
+      
+    - name: Run package tests
+      run: flutter test
+      working-directory: ./
+      
+    - name: Run example tests
+      run: flutter test
+      working-directory: ./example
+      
+    - name: Check formatting
+      run: dart format --set-exit-if-changed .
+      working-directory: ./
+      
+    - name: Check example formatting
+      run: dart format --set-exit-if-changed .
+      working-directory: ./example

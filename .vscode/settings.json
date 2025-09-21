@@ -8,6 +8,7 @@
         "noto",
         "pubspec",
         "riverpod",
+        "subosito",
         "taptest"
     ]
 }
