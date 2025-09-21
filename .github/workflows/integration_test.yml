@@ -1,4 +1,4 @@
-name: Integration Tests iOS
+name: Integration test
 
 on:
   push:
@@ -7,8 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  integration_test_ios:
-    name: Run Integration Tests on iPhone 16 Pro
+  ios:
     runs-on: macos-15
 
     steps:
@@ -25,15 +24,14 @@ jobs:
         flutter-version: ${{ steps.flutter_version.outputs.version }}
         cache: true
 
-    - name: Get package dependencies
-      run: flutter pub get
-      working-directory: ./
-
-    - name: Get example dependencies
+    - name: Get dependencies
       run: flutter pub get
       working-directory: ./example
 
-    - name: Start iPhone 16 Pro Simulator
+    # - name: List available iOS simulators
+    #   run: xcrun simctl list devices
+
+    - name: Start iOS Simulator
       uses: futureware-tech/simulator-action@v3
       with:
         model: 'iPhone 16 Pro'
@@ -44,11 +42,11 @@ jobs:
       run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
       working-directory: ./example
 
-    - name: Upload golden test artifacts
+    - name: Upload snapshot failures
       if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: integration_test-failures-ios
         path: |
           example/integration_test/failures
-        retention-days: 30
+        retention-days: 1
