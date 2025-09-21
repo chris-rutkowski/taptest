@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
+import 'package:taptest/src/networking/mock_http_overrides.dart';
 
 import 'config/config.dart';
 import 'private/app_wrapper.dart';
@@ -75,12 +78,14 @@ final class TapTester {
   );
 
   static Future<TapTester> _bootstrap(WidgetTester widgetTester, String name, bool integration, Config config) async {
-    // widgetTester.view.devicePixelRatio = config.pixelDensity;
-    // widgetTester.view.physicalSize = config.screenSize * config.pixelDensity;
+    if (!integration) {
+      widgetTester.view.devicePixelRatio = config.pixelDensity;
+      widgetTester.view.physicalSize = config.screenSize * config.pixelDensity;
+    }
 
-    // HttpOverrides.global = MockHttpOverrides(
-    //   handlers: config.httpRequestHandlers,
-    // );
+    HttpOverrides.global = MockHttpOverrides(
+      handlers: config.httpRequestHandlers,
+    );
 
     if (!integration) {
       await loadCustomFonts(config.customFonts);
