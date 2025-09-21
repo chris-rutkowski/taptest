@@ -36,30 +36,30 @@ final class Router extends _$Router {
           path: '/',
           builder: (context, state) => const WelcomeScreen(),
           routes: [
-          //   GoRoute(
-          //     path: 'login',
-          //     builder: (context, state) => const LoginScreen(),
-          //   ),
-          //   GoRoute(
-          //     path: 'registration',
-          //     builder: (context, state) => const RegistrationNameScreen(),
-          //   ),
-          //   GoRoute(
-          //     path: 'diagnostics',
-          //     builder: (context, state) => const DiagnosticsScreen(),
-          //   ),
-          //   GoRoute(
-          //     path: 'long',
-          //     builder: (context, state) => const LongScreen(),
-          //   ),
+            //   GoRoute(
+            //     path: 'login',
+            //     builder: (context, state) => const LoginScreen(),
+            //   ),
+            //   GoRoute(
+            //     path: 'registration',
+            //     builder: (context, state) => const RegistrationNameScreen(),
+            //   ),
+            //   GoRoute(
+            //     path: 'diagnostics',
+            //     builder: (context, state) => const DiagnosticsScreen(),
+            //   ),
+            //   GoRoute(
+            //     path: 'long',
+            //     builder: (context, state) => const LongScreen(),
+            //   ),
             GoRoute(
               path: 'http',
               builder: (context, state) => const HttpScreen(),
             ),
-          //   GoRoute(
-          //     path: 'menu',
-          //     builder: (context, state) => const MenuScreen(),
-          //   ),
+            //   GoRoute(
+            //     path: 'menu',
+            //     builder: (context, state) => const MenuScreen(),
+            //   ),
           ],
         ),
 

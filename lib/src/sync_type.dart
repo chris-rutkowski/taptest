@@ -1,4 +1,3 @@
-
 enum SyncType {
   skip,
   instant,

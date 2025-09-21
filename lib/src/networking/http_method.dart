@@ -9,4 +9,3 @@ enum HttpMethod {
   trace,
   connect,
 }
-
