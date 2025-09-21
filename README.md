@@ -1,3 +1,11 @@
+TODO:
+- ci prevent outdated codegen
+- driver tests
+- analytics
+- snapshot more handling
+- readme
+- check all samples
+
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.
 
