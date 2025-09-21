@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:taptest/src/config/custom_font.dart';
+
+import '../config/custom_font.dart';
 
 Future<void> loadCustomFonts(Iterable<CustomFont> customFonts) async {
   for (final font in customFonts) {

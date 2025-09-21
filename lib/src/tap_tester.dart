@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
-import 'package:taptest/src/networking/mockable_http_overrides.dart';
 
 import 'config/config.dart';
+import 'networking/mockable_http_overrides.dart';
 import 'private/app_wrapper.dart';
 import 'private/list_extensions.dart';
 import 'private/load_custom_fonts.dart';
@@ -34,6 +35,8 @@ void tapTest(String name, Config config, TapTesterCallback callback) {
   final description = makeTestDescription(name, config);
 
   testWidgets(description, (widgetTester) async {
+    timeDilation = 0.01;
+
     final tester = await TapTester._bootstrap(widgetTester, name, false, config);
 
     try {
@@ -41,6 +44,8 @@ void tapTest(String name, Config config, TapTesterCallback callback) {
     } catch (e) {
       // TODO: consider snapshot on failure
       rethrow;
+    } finally {
+      timeDilation = 1;
     }
   });
 }

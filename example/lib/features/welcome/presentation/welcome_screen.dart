@@ -75,6 +75,13 @@ final class WelcomeScreen extends StatelessWidget {
               GoRouter.of(context).go('/http');
             },
           ),
+          ListTile(
+            key: WelcomeKeys.dummyButton,
+            title: const Text('Dummy'),
+            onTap: () {
+              GoRouter.of(context).go('/dummy');
+            },
+          ),
         ],
       ),
     );

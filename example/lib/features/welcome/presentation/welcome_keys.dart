@@ -8,4 +8,5 @@ abstract class WelcomeKeys {
   static const registerButton = ValueKey('${_prefix}registerButton');
   static const longButton = ValueKey('${_prefix}longButton');
   static const httpButton = ValueKey('${_prefix}httpButton');
+  static const dummyButton = ValueKey('${_prefix}dummyButton');
 }

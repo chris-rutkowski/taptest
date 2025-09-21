@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:fake_http_client/fake_http_client.dart';
-import 'package:taptest/taptest.dart';
 
+import 'http_method.dart';
 import 'http_method_from_string.dart';
+import 'mock_http_request_handler.dart';
 
 final class MockableHttpOverrides extends HttpOverrides {
   final Iterable<MockHttpRequestHandler> handlers;
