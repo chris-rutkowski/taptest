@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
-import 'package:taptest/src/networking/mock_http_overrides.dart';
+import 'package:taptest/src/networking/mockable_http_overrides.dart';
 
 import 'config/config.dart';
 import 'private/app_wrapper.dart';
@@ -45,23 +45,6 @@ void tapTest(String name, Config config, TapTesterCallback callback) {
   });
 }
 
-@isTest
-void tapTestIntegration(String name, Config config, TapTesterCallback callback) {
-  final description = makeTestDescription(name, config);
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
-  testWidgets(description, (widgetTester) async {
-    final tester = await TapTester._bootstrap(widgetTester, name, true, config);
-
-    try {
-      await callback(tester);
-    } catch (e) {
-      // TODO: consider snapshot on failure
-      rethrow;
-    }
-  });
-}
-
 final class TapTester {
   final WidgetTester widgetTester;
   final String name;
@@ -78,16 +61,16 @@ final class TapTester {
   );
 
   static Future<TapTester> _bootstrap(WidgetTester widgetTester, String name, bool integration, Config config) async {
-    if (!integration) {
+    if (!config.integration) {
       widgetTester.view.devicePixelRatio = config.pixelDensity;
       widgetTester.view.physicalSize = config.screenSize * config.pixelDensity;
     }
 
-    HttpOverrides.global = MockHttpOverrides(
+    HttpOverrides.global = MockableHttpOverrides(
       handlers: config.httpRequestHandlers,
     );
 
-    if (!integration) {
+    if (!config.integration) {
       await loadCustomFonts(config.customFonts);
       await loadMaterialIconsFont();
     }

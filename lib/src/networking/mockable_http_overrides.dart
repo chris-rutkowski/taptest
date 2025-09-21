@@ -5,30 +5,28 @@ import 'package:taptest/taptest.dart';
 
 import 'http_method_from_string.dart';
 
-final class MockHttpOverrides extends HttpOverrides {
+final class MockableHttpOverrides extends HttpOverrides {
   final Iterable<MockHttpRequestHandler> handlers;
 
-  MockHttpOverrides({required this.handlers});
+  MockableHttpOverrides({required this.handlers});
 
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return _MockHttpClientWithFallback(handlers, super.createHttpClient(context));
+    return _MockableHttpClient(handlers, super.createHttpClient(context));
   }
 }
 
-class _MockHttpClientWithFallback implements HttpClient {
-  final Iterable<MockHttpRequestHandler> _handlers;
-  final HttpClient _defaultClient;
-  final FakeHttpClient _fakeClient;
+final class _MockableHttpClient implements HttpClient {
+  final Iterable<MockHttpRequestHandler> handlers;
+  final HttpClient defaultClient;
+  final FakeHttpClient fakeClient;
 
-  _MockHttpClientWithFallback(this._handlers, this._defaultClient)
-    : _fakeClient = FakeHttpClient((request, client) {
+  _MockableHttpClient(this.handlers, this.defaultClient)
+    : fakeClient = FakeHttpClient((request, client) {
         final httpMethod = httpMethodFromString(request.method);
 
-        for (final handler in _handlers) {
-          if (!handler.shouldHandle(request.uri, httpMethod, request.uri.path)) {
-            continue;
-          }
+        for (final handler in handlers) {
+          if (!handler.shouldHandle(request.uri, httpMethod, request.uri.path)) continue;
 
           final response = handler.handle(
             request.uri,
@@ -48,75 +46,73 @@ class _MockHttpClientWithFallback implements HttpClient {
         throw UnimplementedError('No mock handler found');
       });
 
-  bool _hasMockHandler(HttpMethod method, Uri uri) {
-    return _handlers.any(
-      (handler) => handler.shouldHandle(uri, method, uri.path),
-    );
-  }
+  bool _hasMockHandler(HttpMethod method, Uri uri) => handlers.any(
+    (handler) => handler.shouldHandle(uri, method, uri.path),
+  );
 
   @override
   Future<HttpClientRequest> openUrl(String method, Uri url) {
     final httpMethod = httpMethodFromString(method);
 
     if (_hasMockHandler(httpMethod, url)) {
-      return _fakeClient.openUrl(method, url);
+      return fakeClient.openUrl(method, url);
     }
 
-    return _defaultClient.openUrl(method, url);
+    return defaultClient.openUrl(method, url);
   }
 
   // Delegate all other methods to the default client
   @override
-  bool get autoUncompress => _defaultClient.autoUncompress;
+  bool get autoUncompress => defaultClient.autoUncompress;
 
   @override
-  set autoUncompress(bool value) => _defaultClient.autoUncompress = value;
+  set autoUncompress(bool value) => defaultClient.autoUncompress = value;
 
   @override
-  Duration? get connectionTimeout => _defaultClient.connectionTimeout;
+  Duration? get connectionTimeout => defaultClient.connectionTimeout;
 
   @override
-  set connectionTimeout(Duration? value) => _defaultClient.connectionTimeout = value;
+  set connectionTimeout(Duration? value) => defaultClient.connectionTimeout = value;
 
   @override
-  Duration get idleTimeout => _defaultClient.idleTimeout;
+  Duration get idleTimeout => defaultClient.idleTimeout;
 
   @override
-  set idleTimeout(Duration value) => _defaultClient.idleTimeout = value;
+  set idleTimeout(Duration value) => defaultClient.idleTimeout = value;
 
   @override
-  int? get maxConnectionsPerHost => _defaultClient.maxConnectionsPerHost;
+  int? get maxConnectionsPerHost => defaultClient.maxConnectionsPerHost;
 
   @override
-  set maxConnectionsPerHost(int? value) => _defaultClient.maxConnectionsPerHost = value;
+  set maxConnectionsPerHost(int? value) => defaultClient.maxConnectionsPerHost = value;
 
   @override
-  String? get userAgent => _defaultClient.userAgent;
+  String? get userAgent => defaultClient.userAgent;
 
   @override
-  set userAgent(String? value) => _defaultClient.userAgent = value;
+  set userAgent(String? value) => defaultClient.userAgent = value;
 
   @override
   void addCredentials(Uri url, String realm, HttpClientCredentials credentials) =>
-      _defaultClient.addCredentials(url, realm, credentials);
+      defaultClient.addCredentials(url, realm, credentials);
 
   @override
   void addProxyCredentials(String host, int port, String realm, HttpClientCredentials credentials) =>
-      _defaultClient.addProxyCredentials(host, port, realm, credentials);
+      defaultClient.addProxyCredentials(host, port, realm, credentials);
 
   @override
-  set authenticate(Future<bool> Function(Uri url, String scheme, String? realm)? f) => _defaultClient.authenticate = f;
+  set authenticate(Future<bool> Function(Uri url, String scheme, String? realm)? f) => defaultClient.authenticate = f;
 
   @override
   set authenticateProxy(Future<bool> Function(String host, int port, String scheme, String? realm)? f) =>
-      _defaultClient.authenticateProxy = f;
+      defaultClient.authenticateProxy = f;
 
   @override
   set badCertificateCallback(bool Function(X509Certificate cert, String host, int port)? callback) =>
-      _defaultClient.badCertificateCallback = callback;
+      defaultClient.badCertificateCallback = callback;
 
   @override
-  void close({bool force = false}) => _defaultClient.close(force: force);
+  void close({bool force = false}) => defaultClient.close(force: force);
 
   @override
   Future<HttpClientRequest> delete(String host, int port, String path) =>
@@ -126,7 +122,7 @@ class _MockHttpClientWithFallback implements HttpClient {
   Future<HttpClientRequest> deleteUrl(Uri url) => openUrl('DELETE', url);
 
   @override
-  set findProxy(String Function(Uri url)? f) => _defaultClient.findProxy = f;
+  set findProxy(String Function(Uri url)? f) => defaultClient.findProxy = f;
 
   @override
   Future<HttpClientRequest> get(String host, int port, String path) =>
@@ -169,8 +165,8 @@ class _MockHttpClientWithFallback implements HttpClient {
 
   @override
   set connectionFactory(Future<ConnectionTask<Socket>> Function(Uri url, String? proxyHost, int? proxyPort)? f) =>
-      _defaultClient.connectionFactory = f;
+      defaultClient.connectionFactory = f;
 
   @override
-  set keyLog(Function(String line)? callback) => _defaultClient.keyLog = callback;
+  set keyLog(Function(String line)? callback) => defaultClient.keyLog = callback;
 }

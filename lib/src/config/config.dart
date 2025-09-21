@@ -6,6 +6,7 @@ import 'custom_font.dart';
 import 'snapshot_config.dart';
 
 final class Config {
+  final bool integration;
   final String? suite;
   final double pixelDensity;
   final Size screenSize;
@@ -17,6 +18,7 @@ final class Config {
   final Widget Function(ValueListenable<ThemeMode> themeMode, ValueListenable<Locale> locale) builder;
 
   Config({
+    this.integration = false,
     this.suite,
     this.pixelDensity = 2.0,
     this.screenSize = const Size(393, 852),
@@ -30,6 +32,7 @@ final class Config {
        assert(locales.isNotEmpty, 'locales must contain at least one Locale');
 
   Config copyWith({
+    bool? integration,
     String? suite,
     double? pixelDensity,
     Size? screenSize,
@@ -45,6 +48,7 @@ final class Config {
     assert((locales ?? this.locales).isNotEmpty, 'locales must contain at least one Locale');
 
     return Config(
+      integration: integration ?? this.integration,
       suite: suite ?? this.suite,
       pixelDensity: pixelDensity ?? this.pixelDensity,
       screenSize: (screenSize ?? this.screenSize).copyWith(
