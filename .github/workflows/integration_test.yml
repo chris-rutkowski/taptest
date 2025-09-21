@@ -9,6 +9,7 @@ on:
 jobs:
   ios:
     runs-on: macos-15
+    timeout-minutes: 15
 
     steps:
     - name: Checkout repository

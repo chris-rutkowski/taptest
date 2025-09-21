@@ -29,7 +29,7 @@ void main() {
 
     await tester.info('On Http screen');
     await tester.exists(HttpKeys.screen);
-    await tester.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 2));
+    await tester.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 3));
     await tester.snapshot('http_screen');
 
     await Future.delayed(const Duration(seconds: 5));

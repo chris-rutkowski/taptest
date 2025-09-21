@@ -6,7 +6,7 @@ import 'mock_http_response.dart';
 abstract class MockHttpRequestHandler {
   const MockHttpRequestHandler();
 
-  bool shouldHandle(
+  bool canHandle(
     Uri uri,
     HttpMethod method,
     String path,

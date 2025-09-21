@@ -56,7 +56,7 @@ final class TodoHandler implements MockHttpRequestHandler {
   });
 
   @override
-  bool shouldHandle(Uri uri, HttpMethod method, String path) {
+  bool canHandle(Uri uri, HttpMethod method, String path) {
     return method == HttpMethod.get && uri.path == '/todos';
   }
 

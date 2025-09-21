@@ -26,7 +26,7 @@ final class _MockableHttpClient implements HttpClient {
         final httpMethod = httpMethodFromString(request.method);
 
         for (final handler in handlers) {
-          if (!handler.shouldHandle(request.uri, httpMethod, request.uri.path)) continue;
+          if (!handler.canHandle(request.uri, httpMethod, request.uri.path)) continue;
 
           final response = handler.handle(
             request.uri,
@@ -47,7 +47,7 @@ final class _MockableHttpClient implements HttpClient {
       });
 
   bool _hasMockHandler(HttpMethod method, Uri uri) => handlers.any(
-    (handler) => handler.shouldHandle(uri, method, uri.path),
+    (handler) => handler.canHandle(uri, method, uri.path),
   );
 
   @override
