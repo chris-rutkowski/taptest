@@ -1,0 +1,89 @@
+name: Integration Tests iOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  integration_test_ios:
+    name: Run Integration Tests on iPhone 16 Pro
+    runs-on: macos-15
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get Flutter version
+      id: flutter_version
+      run: echo "version=$(cat flutter-version.txt)" >> $GITHUB_OUTPUT
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutter_version.outputs.version }}
+        cache: true
+
+    - name: Get package dependencies
+      run: flutter pub get
+      working-directory: ./
+
+    - name: Get example dependencies
+      run: flutter pub get
+      working-directory: ./example
+
+    - name: List available iOS simulators
+      run: xcrun simctl list devices
+
+    - name: Create iPhone 16 Pro simulator
+      run: |
+        # Create iPhone 16 Pro simulator if it doesn't exist
+        DEVICE_ID=$(xcrun simctl create "iPhone 16 Pro Test" "iPhone 16 Pro" "iOS-18-0" || echo "")
+        if [ -z "$DEVICE_ID" ]; then
+          # Try to find existing iPhone 16 Pro simulator
+          DEVICE_ID=$(xcrun simctl list devices | grep "iPhone 16 Pro" | head -1 | grep -oE '\([A-Z0-9-]+\)' | tr -d '()')
+        fi
+        echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+        echo "Created/Found iPhone 16 Pro simulator: $DEVICE_ID"
+
+    - name: Boot iPhone 16 Pro simulator
+      run: |
+        echo "Booting simulator: $DEVICE_ID"
+        xcrun simctl boot $DEVICE_ID || echo "Simulator may already be booted"
+        xcrun simctl list devices | grep "iPhone 16 Pro"
+
+    - name: Wait for simulator to be ready
+      run: |
+        echo "Waiting for simulator to be ready..."
+        timeout=60
+        while [ $timeout -gt 0 ]; do
+          if xcrun simctl list devices | grep "$DEVICE_ID" | grep -q "Booted"; then
+            echo "Simulator is ready!"
+            break
+          fi
+          echo "Waiting for simulator... ($timeout seconds remaining)"
+          sleep 2
+          timeout=$((timeout - 2))
+        done
+        
+        if [ $timeout -le 0 ]; then
+          echo "Timeout waiting for simulator to boot"
+          exit 1
+        fi
+
+    - name: Run integration tests
+      run: |
+        echo "Running integration tests on iPhone 16 Pro simulator"
+        flutter test integration_test/app_test.dart -d $DEVICE_ID --update-goldens
+      working-directory: ./example
+
+    # - name: Upload golden test artifacts
+    #   if: failure()
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: golden-test-failures-ios
+    #     path: |
+    #       example/test/goldens/
+    #       example/integration_test/
+    #     retention-days: 30
