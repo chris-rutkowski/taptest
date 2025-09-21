@@ -1,0 +1,24 @@
+name: taptest
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  fake_http_client:
+  file:
+  flutter:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  meta:
+  path:
+  platform:
+
+dev_dependencies:
+  flutter_lints:
+
+flutter:

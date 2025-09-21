@@ -1,0 +1,40 @@
+changThemeMode
+
+changeLocale
++ snapshots for locale
+
+snapshots - specific Theme
+
+
+text - richText
+
+
+running on device as well with timeDilataion and
+ Future<void> complete() {
+    timeDilation = 1;
+    return Future.value();
+  }
+
+snapshot on failure
+
+Future<void> hittable(
+    dynamic key, {
+    Duration timeout = const Duration(seconds: 5),
+  }) async {
+    final finder = _finder(key).hitTestable();
+
+    await _expectWithTimeout(
+      () {
+        expect(finder, findsOneWidget);
+        return Future.value();
+      },
+      'Checking hittability ${_formatKey(key)}',
+      timeout,
+    );
+
+    _print('Hittable ${_formatKey(key)}', _PrintType.success, overwrite: true);
+  }
+
+
+
+  

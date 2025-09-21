@@ -1,0 +1,46 @@
+name: example
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  collection:
+  dio:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod:
+  flutter_web_plugins:
+    sdk: flutter
+  go_router:
+  http:
+  intl:
+  json_annotation:
+  riverpod_annotation:
+  shared_preferences:
+
+dev_dependencies:
+  build_runner:
+  custom_lint:
+  flutter_gen_runner:
+  flutter_test:
+    sdk: flutter
+  flutter_lints:
+  json_serializable:
+  riverpod_generator:
+  riverpod_lint:
+  taptest:
+    path: ../
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/noto_sans.ttf
