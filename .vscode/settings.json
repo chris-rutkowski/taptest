@@ -10,10 +10,12 @@
         "mundo",
         "noto",
         "pubspec",
+        "reactivecircus",
         "riverpod",
         "simctl",
         "subosito",
         "taptest",
+        "udevadm",
         "udid",
         "xcrun"
     ]
