@@ -86,13 +86,16 @@ jobs:
         sudo udevadm control --reload-rules
         sudo udevadm trigger --name-match=kvm
 
+    - name: List available AVD device profiles
+      run: avdmanager list device
+
     - name: Start Android Emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 36
         target: google_apis
         arch: x86_64
-        profile: pixel_9_pro
+        profile: pixel_9
         script: flutter test integration_test
         working-directory: ./example
 
