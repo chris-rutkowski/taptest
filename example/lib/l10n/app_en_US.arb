@@ -1,5 +1,5 @@
 {
+  "@@locale": "en_US",
   "helloWorld": "Hello World!",
-  "internationalisation": "Internationalization",
-  "countryFlagEmoji": "🇺🇸"
+  "internationalisation": "Internationalization"
 }

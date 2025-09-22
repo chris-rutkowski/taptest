@@ -1,5 +1,5 @@
 {
-    "helloWorld": "¡Hola Mundo!",
-    "internationalisation": "Internacionalización",
-    "countryFlagEmoji": "🇪🇸"
+  "@@locale": "es",
+  "helloWorld": "¡Hola Mundo!",
+  "internationalisation": "Internacionalización"
 }

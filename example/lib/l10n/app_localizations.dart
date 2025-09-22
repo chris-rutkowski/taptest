@@ -103,12 +103,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Internationalisation'**
   String get internationalisation;
-
-  /// n/a
-  ///
-  /// In en, this message translates to:
-  /// **'🇬🇧'**
-  String get countryFlagEmoji;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

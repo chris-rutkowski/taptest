@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../l10n/app_localizations.dart';
 import 'welcome_keys.dart';
+import 'widgets/flag_widget.dart';
 
 final class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -23,12 +24,9 @@ final class WelcomeScreen extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(AppLocalizations.of(context)!.internationalisation),
+                const FlagWidget(),
                 SizedBox(width: 8),
-                Text(
-                  AppLocalizations.of(context)!.countryFlagEmoji,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
+                Text(AppLocalizations.of(context)!.internationalisation),
               ],
             ),
           ),
