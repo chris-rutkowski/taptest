@@ -32,8 +32,6 @@ void main() {
     await tester.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 3));
     await tester.snapshot('http_screen');
 
-    await Future.delayed(const Duration(seconds: 5));
-
     // await tester.pumpWidget(ProviderScope(child: const ExampleApp()));
     // final button = find.byKey(WelcomeKeys.httpButton);
     // await tester.tap(button);

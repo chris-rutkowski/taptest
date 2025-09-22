@@ -1,7 +1,7 @@
 part of '../tap_tester.dart';
 
 const _defaultSuiteName = 'default';
-const _nonIntegrationDeviceName = 'headless';
+const _headlessName = 'headless';
 
 extension TapTesterSnapshot on TapTester {
   Future<void> snapshot(
@@ -125,12 +125,21 @@ extension TapTesterSnapshot on TapTester {
         .replaceAll('[name]', safe(name)) // snapshot name
         .replaceAll('[theme]', safe(theme.name))
         .replaceAll('[locale]', safe(locale.toString()))
-        .replaceAll('[device]', safe(device));
+        .replaceAll('[device]', safe(device))
+        .replaceAll('[platform]', safe(_getPlatform()));
+  }
+
+  String _getPlatform() {
+    if (!config.integration) {
+      return _headlessName;
+    }
+
+    return Platform.operatingSystem;
   }
 
   Future<String> _getDeviceName() async {
     if (!config.integration) {
-      return _nonIntegrationDeviceName;
+      return _headlessName;
     }
 
     final deviceInfo = DeviceInfoPlugin();

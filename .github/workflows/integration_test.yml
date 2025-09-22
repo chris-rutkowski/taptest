@@ -40,7 +40,7 @@ jobs:
       id: simulator
 
     - name: Run integration tests
-      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
+      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }} -v
       working-directory: ./example
 
     - name: Upload snapshot failures
