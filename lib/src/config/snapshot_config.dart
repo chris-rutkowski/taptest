@@ -12,10 +12,12 @@ final class SnapshotConfig {
   /// - [platform]: Platform (e.g., ios, android)
   final String path;
   final bool Function() isEnabled;
+  final double acceptableDifference;
 
   const SnapshotConfig({
     this.path = 'goldens/[suite]/[test]/[name]-[theme]-[locale]-[platform].png',
     this.isEnabled = _true,
+    this.acceptableDifference = 0.0002,
   });
 
   static bool _true() => true;
@@ -23,10 +25,12 @@ final class SnapshotConfig {
   SnapshotConfig copyWith({
     String? path,
     bool Function()? isEnabled,
+    double? acceptableDifference,
   }) {
     return SnapshotConfig(
       path: path ?? this.path,
       isEnabled: isEnabled ?? this.isEnabled,
+      acceptableDifference: acceptableDifference ?? this.acceptableDifference,
     );
   }
 }

@@ -15,6 +15,7 @@ import 'private/list_extensions.dart';
 import 'private/load_custom_fonts.dart';
 import 'private/load_material_icons_font.dart';
 import 'private/make_test_description.dart';
+import 'private/snapshot_comparator.dart';
 import 'sync_type.dart';
 
 part 'tap_tester_actions/absent.dart';

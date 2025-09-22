@@ -9,7 +9,23 @@ extension TapTesterSnapshot on TapTester {
     dynamic key,
     List<ThemeMode>? themeModes,
     List<Locale>? locales,
+    double? acceptableDifference,
   }) async {
+    final previousGoldenFileComparator = goldenFileComparator;
+    addTearDown(() => goldenFileComparator = previousGoldenFileComparator);
+
+    ComparisonResult? worstResult;
+
+    goldenFileComparator = SnapshotComparator(
+      Uri.parse('${(goldenFileComparator as LocalFileComparator).basedir}/dummy_file.dart'),
+      acceptableDifference ?? config.snapshot.acceptableDifference,
+      (result) {
+        if (worstResult == null || result.diffPercent > worstResult!.diffPercent) {
+          worstResult = result;
+        }
+      },
+    );
+
     if (!config.snapshot.isEnabled()) {
       _print('Skipping snapshot $name', _PrintType.ignore);
       return;
@@ -88,7 +104,15 @@ extension TapTesterSnapshot on TapTester {
     );
 
     await _revertIfNeeded(themeMode: startingThemeMode, locale: startingLocale);
-    _print('Snapshot matches $name', _PrintType.success, overwrite: true);
+    if (worstResult!.diffPercent > 0) {
+      _print(
+        'Snapshot matches $name - ${((1 - worstResult!.diffPercent) * 100).toStringAsFixed(2)}%',
+        _PrintType.success,
+        overwrite: true,
+      );
+    } else {
+      _print('Snapshot matches $name', _PrintType.success, overwrite: true);
+    }
   }
 
   Future<void> _revertIfNeeded({required ThemeMode themeMode, required Locale locale}) async {
