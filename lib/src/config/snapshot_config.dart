@@ -1,9 +1,19 @@
+/// Snapshot configuration
 final class SnapshotConfig {
+  /// Path where snapshots will be saved.
+  ///
+  /// Available placeholders in [path]:
+  /// - [suite]: Test suite name
+  /// - [test]: Test name
+  /// - [name]: Snapshot name
+  /// - [theme]: Theme mode (light/dark)
+  /// - [locale]: Locale (e.g., en_US)
+  /// - [device]: Device model (e.g., iPhone_16_Pro, Pixel_9_Pro, 390x844 for unit tests)
   final String path;
   final bool Function() isEnabled;
 
   const SnapshotConfig({
-    this.path = 'goldens/[suite]/[test]/[name]-[theme]-[locale].png',
+    this.path = 'goldens/[suite]/[test]/[name]-[theme]-[locale]-[device].png',
     this.isEnabled = _true,
   });
 

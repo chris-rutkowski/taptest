@@ -1,6 +1,7 @@
 part of '../tap_tester.dart';
 
 const _defaultSuiteName = 'default';
+const _nonIntegrationDeviceName = 'headless';
 
 extension TapTesterSnapshot on TapTester {
   Future<void> snapshot(
@@ -30,6 +31,8 @@ extension TapTesterSnapshot on TapTester {
 
     final themeModesToUse = themeModes ?? config.themeModes;
     final localesToUse = locales ?? config.locales;
+
+    final deviceName = await _getDeviceName();
 
     await themeModesToUse.cycle(
       from: themeModesToUse.first,
@@ -64,6 +67,7 @@ extension TapTesterSnapshot on TapTester {
                   name: name,
                   theme: theme,
                   locale: locale,
+                  device: deviceName,
                 ),
               ),
             );
@@ -111,6 +115,7 @@ extension TapTesterSnapshot on TapTester {
     required String name,
     required ThemeMode theme,
     required Locale locale,
+    required String device,
   }) {
     String safe(String input) => input.replaceAll(RegExp(r'[\\/ ]'), '_');
 
@@ -119,6 +124,28 @@ extension TapTesterSnapshot on TapTester {
         .replaceAll('[test]', safe(this.name)) // test name
         .replaceAll('[name]', safe(name)) // snapshot name
         .replaceAll('[theme]', safe(theme.name))
-        .replaceAll('[locale]', safe(locale.toString()));
+        .replaceAll('[locale]', safe(locale.toString()))
+        .replaceAll('[device]', safe(device));
+  }
+
+  Future<String> _getDeviceName() async {
+    if (!config.integration) {
+      return _nonIntegrationDeviceName;
+    }
+
+    final deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isIOS) {
+      final iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.name;
+    }
+
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.model;
+    }
+
+    // Fallback for other platforms
+    return Platform.operatingSystem;
   }
 }
