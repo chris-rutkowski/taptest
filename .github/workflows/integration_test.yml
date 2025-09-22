@@ -1,13 +1,12 @@
 name: Integration test
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
   ios:
+    name: iOS Integration test
     runs-on: macos-15
     timeout-minutes: 20
 
@@ -60,6 +59,7 @@ jobs:
         retention-days: 1
 
   android:
+    name: Android Integration test
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
