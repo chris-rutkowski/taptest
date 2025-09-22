@@ -87,7 +87,8 @@ jobs:
         sudo udevadm trigger --name-match=kvm
 
     - name: List available AVD device profiles
-      run: avdmanager list device
+      run: |
+        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/avdmanager list device | awk -F'"' '/id: /{ print $2 }'
 
     - name: Start Android Emulator
       uses: reactivecircus/android-emulator-runner@v2
