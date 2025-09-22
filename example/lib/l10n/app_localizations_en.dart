@@ -13,9 +13,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get internationalisation => 'Internationalisation';
-
-  @override
-  String get countryFlagEmoji => '🇬🇧';
 }
 
 /// The translations for English, as used in the United States (`en_US`).
@@ -27,7 +24,4 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
 
   @override
   String get internationalisation => 'Internationalization';
-
-  @override
-  String get countryFlagEmoji => '🇺🇸';
 }

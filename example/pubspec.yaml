@@ -14,6 +14,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_riverpod:
+  flutter_svg:
   flutter_web_plugins:
     sdk: flutter
   go_router:
@@ -40,7 +41,14 @@ flutter:
   generate: true
   uses-material-design: true
 
+  assets:
+    - path: assets/images/
+
   fonts:
     - family: NotoSans
       fonts:
         - asset: assets/fonts/noto_sans.ttf
+
+flutter_gen:
+  integrations:
+    flutter_svg: true

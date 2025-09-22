@@ -1,14 +1,11 @@
 {
+  "@@locale": "en",
   "helloWorld": "Hello World!",
   "@helloWorld": {
     "description": "n/a"
   },
   "internationalisation": "Internationalisation",
   "@internationalisation": {
-    "description": "n/a"
-  },
-  "countryFlagEmoji": "🇬🇧",
-  "@countryFlagEmoji": {
     "description": "n/a"
   }
 }

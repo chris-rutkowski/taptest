@@ -13,7 +13,4 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get internationalisation => 'Internacionalización';
-
-  @override
-  String get countryFlagEmoji => '🇪🇸';
 }
