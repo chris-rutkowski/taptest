@@ -80,6 +80,13 @@ final class WelcomeScreen extends StatelessWidget {
               GoRouter.of(context).go('/dummy');
             },
           ),
+          ListTile(
+            key: WelcomeKeys.limitationsButton,
+            title: const Text('Limitations'),
+            onTap: () {
+              GoRouter.of(context).go('/limitations');
+            },
+          ),
         ],
       ),
     );
