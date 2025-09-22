@@ -11,24 +11,26 @@ extension TapTesterSnapshot on TapTester {
     List<Locale>? locales,
     double? acceptableDifference,
   }) async {
+    if (!config.snapshot.isEnabled()) {
+      _print('Skipping snapshot $name', _PrintType.ignore);
+      return;
+    }
+
     final previousGoldenFileComparator = goldenFileComparator;
     addTearDown(() => goldenFileComparator = previousGoldenFileComparator);
 
     ComparisonResult? worstResult;
 
-    goldenFileComparator = SnapshotComparator(
-      Uri.parse('${(goldenFileComparator as LocalFileComparator).basedir}/dummy_file.dart'),
-      acceptableDifference ?? config.snapshot.acceptableDifference,
-      (result) {
-        if (worstResult == null || result.diffPercent > worstResult!.diffPercent) {
-          worstResult = result;
-        }
-      },
-    );
-
-    if (!config.snapshot.isEnabled()) {
-      _print('Skipping snapshot $name', _PrintType.ignore);
-      return;
+    if (!config.integration) {
+      goldenFileComparator = SnapshotComparator(
+        Uri.parse('${(goldenFileComparator as LocalFileComparator).basedir}/dummy_file.dart'),
+        acceptableDifference ?? config.snapshot.acceptableDifference,
+        (result) {
+          if (worstResult == null || result.diffPercent > worstResult!.diffPercent) {
+            worstResult = result;
+          }
+        },
+      );
     }
 
     _print('Checking snapshot $name', _PrintType.inProgress);

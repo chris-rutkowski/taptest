@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:example/example_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +11,15 @@ final defaultTapTesterConfig = Config(
   customFonts: [
     CustomFont(familyName: 'NotoSans', file: 'assets/fonts/noto_sans.ttf'),
   ],
+  snapshot: SnapshotConfig(
+    isEnabled: () {
+      if (Platform.isAndroid) {
+        return false;
+      }
+
+      return true;
+    },
+  ),
   locales: [
     const Locale('en'),
     const Locale('en', 'US'),
