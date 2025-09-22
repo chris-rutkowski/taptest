@@ -8,6 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  device_info_plus:
   fake_http_client:
   file:
   flutter:

@@ -5,11 +5,7 @@ import 'package:taptest/taptest.dart';
 import '../test/_utils/default_tap_tester_config.dart';
 
 void main() {
-  final config = defaultTapTesterConfig.copyWith(
-    integration: true,
-  );
-
-  tapTest('quick navigation', config, (tester) async {
+  tapTest('quick navigation', defaultTapTesterConfig, (tester) async {
     for (var i = 0; i < 10; i++) {
       await tester.info('On Welcome screen ${i + 1}/10');
       await tester.exists(WelcomeKeys.screen);

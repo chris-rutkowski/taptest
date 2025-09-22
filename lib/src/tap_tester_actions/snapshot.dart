@@ -1,6 +1,7 @@
 part of '../tap_tester.dart';
 
 const _defaultSuiteName = 'default';
+const _headlessName = 'headless';
 
 extension TapTesterSnapshot on TapTester {
   Future<void> snapshot(
@@ -8,10 +9,28 @@ extension TapTesterSnapshot on TapTester {
     dynamic key,
     List<ThemeMode>? themeModes,
     List<Locale>? locales,
+    double? acceptableDifference,
   }) async {
     if (!config.snapshot.isEnabled()) {
       _print('Skipping snapshot $name', _PrintType.ignore);
       return;
+    }
+
+    final previousGoldenFileComparator = goldenFileComparator;
+    addTearDown(() => goldenFileComparator = previousGoldenFileComparator);
+
+    ComparisonResult? worstResult;
+
+    if (testType == TestType.widget) {
+      goldenFileComparator = SnapshotComparator(
+        Uri.parse('${(goldenFileComparator as LocalFileComparator).basedir}/dummy_file.dart'),
+        acceptableDifference ?? config.snapshot.acceptableDifference,
+        (result) {
+          if (worstResult == null || result.diffPercent > worstResult!.diffPercent) {
+            worstResult = result;
+          }
+        },
+      );
     }
 
     _print('Checking snapshot $name', _PrintType.inProgress);
@@ -30,6 +49,8 @@ extension TapTesterSnapshot on TapTester {
 
     final themeModesToUse = themeModes ?? config.themeModes;
     final localesToUse = locales ?? config.locales;
+
+    final deviceName = await _getDeviceName();
 
     await themeModesToUse.cycle(
       from: themeModesToUse.first,
@@ -64,6 +85,7 @@ extension TapTesterSnapshot on TapTester {
                   name: name,
                   theme: theme,
                   locale: locale,
+                  device: deviceName,
                 ),
               ),
             );
@@ -84,7 +106,15 @@ extension TapTesterSnapshot on TapTester {
     );
 
     await _revertIfNeeded(themeMode: startingThemeMode, locale: startingLocale);
-    _print('Snapshot matches $name', _PrintType.success, overwrite: true);
+    if (worstResult != null && worstResult!.diffPercent > 0) {
+      _print(
+        'Snapshot matches $name - ${((1 - worstResult!.diffPercent) * 100).toStringAsFixed(2)}%',
+        _PrintType.success,
+        overwrite: true,
+      );
+    } else {
+      _print('Snapshot matches $name', _PrintType.success, overwrite: true);
+    }
   }
 
   Future<void> _revertIfNeeded({required ThemeMode themeMode, required Locale locale}) async {
@@ -111,6 +141,7 @@ extension TapTesterSnapshot on TapTester {
     required String name,
     required ThemeMode theme,
     required Locale locale,
+    required String device,
   }) {
     String safe(String input) => input.replaceAll(RegExp(r'[\\/ ]'), '_');
 
@@ -119,6 +150,37 @@ extension TapTesterSnapshot on TapTester {
         .replaceAll('[test]', safe(this.name)) // test name
         .replaceAll('[name]', safe(name)) // snapshot name
         .replaceAll('[theme]', safe(theme.name))
-        .replaceAll('[locale]', safe(locale.toString()));
+        .replaceAll('[locale]', safe(locale.toString()))
+        .replaceAll('[device]', safe(device))
+        .replaceAll('[platform]', safe(_getPlatform()));
+  }
+
+  String _getPlatform() {
+    if (testType == TestType.widget) {
+      return _headlessName;
+    }
+
+    return Platform.operatingSystem;
+  }
+
+  Future<String> _getDeviceName() async {
+    if (testType == TestType.widget) {
+      return _headlessName;
+    }
+
+    final deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isIOS) {
+      final iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.name;
+    }
+
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.model;
+    }
+
+    // Fallback for other platforms
+    return Platform.operatingSystem;
   }
 }

@@ -39,8 +39,15 @@ jobs:
         os_version: '26.0'
       id: simulator
 
+    - name: Wait for simulator boot
+      run: xcrun simctl bootstatus ${{ steps.simulator.outputs.udid }} -b
+
+    - name: Prebuild app
+      run: flutter build ios --simulator --no-codesign
+      working-directory: ./example
+
     - name: Run integration tests
-      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
+      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }} -v
       working-directory: ./example
 
     - name: Upload snapshot failures
@@ -48,6 +55,63 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: integration_test-failures-ios
+        path: |
+          example/integration_test/failures
+        retention-days: 1
+
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get Flutter version
+      id: flutter_version
+      run: echo "version=$(cat flutter-version.txt)" >> $GITHUB_OUTPUT
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutter_version.outputs.version }}
+        cache: true
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: Get dependencies
+      run: flutter pub get
+      working-directory: ./example
+
+    - name: Enable KVM
+      run: |
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+
+    # - name: List available AVD device profiles
+    #   run: |
+    #     /usr/local/lib/android/sdk/cmdline-tools/latest/bin/avdmanager list device | awk -F'"' '/id: /{ print $2 }'
+
+    - name: Start Android Emulator
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 36
+        target: google_apis
+        arch: x86_64
+        profile: pixel_7
+        script: flutter test integration_test
+        working-directory: ./example
+
+    - name: Upload snapshot failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: integration_test-failures-android
         path: |
           example/integration_test/failures
         retention-days: 1
