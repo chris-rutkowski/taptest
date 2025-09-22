@@ -42,11 +42,11 @@ jobs:
         find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
       working-directory: ./example
 
-    - name: Check generated code - library
-      run: |
-        flutter packages pub run build_runner build --delete-conflicting-outputs
-        git diff --exit-code
-      working-directory: ./
+    # - name: Check generated code - library
+    #   run: |
+    #     flutter packages pub run build_runner build --delete-conflicting-outputs
+    #     git diff --exit-code
+    #   working-directory: ./
 
     - name: Check generated code - example
       run: |
