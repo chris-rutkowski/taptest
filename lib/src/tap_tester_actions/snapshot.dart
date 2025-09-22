@@ -21,7 +21,7 @@ extension TapTesterSnapshot on TapTester {
 
     ComparisonResult? worstResult;
 
-    if (!config.integration) {
+    if (testType == TestType.widget) {
       goldenFileComparator = SnapshotComparator(
         Uri.parse('${(goldenFileComparator as LocalFileComparator).basedir}/dummy_file.dart'),
         acceptableDifference ?? config.snapshot.acceptableDifference,
@@ -156,7 +156,7 @@ extension TapTesterSnapshot on TapTester {
   }
 
   String _getPlatform() {
-    if (!config.integration) {
+    if (testType == TestType.widget) {
       return _headlessName;
     }
 
@@ -164,7 +164,7 @@ extension TapTesterSnapshot on TapTester {
   }
 
   Future<String> _getDeviceName() async {
-    if (!config.integration) {
+    if (testType == TestType.widget) {
       return _headlessName;
     }
 

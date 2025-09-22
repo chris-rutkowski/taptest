@@ -16,6 +16,7 @@ import 'private/load_custom_fonts.dart';
 import 'private/load_material_icons_font.dart';
 import 'private/make_test_description.dart';
 import 'private/snapshot_comparator.dart';
+import 'private/test_type.dart';
 import 'sync_type.dart';
 
 part 'tap_tester_actions/absent.dart';
@@ -53,6 +54,7 @@ void tapTest(String name, Config config, TapTesterCallback callback) {
 }
 
 final class TapTester {
+  final TestType testType;
   final WidgetTester widgetTester;
   final String name;
   final Config config;
@@ -60,6 +62,7 @@ final class TapTester {
   final ValueNotifier<Locale> _localeNotifier;
 
   const TapTester._(
+    this.testType,
     this.widgetTester,
     this.name,
     this.config,
@@ -68,7 +71,9 @@ final class TapTester {
   );
 
   static Future<TapTester> _bootstrap(WidgetTester widgetTester, String name, bool integration, Config config) async {
-    if (config.integration) {
+    final testType = getTestType();
+
+    if (testType == TestType.integration) {
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
     } else {
       widgetTester.view.devicePixelRatio = config.pixelDensity;
@@ -79,7 +84,7 @@ final class TapTester {
       handlers: config.httpRequestHandlers,
     );
 
-    if (!config.integration) {
+    if (testType == TestType.widget) {
       await loadCustomFonts(config.customFonts);
       await loadMaterialIconsFont();
     }
@@ -98,6 +103,7 @@ final class TapTester {
     await widgetTester.pumpAndSettle();
 
     return TapTester._(
+      testType,
       widgetTester,
       name,
       config,
