@@ -104,7 +104,7 @@ extension TapTesterSnapshot on TapTester {
     );
 
     await _revertIfNeeded(themeMode: startingThemeMode, locale: startingLocale);
-    if (worstResult!.diffPercent > 0) {
+    if (worstResult != null && worstResult!.diffPercent > 0) {
       _print(
         'Snapshot matches $name - ${((1 - worstResult!.diffPercent) * 100).toStringAsFixed(2)}%',
         _PrintType.success,
