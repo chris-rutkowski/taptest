@@ -18,9 +18,10 @@ final class SnapshotComparator extends LocalFileComparator {
       await getGoldenBytes(golden),
     );
 
+    onResult(result);
+
     if (result.passed || result.diffPercent <= acceptableDifference) {
       result.dispose();
-      onResult(result);
       return true;
     }
 
