@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
         "avdmanager",
+        "bootstatus",
         "buildlog",
         "cmdline",
         "codegen",
+        "codesign",
         "futureware",
         "gifs",
         "goldens",
@@ -11,6 +13,7 @@
         "internationalisation",
         "mundo",
         "noto",
+        "prebuild",
         "pubspec",
         "reactivecircus",
         "riverpod",

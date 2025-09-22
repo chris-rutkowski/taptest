@@ -39,6 +39,13 @@ jobs:
         os_version: '26.0'
       id: simulator
 
+    - name: Wait for simulator boot
+      run: xcrun simctl bootstatus ${{ steps.simulator.outputs.udid }} -b
+
+    - name: Prebuild app
+      run: flutter build ios --simulator --no-codesign
+      working-directory: ./example
+
     - name: Run integration tests
       run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }} -v
       working-directory: ./example
