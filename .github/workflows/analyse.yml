@@ -1,0 +1,63 @@
+name: Analyse
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get Flutter version
+      id: flutter_version
+      run: echo "version=$(cat flutter-version.txt)" >> $GITHUB_OUTPUT
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutter_version.outputs.version }}
+        cache: true
+
+    - name: Get package dependencies
+      run: flutter pub get
+      working-directory: ./
+
+    - name: Get example dependencies
+      run: flutter pub get
+      working-directory: ./example
+
+    - name: Check formatting - library
+      run: |
+        find . -name "*.dart" ! -path "./example/*" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
+      working-directory: ./
+
+    - name: Check formatting - example
+      run: |
+        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
+      working-directory: ./example
+
+    # - name: Check generated code - library
+    #   run: |
+    #     flutter packages pub run build_runner build --delete-conflicting-outputs
+    #     git diff --exit-code
+    #   working-directory: ./
+
+    - name: Check generated code - example
+      run: |
+        flutter packages pub run build_runner build --delete-conflicting-outputs
+        git diff --exit-code
+      working-directory: ./example
+
+    - name: Analyse - library
+      run: flutter analyze --fatal-infos
+      working-directory: ./
+
+    - name: Analyze - example
+      run: flutter analyze --fatal-infos
+      working-directory: ./example
