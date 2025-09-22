@@ -86,9 +86,9 @@ jobs:
         sudo udevadm control --reload-rules
         sudo udevadm trigger --name-match=kvm
 
-    - name: List available AVD device profiles
-      run: |
-        /usr/local/lib/android/sdk/cmdline-tools/latest/bin/avdmanager list device | awk -F'"' '/id: /{ print $2 }'
+    # - name: List available AVD device profiles
+    #   run: |
+    #     /usr/local/lib/android/sdk/cmdline-tools/latest/bin/avdmanager list device | awk -F'"' '/id: /{ print $2 }'
 
     - name: Start Android Emulator
       uses: reactivecircus/android-emulator-runner@v2
@@ -96,7 +96,7 @@ jobs:
         api-level: 36
         target: google_apis
         arch: x86_64
-        profile: pixel_9
+        profile: pixel_7
         script: flutter test integration_test
         working-directory: ./example
 
