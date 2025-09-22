@@ -7,8 +7,8 @@ final class SnapshotConfig {
   /// - [test]: Test name
   /// - [name]: Snapshot name
   /// - [theme]: Theme mode (light/dark)
-  /// - [locale]: Locale (e.g., en_US)
-  /// - [device]: Device model (e.g., iPhone_16_Pro, Pixel_9_Pro, 390x844 for unit tests)
+  /// - [locale]: Locale (e.g., en, en_US)
+  /// - [device]: Device model (e.g., iPhone_16_Pro, Pixel_9_Pro, headless for unit tests)
   /// - [platform]: Platform (e.g., ios, android)
   final String path;
   final bool Function() isEnabled;
