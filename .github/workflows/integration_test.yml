@@ -7,7 +7,7 @@ on:
 jobs:
   ios:
     name: iOS Integration test
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 20
 
     steps:
@@ -34,7 +34,7 @@ jobs:
     - name: Start iOS Simulator
       uses: futureware-tech/simulator-action@v4
       with:
-        model: 'iPhone 16 Pro'
+        model: 'iPhone 17 Pro'
         os_version: '26.0'
         wait_for_boot: true
       id: simulator
