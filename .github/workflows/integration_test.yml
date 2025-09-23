@@ -39,9 +39,6 @@ jobs:
         wait_for_boot: true
       id: simulator
 
-    # - name: Wait for simulator boot
-    #   run: xcrun simctl bootstatus ${{ steps.simulator.outputs.udid }} -b
-
     - name: Prebuild app
       run: flutter build ios --simulator --no-codesign
       working-directory: ./example
