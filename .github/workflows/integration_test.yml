@@ -32,14 +32,15 @@ jobs:
     #   run: xcrun simctl list devices
 
     - name: Start iOS Simulator
-      uses: futureware-tech/simulator-action@v3
+      uses: futureware-tech/simulator-action@v4
       with:
         model: 'iPhone 16 Pro'
         os_version: '26.0'
+        wait_for_boot: true
       id: simulator
 
-    - name: Wait for simulator boot
-      run: xcrun simctl bootstatus ${{ steps.simulator.outputs.udid }} -b
+    # - name: Wait for simulator boot
+    #   run: xcrun simctl bootstatus ${{ steps.simulator.outputs.udid }} -b
 
     - name: Prebuild app
       run: flutter build ios --simulator --no-codesign
