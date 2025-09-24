@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../features/dummy_screen/presentation/dummy_screen.dart';
 import '../../features/http_screen/http_screen.dart';
 import '../../features/limitations/presentation/limitations_screen.dart';
+import '../../features/products/presentation/product_details_screen.dart';
 import '../../features/products/presentation/products_screen.dart';
 import '../../features/welcome/presentation/welcome_screen.dart';
 
@@ -70,6 +71,15 @@ final class Router extends _$Router {
             GoRoute(
               path: 'products',
               builder: (context, state) => const ProductsScreen(),
+              routes: [
+                GoRoute(
+                  path: ':id',
+                  builder: (context, state) {
+                    final id = state.pathParameters['id']!;
+                    return ProductDetailsScreen(id: int.tryParse(id) ?? -1);
+                  },
+                ),
+              ]
             ),
             //   GoRoute(
             //     path: 'menu',

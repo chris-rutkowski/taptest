@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../domain/products_repository.dart';
 import 'widgets/product_list_tile.dart';
@@ -26,7 +27,10 @@ final class ProductsScreen extends ConsumerWidget {
           itemCount: products.length,
           itemBuilder: (context, index) {
             final product = products[index];
-            return ProductListTile(product: product);
+            return ProductListTile(
+              product: product,
+              onTap: () => GoRouter.of(context).go('/products/${product.id}'),
+            );
           },
         ),
 

@@ -2,8 +2,10 @@ import 'package:decimal/decimal.dart';
 
 import '../data/product_dto.dart';
 
+typedef ProductId = int;
+
 final class Product {
-  final int id;
+  final ProductId id;
   final String title;
   final Decimal price;
   final String description;
