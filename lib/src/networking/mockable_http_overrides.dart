@@ -1,35 +1,42 @@
 import 'dart:io';
 
 import 'package:fake_http_client/fake_http_client.dart';
+import 'package:flutter/foundation.dart';
 
+import '../private/test_type.dart';
 import 'http_method.dart';
 import 'http_method_from_string.dart';
 import 'mock_http_request_handler.dart';
 
 final class MockableHttpOverrides extends HttpOverrides {
+  final TestType testType;
   final Iterable<MockHttpRequestHandler> handlers;
 
-  MockableHttpOverrides({required this.handlers});
+  MockableHttpOverrides({
+    required this.testType,
+    required this.handlers,
+  });
 
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return _MockableHttpClient(handlers, super.createHttpClient(context));
+    return _MockableHttpClient(testType, handlers, super.createHttpClient(context));
   }
 }
 
 final class _MockableHttpClient implements HttpClient {
+  final TestType testType;
   final Iterable<MockHttpRequestHandler> handlers;
   final HttpClient defaultClient;
   final FakeHttpClient fakeClient;
 
-  _MockableHttpClient(this.handlers, this.defaultClient)
-    : fakeClient = FakeHttpClient((request, client) {
+  _MockableHttpClient(this.testType, this.handlers, this.defaultClient)
+    : fakeClient = FakeHttpClient((request, client) async {
         final httpMethod = httpMethodFromString(request.method);
 
         for (final handler in handlers) {
           if (!handler.canHandle(request.uri, httpMethod, request.uri.path)) continue;
 
-          final response = handler.handle(
+          final response = await handler.handle(
             request.uri,
             request.headers,
             request.bodyText,
@@ -57,6 +64,10 @@ final class _MockableHttpClient implements HttpClient {
 
     if (_hasMockHandler(httpMethod, url)) {
       return fakeClient.openUrl(method, url);
+    } else if (testType == TestType.widget) {
+      final errorMessage = '‼️ Missing HTTP mock response for $method $url';
+      debugPrint(errorMessage);
+      throw StateError(errorMessage);
     }
 
     return defaultClient.openUrl(method, url);
