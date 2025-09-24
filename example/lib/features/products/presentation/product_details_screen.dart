@@ -18,10 +18,10 @@ final class ProductDetailsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
+        title: const Text('Product'),
       ),
       body: product.when(
-        data: (products) => Text('data ${products.title}'),
+        data: (product) => _ProductScreenContent(product: product),
 
         loading: () => const Center(child: CircularProgressIndicator()),
 
@@ -29,6 +29,23 @@ final class ProductDetailsScreen extends ConsumerWidget {
           child: Text('Error'),
         ),
       ),
+    );
+  }
+}
+
+final class _ProductScreenContent extends StatelessWidget {
+  final Product product;
+  const _ProductScreenContent({required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image.network(product.imageUrl),
+        Text(product.title),
+        Text('\$${product.price.toString()}'),
+        Text(product.description),
+      ],
     );
   }
 }
