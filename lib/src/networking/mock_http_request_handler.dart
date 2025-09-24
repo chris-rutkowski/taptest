@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'http_method.dart';
@@ -12,5 +13,5 @@ abstract class MockHttpRequestHandler {
     String path,
   );
 
-  MockHttpResponse? handle(Uri uri, HttpHeaders headers, String? body);
+  FutureOr<MockHttpResponse?> handle(Uri uri, HttpHeaders headers, String? body);
 }
