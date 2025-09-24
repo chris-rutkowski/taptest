@@ -39,7 +39,7 @@ final class _ProductScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         Image.network(product.imageUrl),
         Text(product.title),
