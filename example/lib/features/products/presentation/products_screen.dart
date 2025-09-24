@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../domain/products_repository.dart';
+import 'products_keys.dart';
 import 'widgets/product_list_tile.dart';
 
 final class ProductsScreen extends ConsumerWidget {
@@ -13,6 +14,7 @@ final class ProductsScreen extends ConsumerWidget {
     final products = ref.watch(productsRepositoryProvider);
 
     return Scaffold(
+      key: ProductScreenKeys.screen,
       appBar: AppBar(
         title: const Text('Products'),
       ),
@@ -27,7 +29,9 @@ final class ProductsScreen extends ConsumerWidget {
           itemCount: products.length,
           itemBuilder: (context, index) {
             final product = products[index];
+
             return ProductListTile(
+              key: ProductScreenKeys.tile(index),
               product: product,
               onTap: () => GoRouter.of(context).go('/products/${product.id}'),
             );
