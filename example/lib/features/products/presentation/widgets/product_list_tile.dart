@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../widgets/stubable_network_image.dart';
 import '../../domain/product.dart';
 
 final class ProductListTile extends StatelessWidget {
@@ -22,11 +23,10 @@ final class ProductListTile extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              Image.network(
-                product.imageUrl,
-                width: 48,
-                height: 48,
-                fit: BoxFit.cover,
+              StubableNetworkImage(
+                source: product.imageUrl,
+                width: 64,
+                height: 64,
               ),
               const SizedBox(width: 16),
               Expanded(
