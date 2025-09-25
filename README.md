@@ -9,6 +9,7 @@ TODO:
 - retry
 - snapshots to be in global directory, currently test in folder will create another golden path
 - snapshots to have enum SnapshotScope { matrix, current }, current method in private
+- use configurable logger https://pub.dev/packages/logger instead of printing
 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.

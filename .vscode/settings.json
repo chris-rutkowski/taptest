@@ -28,6 +28,7 @@
         "taptest",
         "udevadm",
         "udid",
+        "unawaited",
         "xcrun"
     ]
 }
