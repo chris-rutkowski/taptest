@@ -23,7 +23,7 @@ final class ProductDetailsScreen extends ConsumerWidget {
       body: product.when(
         data: (product) => _ProductScreenContent(product: product),
 
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: Text('loading...')),
 
         error: (_, _) => Center(
           child: Text('Error'),

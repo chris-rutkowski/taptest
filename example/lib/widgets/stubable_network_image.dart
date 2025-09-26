@@ -28,6 +28,14 @@ final class StubableNetworkImage extends StatelessWidget {
       width: width,
       height: height,
       fit: fit,
+      
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+
+        return Container(key: ValueKey('ignore_on_snapshot'), color: Colors.yellow, child: child);
+      },
     );
   }
 }
