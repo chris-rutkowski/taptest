@@ -27,7 +27,7 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ steps.flutter_version.outputs.version }}
-        cache: true
+        # cache: true # self-hosted runners do not need caching
 
     - name: Get dependencies
       run: flutter pub get
