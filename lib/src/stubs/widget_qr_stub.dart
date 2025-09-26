@@ -33,8 +33,8 @@ final class WidgetQRStub extends StatelessWidget {
   Widget build(BuildContext context) {
     final payload = jsonEncode({
       'src': src,
-      'w': width,
-      'h': height,
+      'width': width,
+      'height': height,
       'fit': fit?.toString(),
     });
 

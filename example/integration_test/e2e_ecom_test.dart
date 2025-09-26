@@ -8,8 +8,6 @@ import 'package:taptest/taptest.dart';
 
 import '_utils/default_integration_tap_tester_config.dart';
 
-// const standardTapTesterConfig =
-
 void main() {
   final config = defaultIntegrationTapTesterConfig.copyWith(
     suite: 'e2e_ecom',
@@ -22,6 +20,7 @@ void main() {
 
     await tester.info('On Products screen');
     await tester.exists(ProductScreenKeys.screen);
+    await tester.exists(ProductScreenKeys.tile(0));
 
     // await tester.absent(LongKeys.cell(72));
     // await tester.scrollTo([LongKeys.cell(72), LongKeys.cellTitle], scrollable: LongKeys.list);

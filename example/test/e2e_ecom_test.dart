@@ -9,12 +9,9 @@ import 'package:taptest/taptest.dart';
 
 import '_utils/default_tap_tester_config.dart';
 
-// const standardTapTesterConfig =
-
 void main() {
   final config = defaultTapTesterConfig.copyWith(
     httpRequestHandlers: [
-      // const ImageHandler(),
       const ProductsHandler(
         products: [
           ProductDto(
