@@ -32,8 +32,8 @@ jobs:
       run: flutter pub get
       working-directory: ./example
 
-    # - name: List available iOS simulators
-    #   run: xcrun simctl list devices
+    - name: List available iOS simulators
+      run: xcrun simctl list devices
 
     - name: Start iOS Simulator
       uses: futureware-tech/simulator-action@v4
