@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "amet",
         "analyse",
         "avdmanager",
         "bootstatus",
@@ -7,11 +8,14 @@
         "cmdline",
         "codegen",
         "codesign",
+        "dtos",
+        "ecom",
         "futureware",
         "gifs",
         "goldens",
         "internacionalización",
         "internationalisation",
+        "ltwh",
         "mundo",
         "noto",
         "prebuild",
@@ -19,10 +23,12 @@
         "reactivecircus",
         "riverpod",
         "simctl",
+        "stubable",
         "subosito",
         "taptest",
         "udevadm",
         "udid",
+        "unawaited",
         "xcrun"
     ]
 }

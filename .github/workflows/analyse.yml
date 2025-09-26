@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [ main ]
 
+concurrency:
+  group: analyse-${{ github.ref }}
+  cancel-in-progress: true   
+
 jobs:
   analyse:
     runs-on: ubuntu-latest

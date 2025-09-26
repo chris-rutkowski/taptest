@@ -4,10 +4,15 @@ on:
   pull_request:
     branches: [ main ]
 
+concurrency:
+  group: integration_test-${{ github.ref }}
+  cancel-in-progress: true       
+
 jobs:
   ios:
     name: iOS Integration test
-    runs-on: macos-26
+    # runs-on: macos-26
+    runs-on: [self-hosted, macOS]
     timeout-minutes: 20
 
     steps:
@@ -22,14 +27,14 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ steps.flutter_version.outputs.version }}
-        cache: true
+        # cache: true # self-hosted runners do not need caching
 
     - name: Get dependencies
       run: flutter pub get
       working-directory: ./example
 
-    # - name: List available iOS simulators
-    #   run: xcrun simctl list devices
+    - name: List available iOS simulators
+      run: xcrun simctl list devices
 
     - name: Start iOS Simulator
       uses: futureware-tech/simulator-action@v4
@@ -44,7 +49,8 @@ jobs:
       working-directory: ./example
 
     - name: Run integration tests
-      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }} -v
+      # run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }} -v
+      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
       working-directory: ./example
 
     - name: Upload snapshot failures

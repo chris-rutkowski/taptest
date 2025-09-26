@@ -28,6 +28,7 @@ part 'tap_tester_actions/snapshot.dart';
 part 'tap_tester_actions/tap.dart';
 part 'tap_tester_actions/text.dart';
 part 'tap_tester_actions/type.dart';
+part 'tap_tester_actions/wait.dart';
 
 const _singleFrameDuration = Duration(milliseconds: 17);
 
@@ -81,6 +82,7 @@ final class TapTester {
     }
 
     HttpOverrides.global = MockableHttpOverrides(
+      testType: testType,
       handlers: config.httpRequestHandlers,
     );
 

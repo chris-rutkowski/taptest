@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+
+import '../../../../widgets/stubable_network_image.dart';
+import '../../domain/product.dart';
+
+final class ProductListTile extends StatelessWidget {
+  final Product product;
+  final VoidCallback onTap;
+
+  const ProductListTile({
+    super.key,
+    required this.product,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              StubableNetworkImage(
+                source: product.imageUrl,
+                width: 64,
+                height: 64,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  product.title,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

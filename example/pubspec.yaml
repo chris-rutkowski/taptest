@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   collection:
+  decimal:
   dio:
   flutter:
     sdk: flutter
