@@ -41,3 +41,12 @@ jobs:
     - name: Run example tests
       run: flutter test
       working-directory: ./example
+
+    - name: Upload snapshot failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-failures
+        path: |
+          example/test/failures
+        retention-days: 1
