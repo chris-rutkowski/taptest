@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:example/features/disappearing_widget_screen.dart/disappearing_keys.dart';
 import 'package:example/features/welcome/presentation/welcome_keys.dart';
 import 'package:taptest/taptest.dart';
-import 'package:test/test.dart';
+
 import '../_utils/default_tap_tester_config.dart';
 
 void main() {

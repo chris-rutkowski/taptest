@@ -40,6 +40,8 @@ void main() {
 
     await tester.info('On Products screen');
     await tester.exists(ProductScreenKeys.screen);
+    await tester.exists(ProductScreenKeys.tile(0));
+    // await tester.wait(Duration(seconds: 3));
     // await tester.snapshot('http_screen');
 
     // await tester.absent(LongKeys.cell(72));
