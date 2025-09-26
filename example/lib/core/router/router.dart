@@ -84,7 +84,7 @@ final class Router extends _$Router {
                     return ProductDetailsScreen(id: int.tryParse(id) ?? -1);
                   },
                 ),
-              ]
+              ],
             ),
             //   GoRoute(
             //     path: 'menu',
