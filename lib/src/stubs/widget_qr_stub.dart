@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:qr/qr.dart';
 
@@ -28,13 +31,15 @@ final class WidgetQRStub extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(
-      'Generating QR code for $src with size ${width}x${height} and fit $fit ${Object.hash(src, width, height, fit).toString()}',
-    );
-    print('END');
+    final payload = jsonEncode({
+      'src': src,
+      'w': width,
+      'h': height,
+      'fit': fit?.toString(),
+    });
+
     final qrCode = QrCode.fromData(
-      // data: src,
-      data: Object.hash(src, width, height, fit).toString(),
+      data: sha1.convert(utf8.encode(payload)).toString().substring(0, 8),
       errorCorrectLevel: QrErrorCorrectLevel.L,
     );
 
