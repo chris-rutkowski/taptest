@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [ main ]
 
+concurrency:
+  group: integration_test-${{ github.ref }}
+  cancel-in-progress: true       
+
 jobs:
   ios:
     name: iOS Integration test
