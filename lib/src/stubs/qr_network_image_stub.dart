@@ -28,9 +28,13 @@ final class WidgetQRStub extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(
+      'Generating QR code for $src with size ${width}x${height} and fit $fit ${Object.hash(src, width, height, fit).toString()}',
+    );
+    print('END');
     final qrCode = QrCode.fromData(
-      data: src,
-      // data: Object.hash(src, width, height, fit).toString(),
+      // data: src,
+      data: Object.hash(src, width, height, fit).toString(),
       errorCorrectLevel: QrErrorCorrectLevel.L,
     );
 
