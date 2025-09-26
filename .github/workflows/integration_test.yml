@@ -48,7 +48,8 @@ jobs:
       working-directory: ./example
 
     - name: Run integration tests
-      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }} -v
+      # run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }} -v
+      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
       working-directory: ./example
 
     - name: Upload snapshot failures
