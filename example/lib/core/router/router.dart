@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/disappearing_widget_screen.dart/disappearing_widget_screen.dart';
 import '../../features/dummy_screen/presentation/dummy_screen.dart';
 import '../../features/http_screen/http_screen.dart';
 import '../../features/limitations/presentation/limitations_screen.dart';
@@ -67,6 +68,10 @@ final class Router extends _$Router {
             GoRoute(
               path: 'limitations',
               builder: (context, state) => const LimitationsScreen(),
+            ),
+            GoRoute(
+              path: 'disappearing',
+              builder: (context, state) => const DisappearingWidgetScreen(),
             ),
             GoRoute(
               path: 'products',

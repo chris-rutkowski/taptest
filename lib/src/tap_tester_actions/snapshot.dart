@@ -36,11 +36,11 @@ extension TapTesterSnapshot on TapTester {
     _print('Checking snapshot $name', _PrintType.inProgress);
 
     assert(
-      locales == null || locales.every((e) => config.locales.contains(e)),
+      locales == null || locales.every(config.locales.contains),
       'All provided locales must be in config.locales',
     );
     assert(
-      themeModes == null || themeModes.every((e) => config.themeModes.contains(e)),
+      themeModes == null || themeModes.every(config.themeModes.contains),
       'All provided themeModes must be in config.themeModes',
     );
 
@@ -143,7 +143,7 @@ extension TapTesterSnapshot on TapTester {
     required Locale locale,
     required String device,
   }) {
-    String safe(String input) => input.replaceAll(RegExp(r'[\\/ ]'), '_');
+    String safe(String input) => input.toLowerCase().replaceAll(RegExp(r'[\\/ ]'), '_');
 
     return template
         .replaceAll('[suite]', safe(suite))

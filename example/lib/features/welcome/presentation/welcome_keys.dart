@@ -11,4 +11,5 @@ abstract class WelcomeKeys {
   static const dummyButton = ValueKey('${_prefix}dummyButton');
   static const limitationsButton = ValueKey('${_prefix}limitationsButton');
   static const productsButton = ValueKey('${_prefix}productsButton');
+  static const disappearingButton = ValueKey('${_prefix}disappearingButton');
 }
