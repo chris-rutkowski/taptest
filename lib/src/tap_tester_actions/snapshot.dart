@@ -23,7 +23,8 @@ extension TapTesterSnapshot on TapTester {
 
     if (testType == TestType.widget) {
       goldenFileComparator = SnapshotComparator(
-        Uri.parse('${(goldenFileComparator as LocalFileComparator).basedir}/dummy_file.dart'),
+        findTestFolderUri(),
+        // Uri.parse('${(goldenFileComparator as LocalFileComparator).basedir}/dummy_file.dart'),
         acceptableDifference ?? config.snapshot.acceptableDifference,
         (result) {
           if (worstResult == null || result.diffPercent > worstResult!.diffPercent) {
@@ -209,4 +210,18 @@ extension TapTesterSnapshot on TapTester {
     //   );
     // }
   }
+}
+
+Uri findTestFolderUri() {
+  final pattern = RegExp(r'file://([^\s)]+/(integration_test|test)/)');
+  final match = pattern.firstMatch(StackTrace.current.toString());
+
+  if (match == null) {
+    throw StateError(
+      'No folder ending with /integration_test/ or /test/ found in stack trace.',
+    );
+  }
+
+  // match.group(1) contains the full file path ending with /integration_test/ or /test/
+  return Uri.parse('file://${match.group(1)!}any_file.dart');
 }
