@@ -29,8 +29,8 @@ final class WidgetQRStub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final qrCode = QrCode.fromData(
-      // data: src,
-      data: Object.hash(src, width, height, fit).toString(),
+      data: src,
+      // data: Object.hash(src, width, height, fit).toString(),
       errorCorrectLevel: QrErrorCorrectLevel.L,
     );
 
