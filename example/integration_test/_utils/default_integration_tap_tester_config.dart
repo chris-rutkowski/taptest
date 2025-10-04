@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:example/example_app.dart';
-import 'package:example/widgets/stubable_network_image.dart';
 import 'package:example/widgets/common_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +27,6 @@ final defaultIntegrationTapTesterConfig = Config(
   ],
   builder: (themeMode, locale) {
     SharedPreferences.setMockInitialValues({});
-    StubableNetworkImage.stubBuilder = defaultWidgetQRStubBuilder;
 
     final providerContainer = ProviderContainer(
       overrides: [
