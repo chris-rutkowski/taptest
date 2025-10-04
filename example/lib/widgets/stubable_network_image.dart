@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'common_keys.dart';
+
 final class StubableNetworkImage extends StatelessWidget {
   static Widget Function(String source, double? width, double? height, BoxFit? fit)? stubBuilder;
 
@@ -28,13 +30,17 @@ final class StubableNetworkImage extends StatelessWidget {
       width: width,
       height: height,
       fit: fit,
-      
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) {
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        final isLoaded = (frame != null || wasSynchronouslyLoaded);
+
+        if (isLoaded) {
           return child;
         }
 
-        return Container(key: ValueKey('ignore_on_snapshot'), color: Colors.yellow, child: child);
+        return KeyedSubtree(
+          key: CommonKeys.loadingNetworkImage,
+          child: child,
+        );
       },
     );
   }

@@ -74,8 +74,7 @@ extension TapTesterSnapshot on TapTester {
               await widgetTester.pumpAndSettle();
             }
 
-            // Wait for any widgets with "ignore_on_snapshot" key to disappear
-            await _waitForIgnoredWidgetsToDisappear();
+            await _waitForDeferredToDisappear();
 
             final finder = key == null ? find.byType(AppWrapper) : _finder(key);
 
@@ -187,26 +186,9 @@ extension TapTesterSnapshot on TapTester {
     return Platform.operatingSystem;
   }
 
-  /// Waits for any widgets with ValueKey("ignore_on_snapshot") to disappear
-  /// from the widget tree before taking a snapshot.
-  ///
-  /// This is useful for loading indicators, animations, or other transient
-  /// widgets that should not appear in golden file tests.
-  Future<void> _waitForIgnoredWidgetsToDisappear() async {
-    // const maxRetries = 10; // Maximum number of retries (10 seconds total)
-    // int retryCount = 0;
-
-    await absent(
-      const ValueKey('ignore_on_snapshot'),
-    );
-
-    // If we reach here, we've hit the maximum retries
-    // final remainingWidgets = find.byKey(const ValueKey('ignore_on_snapshot'));
-    // if (remainingWidgets.hasFound) {
-    //   _print(
-    //     'Warning: ${remainingWidgets.evaluate().length} widget(s) with "ignore_on_snapshot" key still present after $maxRetries seconds',
-    //     _PrintType.info,
-    //   );
-    // }
+  Future<void> _waitForDeferredToDisappear() async {
+    for (final key in config.snapshot.deferredKeys) {
+      await absent(key);
+    }
   }
 }
