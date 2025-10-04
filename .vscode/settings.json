@@ -8,6 +8,8 @@
         "cmdline",
         "codegen",
         "codesign",
+        "deeplink",
+        "deeplinks",
         "dtos",
         "ecom",
         "futureware",
