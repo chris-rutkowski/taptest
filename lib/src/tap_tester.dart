@@ -18,6 +18,7 @@ import 'private/make_test_description.dart';
 import 'private/snapshot_comparator.dart';
 import 'private/test_type.dart';
 import 'sync_type.dart';
+import 'tap_key.dart';
 
 part 'tap_tester_actions/absent.dart';
 part 'tap_tester_actions/exists.dart';
@@ -124,7 +125,7 @@ final class TapTester {
     }
   }
 
-  Finder _finder(dynamic keyOrKeys) {
+  Finder _finder(TapKey keyOrKeys) {
     if (keyOrKeys is Key) {
       return find.byKey(keyOrKeys);
     }
@@ -153,7 +154,7 @@ final class TapTester {
     }
   }
 
-  String _formatKey(dynamic keyOrKeys) {
+  String _formatKey(TapKey keyOrKeys) {
     if (keyOrKeys is Key) {
       return keyOrKeys.formatted;
     }

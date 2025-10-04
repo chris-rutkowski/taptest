@@ -2,7 +2,7 @@ part of '../tap_tester.dart';
 
 extension TapTesterType on TapTester {
   Future<void> type(
-    dynamic key,
+    TapKey key,
     String text, {
     bool secret = false,
     SyncType sync = SyncType.instant,

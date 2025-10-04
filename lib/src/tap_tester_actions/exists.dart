@@ -2,7 +2,7 @@ part of '../tap_tester.dart';
 
 extension TapTesterExists on TapTester {
   Future<void> exists(
-    dynamic key, {
+    TapKey key, {
     Duration timeout = const Duration(seconds: 5),
   }) async {
     final finder = _finder(key);

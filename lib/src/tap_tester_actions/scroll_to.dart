@@ -2,8 +2,8 @@ part of '../tap_tester.dart';
 
 extension TapTesterScrollTo on TapTester {
   Future<void> scrollTo(
-    dynamic key, {
-    required dynamic scrollable,
+    TapKey key, {
+    required TapKey scrollable,
     double delta = 50,
     int maxScrolls = 1000,
   }) async {

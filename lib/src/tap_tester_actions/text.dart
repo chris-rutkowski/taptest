@@ -1,7 +1,7 @@
 part of '../tap_tester.dart';
 
 extension TapTesterText on TapTester {
-  Future<void> text(dynamic key, String text) async {
+  Future<void> text(TapKey key, String text) async {
     _print('Checking text of ${_formatKey(key)} matches "$text"', _PrintType.inProgress);
 
     final elementWidget = _finder(key).evaluate().single.widget;

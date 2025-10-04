@@ -6,7 +6,7 @@ const _headlessName = 'headless';
 extension TapTesterSnapshot on TapTester {
   Future<void> snapshot(
     final String name, {
-    dynamic key,
+    TapKey key,
     List<ThemeMode>? themeModes,
     List<Locale>? locales,
     double? acceptableDifference,

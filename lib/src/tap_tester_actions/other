@@ -18,7 +18,7 @@ running on device as well with timeDilataion and
 snapshot on failure
 
 Future<void> hittable(
-    dynamic key, {
+    TapKey key, {
     Duration timeout = const Duration(seconds: 5),
   }) async {
     final finder = _finder(key).hitTestable();
