@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:example/example_app.dart';
 import 'package:example/widgets/stubable_network_image.dart';
 import 'package:example/widgets/common_keys.dart';
@@ -11,9 +9,9 @@ import 'package:taptest/taptest.dart';
 final defaultIntegrationTapTesterConfig = Config(
   snapshot: SnapshotConfig(
     isEnabled: () {
-      if (Platform.isAndroid) {
-        return false;
-      }
+      // if (Platform.isAndroid) {
+      //   return false;
+      // }
 
       return true;
     },
