@@ -27,6 +27,7 @@ final class ProductListTile extends StatelessWidget {
                 source: product.imageUrl,
                 width: 64,
                 height: 64,
+                fit: BoxFit.contain,
               ),
               const SizedBox(width: 16),
               Expanded(
