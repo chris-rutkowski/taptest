@@ -43,8 +43,7 @@ final class WidgetQRStub extends StatelessWidget {
       errorCorrectLevel: QrErrorCorrectLevel.L,
     );
 
-    return Container(
-      color: Colors.white,
+    return SizedBox(
       width: width ?? _defaultSize,
       height: height ?? _defaultSize,
       child: Center(
@@ -66,6 +65,11 @@ final class _Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      Paint()..color = Colors.white,
+    );
+
     final paint = Paint()
       ..color = Colors.black
       ..style = PaintingStyle.fill;
