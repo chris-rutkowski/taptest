@@ -103,6 +103,17 @@ final class TapTester {
         ),
       ),
     );
+
+    if (config.precachedImages.isNotEmpty) {
+      await widgetTester.runAsync(() async {
+        final finder = find.byType(AppWrapper);
+
+        for (final image in config.precachedImages) {
+          await precacheImage(image, widgetTester.element(finder));
+        }
+      });
+    }
+
     await widgetTester.pumpAndSettle();
 
     return TapTester._(

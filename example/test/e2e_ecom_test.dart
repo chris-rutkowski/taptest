@@ -5,11 +5,14 @@ import 'package:example/features/products/data/product_dto.dart';
 import 'package:example/features/products/data/rating_dto.dart';
 import 'package:example/features/products/presentation/products_keys.dart';
 import 'package:example/features/welcome/presentation/welcome_keys.dart';
+import 'package:flutter/material.dart';
 import 'package:taptest/taptest.dart';
 
 import '_utils/default_tap_tester_config.dart';
 
 void main() {
+  const imageUrl = 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg';
+
   final config = defaultTapTesterConfig.copyWith(
     httpRequestHandlers: [
       const ProductsHandler(
@@ -20,11 +23,17 @@ void main() {
             price: 29.99,
             description: 'Description for Test Product 1',
             category: 'electronics',
-            image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png',
+            image: imageUrl,
             rating: RatingDto(rate: 4.5, count: 120),
           ),
         ],
       ),
+      ToQrImageHttpRequestHandler(
+        (uri, method) => method == HttpMethod.get && uri.path.startsWith('/img'),
+      ),
+    ],
+    precachedImages: [
+      const NetworkImage(imageUrl),
     ],
     suite: 'e2e_ecom',
   );
@@ -32,7 +41,7 @@ void main() {
   tapTest('flow', config, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
-    // await tester.snapshot('welcome_screen');
+    await tester.snapshot('welcome_screen');
     await tester.tap(WelcomeKeys.productsButton, sync: SyncType.settled);
 
     await tester.info('On Products screen');
