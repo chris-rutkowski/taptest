@@ -22,9 +22,6 @@ void main() {
     await tester.exists(ProductScreenKeys.screen);
     await tester.exists(ProductScreenKeys.tile(0));
 
-    // await tester.absent(LongKeys.cell(72));
-    // await tester.scrollTo([LongKeys.cell(72), LongKeys.cellTitle], scrollable: LongKeys.list);
-    // await tester.snapshot('long_screen_72');
     await tester.snapshot('http_screen');
 
     // await tester.pop();

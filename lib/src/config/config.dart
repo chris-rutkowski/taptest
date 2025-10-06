@@ -14,6 +14,7 @@ final class Config {
   final List<ThemeMode> themeModes;
   final List<Locale> locales;
   final Iterable<MockHttpRequestHandler> httpRequestHandlers;
+  final Iterable<ImageProvider> precachedImages;
   final Widget Function(ValueListenable<ThemeMode> themeMode, ValueListenable<Locale> locale) builder;
 
   Config({
@@ -25,6 +26,7 @@ final class Config {
     this.themeModes = const [ThemeMode.light, ThemeMode.dark],
     this.locales = const [Locale('en'), Locale('en', 'US'), Locale('en', 'GB')],
     this.httpRequestHandlers = const [],
+    this.precachedImages = const [],
     required this.builder,
   }) : assert(themeModes.isNotEmpty, 'themeModes must contain at least one ThemeMode'),
        assert(locales.isNotEmpty, 'locales must contain at least one Locale');
@@ -39,6 +41,7 @@ final class Config {
     List<ThemeMode>? themeModes,
     List<Locale>? locales,
     Iterable<MockHttpRequestHandler>? httpRequestHandlers,
+    Iterable<ImageProvider>? precachedImages,
     Widget Function(ValueListenable<ThemeMode>, ValueListenable<Locale>)? builder,
   }) {
     assert((themeModes ?? this.themeModes).isNotEmpty, 'themeModes must contain at least one ThemeMode');
@@ -55,6 +58,7 @@ final class Config {
       themeModes: themeModes ?? this.themeModes,
       locales: locales ?? this.locales,
       httpRequestHandlers: httpRequestHandlers ?? this.httpRequestHandlers,
+      precachedImages: precachedImages ?? this.precachedImages,
       builder: builder ?? this.builder,
     );
   }
