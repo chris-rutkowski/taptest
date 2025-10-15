@@ -14,6 +14,8 @@ TODO:
 - ability to provide keys to be awaited disappearance during snapshot tests
 - action to go - navigating using router, testing deeplinks etc
 - MockHttpRequestHandler doesn't need path if the uri can be uri.path
+- Info in wait about gesture detector
+- maybe test detect timers in progress and wait for all of them - configurable
 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.
