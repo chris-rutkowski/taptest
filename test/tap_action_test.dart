@@ -3,7 +3,7 @@ import 'package:taptest/taptest.dart';
 
 void main() {
   final config = Config(
-    builder: (themeMode, locale) => const MaterialApp(
+    builder: (themeMode, locale, initialRoute) => const MaterialApp(
       home: _Screen(
         key: _Keys.screen,
       ),

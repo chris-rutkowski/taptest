@@ -25,7 +25,7 @@ final defaultTapTesterConfig = Config(
     const Locale('en', 'US'),
     const Locale('es'),
   ],
-  builder: (themeMode, locale) {
+  builder: (themeMode, locale, initialRoute) {
     SharedPreferences.setMockInitialValues({});
     // StubableNetworkImage.stubBuilder = defaultWidgetQRStubBuilder;
 

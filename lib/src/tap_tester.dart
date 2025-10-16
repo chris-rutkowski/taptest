@@ -22,6 +22,7 @@ import 'tap_key.dart';
 
 part 'tap_tester_actions/absent.dart';
 part 'tap_tester_actions/exists.dart';
+part 'tap_tester_actions/go.dart';
 part 'tap_tester_actions/info.dart';
 part 'tap_tester_actions/pop.dart';
 part 'tap_tester_actions/scroll_to.dart';
@@ -100,6 +101,7 @@ final class TapTester {
         child: config.builder(
           themeModeNotifier,
           localeNotifier,
+          config.initialRoute,
         ),
       ),
     );

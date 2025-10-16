@@ -11,8 +11,16 @@ extension TapTesterPop on TapTester {
   Future<void> pop({SyncType sync = SyncType.settled}) async {
     _print('Popping screen', _PrintType.inProgress);
 
-    final navigator = widgetTester.state<NavigatorState>(find.byType(Navigator));
-    navigator.pop();
+    // Two other ways to pop, but they don't trigger PopScope etc
+
+    // final navigator = widgetTester.state<NavigatorState>(find.byType(Navigator));
+    // navigator.pop();
+
+    // final backButton = find.byTooltip('Back');
+    // await widgetTester.tap(backButton);
+
+    await widgetTester.pageBack();
+
     await _sync(sync);
 
     _print('Popped screen', _PrintType.success, overwrite: true);
