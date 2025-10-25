@@ -149,7 +149,7 @@ extension TapTesterSnapshot on TapTester {
 
     return template
         .replaceAll('[suite]', safe(suite))
-        .replaceAll('[test]', safe(this.name)) // test name
+        .replaceAll('[test]', safe(description)) // test's description
         .replaceAll('[name]', safe(name)) // snapshot name
         .replaceAll('[theme]', safe(theme.name))
         .replaceAll('[locale]', safe(locale.toString()))
