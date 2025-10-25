@@ -11,8 +11,8 @@ final class FlagWidget extends StatelessWidget {
 
     final flagAsset = switch (locale.languageCode) {
       'en' => switch (locale.countryCode) {
-        'GB' => Assets.images.uk,
-        'US' || _ => Assets.images.usa,
+        'US' => Assets.images.usa,
+        'GB' || _ => Assets.images.uk,
       },
       'es' => Assets.images.es,
       _ => Assets.images.usa,

@@ -226,6 +226,7 @@ enum _PrintType {
   inProgress,
   success,
   ignore,
+  warning,
 }
 
 extension _PrintTypeExtension on _PrintType {
@@ -239,6 +240,8 @@ extension _PrintTypeExtension on _PrintType {
         return '✅';
       case _PrintType.ignore:
         return '🚫';
+      case _PrintType.warning:
+        return '⚠️';
     }
   }
 }
