@@ -16,6 +16,11 @@ TODO:
 - MockHttpRequestHandler doesn't need path if the uri can be uri.path
 - Info in wait about gesture detector
 - maybe test detect timers in progress and wait for all of them - configurable
+- make nav test using ordinary Navigator 2.0 not only GoRouter
+- make some mini package with start app Params - location theme as well as initial route
+- consider initial route as a '/' instead of null
+- consider dropping suite
+- go action clearly uses the api inappropriately - should be fixed
 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.

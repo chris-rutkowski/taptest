@@ -7,6 +7,7 @@ import 'snapshot_config.dart';
 
 final class Config {
   final String? suite;
+  final String? initialRoute; // TODO: consider '/'
   final double pixelDensity;
   final Size screenSize;
   final Iterable<CustomFont> customFonts;
@@ -15,10 +16,17 @@ final class Config {
   final List<Locale> locales;
   final Iterable<MockHttpRequestHandler> httpRequestHandlers;
   final Iterable<ImageProvider> precachedImages;
-  final Widget Function(ValueListenable<ThemeMode> themeMode, ValueListenable<Locale> locale) builder;
+  final Widget Function(
+    // TODO: replace with params
+    ValueListenable<ThemeMode> themeMode,
+    ValueListenable<Locale> locale,
+    String? initialRoute,
+  )
+  builder;
 
   Config({
     this.suite,
+    this.initialRoute,
     this.pixelDensity = 2.0,
     this.screenSize = const Size(393, 852),
     this.customFonts = const [],
@@ -33,6 +41,7 @@ final class Config {
 
   Config copyWith({
     String? suite,
+    String? initialRoute,
     double? pixelDensity,
     Size? screenSize,
     double? screenHeight,
@@ -42,13 +51,14 @@ final class Config {
     List<Locale>? locales,
     Iterable<MockHttpRequestHandler>? httpRequestHandlers,
     Iterable<ImageProvider>? precachedImages,
-    Widget Function(ValueListenable<ThemeMode>, ValueListenable<Locale>)? builder,
+    Widget Function(ValueListenable<ThemeMode>, ValueListenable<Locale>, String?)? builder,
   }) {
     assert((themeModes ?? this.themeModes).isNotEmpty, 'themeModes must contain at least one ThemeMode');
     assert((locales ?? this.locales).isNotEmpty, 'locales must contain at least one Locale');
 
     return Config(
       suite: suite ?? this.suite,
+      initialRoute: initialRoute ?? this.initialRoute,
       pixelDensity: pixelDensity ?? this.pixelDensity,
       screenSize: (screenSize ?? this.screenSize).copyWith(
         height: screenHeight,
