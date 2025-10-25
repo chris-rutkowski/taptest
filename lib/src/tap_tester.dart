@@ -21,6 +21,7 @@ import 'tap_key.dart';
 
 part 'tap_tester_actions/absent.dart';
 part 'tap_tester_actions/change_locale.dart';
+part 'tap_tester_actions/change_theme_mode.dart';
 part 'tap_tester_actions/exists.dart';
 part 'tap_tester_actions/go.dart';
 part 'tap_tester_actions/info.dart';
