@@ -6,7 +6,7 @@ final class SnapshotConfig {
   ///
   /// Available placeholders in [path]:
   /// - [suite]: Test suite name
-  /// - [test]: Test name
+  /// - [description]: Test's description
   /// - [name]: Snapshot name
   /// - [theme]: Theme mode (light/dark)
   /// - [locale]: Locale (e.g., en, en_US)

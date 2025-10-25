@@ -14,13 +14,14 @@ import 'private/app_wrapper.dart';
 import 'private/list_extensions.dart';
 import 'private/load_custom_fonts.dart';
 import 'private/load_material_icons_font.dart';
-import 'private/make_test_description.dart';
 import 'private/snapshot_comparator.dart';
 import 'private/test_type.dart';
 import 'sync_type.dart';
 import 'tap_key.dart';
 
 part 'tap_tester_actions/absent.dart';
+part 'tap_tester_actions/change_locale.dart';
+part 'tap_tester_actions/change_theme_mode.dart';
 part 'tap_tester_actions/exists.dart';
 part 'tap_tester_actions/go.dart';
 part 'tap_tester_actions/info.dart';
@@ -37,13 +38,11 @@ const _singleFrameDuration = Duration(milliseconds: 17);
 typedef TapTesterCallback = Future<void> Function(TapTester tester);
 
 @isTest
-void tapTest(String name, Config config, TapTesterCallback callback) {
-  final description = makeTestDescription(name, config);
-
+void tapTest(String description, Config config, TapTesterCallback callback) {
   testWidgets(description, (widgetTester) async {
     timeDilation = 0.01;
 
-    final tester = await TapTester._bootstrap(widgetTester, name, false, config);
+    final tester = await TapTester._bootstrap(widgetTester, description, false, config);
 
     try {
       await callback(tester);
@@ -59,7 +58,7 @@ void tapTest(String name, Config config, TapTesterCallback callback) {
 final class TapTester {
   final TestType testType;
   final WidgetTester widgetTester;
-  final String name;
+  final String description;
   final Config config;
   final ValueNotifier<ThemeMode> _themeModeNotifier;
   final ValueNotifier<Locale> _localeNotifier;
@@ -67,13 +66,18 @@ final class TapTester {
   const TapTester._(
     this.testType,
     this.widgetTester,
-    this.name,
+    this.description,
     this.config,
     this._themeModeNotifier,
     this._localeNotifier,
   );
 
-  static Future<TapTester> _bootstrap(WidgetTester widgetTester, String name, bool integration, Config config) async {
+  static Future<TapTester> _bootstrap(
+    WidgetTester widgetTester,
+    String description,
+    bool integration,
+    Config config,
+  ) async {
     final testType = getTestType();
 
     if (testType == TestType.integration) {
@@ -121,7 +125,7 @@ final class TapTester {
     return TapTester._(
       testType,
       widgetTester,
-      name,
+      description,
       config,
       themeModeNotifier,
       localeNotifier,
@@ -223,6 +227,7 @@ enum _PrintType {
   inProgress,
   success,
   ignore,
+  warning,
 }
 
 extension _PrintTypeExtension on _PrintType {
@@ -236,6 +241,8 @@ extension _PrintTypeExtension on _PrintType {
         return '✅';
       case _PrintType.ignore:
         return '🚫';
+      case _PrintType.warning:
+        return '⚠️';
     }
   }
 }

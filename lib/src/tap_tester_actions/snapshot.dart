@@ -6,11 +6,19 @@ const _headlessName = 'headless';
 extension TapTesterSnapshot on TapTester {
   Future<void> snapshot(
     final String name, {
+    bool variations = true,
     TapKey key,
     List<ThemeMode>? themeModes,
     List<Locale>? locales,
     double? acceptableDifference,
   }) async {
+    if (!variations && (themeModes != null || locales != null)) {
+      _print(
+        "When variations=false, themeModes and locales are ignored. Current theme/locale will be used instead.",
+        _PrintType.warning,
+      );
+    }
+
     if (!config.snapshot.isEnabled()) {
       _print('Skipping snapshot $name', _PrintType.ignore);
       return;
@@ -47,8 +55,8 @@ extension TapTesterSnapshot on TapTester {
     final startingThemeMode = _themeModeNotifier.value;
     final startingLocale = _localeNotifier.value;
 
-    final themeModesToUse = themeModes ?? config.themeModes;
-    final localesToUse = locales ?? config.locales;
+    final themeModesToUse = variations ? themeModes ?? config.themeModes : [startingThemeMode];
+    final localesToUse = variations ? locales ?? config.locales : [startingLocale];
 
     final deviceName = await _getDeviceName();
     await widgetTester.pumpAndSettle();
@@ -149,7 +157,7 @@ extension TapTesterSnapshot on TapTester {
 
     return template
         .replaceAll('[suite]', safe(suite))
-        .replaceAll('[test]', safe(this.name)) // test name
+        .replaceAll('[test]', safe(description)) // test's description
         .replaceAll('[name]', safe(name)) // snapshot name
         .replaceAll('[theme]', safe(theme.name))
         .replaceAll('[locale]', safe(locale.toString()))
