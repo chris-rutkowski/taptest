@@ -71,7 +71,12 @@ final class TapTester {
     this._localeNotifier,
   );
 
-  static Future<TapTester> _bootstrap(WidgetTester widgetTester, String description, bool integration, Config config) async {
+  static Future<TapTester> _bootstrap(
+    WidgetTester widgetTester,
+    String description,
+    bool integration,
+    Config config,
+  ) async {
     final testType = getTestType();
 
     if (testType == TestType.integration) {
