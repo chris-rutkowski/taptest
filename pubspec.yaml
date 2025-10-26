@@ -2,6 +2,7 @@ name: taptest
 description: "A new Flutter package project."
 version: 0.0.1
 homepage:
+publish_to: none
 
 environment:
   sdk: ^3.9.0
@@ -22,6 +23,8 @@ dependencies:
   path:
   platform:
   qr:
+  taptest_runtime:
+    path: ./taptest_runtime
 
 dev_dependencies:
   flutter_lints:

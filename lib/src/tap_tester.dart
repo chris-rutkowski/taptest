@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:meta/meta.dart';
+import 'package:taptest_runtime/taptest_runtime.dart';
 
 import 'config/config.dart';
 import 'networking/mockable_http_overrides.dart';
@@ -101,11 +102,14 @@ final class TapTester {
     final localeNotifier = ValueNotifier<Locale>(config.locales.first);
 
     await widgetTester.pumpWidget(
+      // TODO here listenable
       AppWrapper(
         child: config.builder(
-          themeModeNotifier,
-          localeNotifier,
-          config.initialRoute,
+          RuntimeParams(
+            themeMode: themeModeNotifier,
+            locale: localeNotifier,
+            initialRoute: config.initialRoute,
+          ),
         ),
       ),
     );
