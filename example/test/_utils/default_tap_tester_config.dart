@@ -38,15 +38,9 @@ final defaultTapTesterConfig = Config(
 
     return UncontrolledProviderScope(
       container: providerContainer,
-      child: ListenableBuilder(
-        listenable: Listenable.merge([params.themeMode, params.locale]),
-        builder: (context, child) {
-          return ExampleApp(
-            themeMode: params.themeMode.value,
-            locale: params.locale.value,
-            debugShowCheckedModeBanner: false,
-          );
-        },
+      child: ExampleApp(
+        params: params,
+        debugShowCheckedModeBanner: false,
       ),
     );
   },
