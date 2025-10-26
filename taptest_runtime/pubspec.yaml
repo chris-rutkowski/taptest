@@ -1,0 +1,19 @@
+name: taptest_runtime
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints:
+  flutter_test:
+    sdk: flutter
+
+flutter:
