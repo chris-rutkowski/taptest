@@ -34,6 +34,9 @@ void main() {
     ],
     precachedImages: [
       const NetworkImage(imageUrl),
+      const AssetImage('assets/images/es.png'),
+      const AssetImage('assets/images/uk.png'),
+      const AssetImage('assets/images/usa.png'),
     ],
     suite: 'e2e_ecom',
   );
