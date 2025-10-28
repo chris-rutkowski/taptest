@@ -110,19 +110,14 @@ final class TapTester {
     }
 
     await widgetTester.pumpWidget(
-      ListenableBuilder(
-        listenable: Listenable.merge([]),
-        builder: (context, _) {
-          return AppWrapper(
-            child: config.builder(
-              RuntimeParams(
-                themeMode: themeModeNotifier,
-                locale: localeNotifier,
-                initialRoute: config.initialRoute,
-              ),
-            ),
-          );
-        },
+      AppWrapper(
+        child: config.builder(
+          RuntimeParams(
+            themeMode: themeModeNotifier,
+            locale: localeNotifier,
+            initialRoute: config.initialRoute,
+          ),
+        ),
       ),
     );
 
