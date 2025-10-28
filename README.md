@@ -21,6 +21,7 @@ TODO:
 - consider initial route as a '/' instead of null
 - consider dropping suite
 - go action clearly uses the api inappropriately - should be fixed
+- precache all images from the assets
 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.
