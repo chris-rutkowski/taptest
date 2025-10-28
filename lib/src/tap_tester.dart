@@ -101,27 +101,30 @@ final class TapTester {
     final themeModeNotifier = ValueNotifier<ThemeMode>(config.themeModes.first);
     final localeNotifier = ValueNotifier<Locale>(config.locales.first);
 
-    await widgetTester.pumpWidget(
-      AppWrapper(
-        child: config.builder(
-          RuntimeParams(
-            themeMode: themeModeNotifier,
-            locale: localeNotifier,
-            initialRoute: config.initialRoute,
-          ),
-        ),
-      ),
-    );
-
     if (config.precachedImages.isNotEmpty) {
       await widgetTester.runAsync(() async {
-        final finder = find.byType(AppWrapper);
-
         for (final image in config.precachedImages) {
-          await precacheImage(image, widgetTester.element(finder));
+          await precacheImage(image, widgetTester.binding.rootElement!);
         }
       });
     }
+
+    await widgetTester.pumpWidget(
+      ListenableBuilder(
+        listenable: Listenable.merge([]),
+        builder: (context, _) {
+          return AppWrapper(
+            child: config.builder(
+              RuntimeParams(
+                themeMode: themeModeNotifier,
+                locale: localeNotifier,
+                initialRoute: config.initialRoute,
+              ),
+            ),
+          );
+        },
+      ),
+    );
 
     await widgetTester.pumpAndSettle();
 
