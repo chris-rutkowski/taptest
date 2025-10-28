@@ -1024,6 +1024,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  taptest_runtime:
+    dependency: transitive
+    description:
+      path: "../taptest_runtime"
+      relative: true
+    source: path
+    version: "0.0.1"
   term_glyph:
     dependency: transitive
     description:

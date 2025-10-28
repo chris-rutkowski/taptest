@@ -4,7 +4,7 @@ import 'package:taptest/taptest.dart';
 
 void main() {
   final config = Config(
-    builder: (themeMode, locale, initialRoute) => _NavApp(initialRoute: initialRoute),
+    builder: (params) => _NavApp(initialRoute: params.initialRoute),
   );
 
   tapTest('flow', config, (tester) async {
