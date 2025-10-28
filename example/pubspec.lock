@@ -1025,7 +1025,7 @@ packages:
     source: path
     version: "0.0.1"
   taptest_runtime:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       path: "../taptest_runtime"
       relative: true
