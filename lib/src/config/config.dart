@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:taptest_runtime/taptest_runtime.dart';
 
 import '../networking/mock_http_request_handler.dart';
 import 'custom_font.dart';
@@ -16,13 +16,7 @@ final class Config {
   final List<Locale> locales;
   final Iterable<MockHttpRequestHandler> httpRequestHandlers;
   final Iterable<ImageProvider> precachedImages;
-  final Widget Function(
-    // TODO: replace with params
-    ValueListenable<ThemeMode> themeMode,
-    ValueListenable<Locale> locale,
-    String? initialRoute,
-  )
-  builder;
+  final Widget Function(RuntimeParams params) builder;
 
   Config({
     this.suite,
@@ -51,7 +45,7 @@ final class Config {
     List<Locale>? locales,
     Iterable<MockHttpRequestHandler>? httpRequestHandlers,
     Iterable<ImageProvider>? precachedImages,
-    Widget Function(ValueListenable<ThemeMode>, ValueListenable<Locale>, String?)? builder,
+    Widget Function(RuntimeParams)? builder,
   }) {
     assert((themeModes ?? this.themeModes).isNotEmpty, 'themeModes must contain at least one ThemeMode');
     assert((locales ?? this.locales).isNotEmpty, 'locales must contain at least one Locale');
