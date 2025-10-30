@@ -19,17 +19,17 @@ void main() {
     await tester.exists(_Keys.screen);
 
     // Verify `Text` widget
-    await tester.text(_Keys.simpleText, 'Simple text');
+    await tester.expectText(_Keys.simpleText, 'Simple text');
 
     // Verify `RichText` widget
-    await tester.text(_Keys.richText, 'This is rich text');
+    await tester.expectText(_Keys.richText, 'This is rich text');
 
     // Verify `RichText` widget containing non-text Span
-    await tester.text(_Keys.richTextWithWidget, 'This is ${objectReplacementCharacter}rich text');
+    await tester.expectText(_Keys.richTextWithWidget, 'This is ${objectReplacementCharacter}rich text');
 
     // `_Keys.screen` doesn't represent a textual widget, so this will throw an exception
     expect(
-      () => tester.text(_Keys.screen, 'That will throw an exception'),
+      () => tester.expectText(_Keys.screen, 'That will throw an exception'),
       throwsA(
         isA<TapTestFailure>().having((e) => e.retriable, '', false),
       ),

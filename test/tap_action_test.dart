@@ -16,23 +16,23 @@ void main() {
     await tester.exists(_Keys.screen);
 
     // Verify initial state
-    await tester.text(_Keys.statusLabel, 'Idle');
+    await tester.expectText(_Keys.statusLabel, 'Idle');
 
     // Single tap on tap area
     await tester.tap(_Keys.tapArea);
     // Since this GestureDetector handles both single and double taps, there's a slight delay
     // before the single tap is confirmed. You could wait about 41ms:
     // await tester.wait(Duration(milliseconds: 41));
-    // However, TapTester.text has a built-in retry mechanism with a 5-second timeout
-    await tester.text(_Keys.statusLabel, 'Single tapped');
+    // However, TapTester.expectText has a built-in retry mechanism with a 5-second timeout
+    await tester.expectText(_Keys.statusLabel, 'Single tapped');
 
     // Double tap on tap area
     await tester.tap(_Keys.tapArea, count: 2);
-    await tester.text(_Keys.statusLabel, 'Double tapped');
+    await tester.expectText(_Keys.statusLabel, 'Double tapped');
 
     // Tap the button
     await tester.tap(_Keys.button);
-    await tester.text(_Keys.statusLabel, 'Button tapped');
+    await tester.expectText(_Keys.statusLabel, 'Button tapped');
 
     // Clear the GestureDetector's internal timer to avoid test interference
     await tester.wait(Duration(milliseconds: 40));

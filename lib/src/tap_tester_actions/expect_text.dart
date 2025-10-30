@@ -1,7 +1,7 @@
 part of '../tap_tester.dart';
 
 extension TapTesterText on TapTester {
-  Future<void> text(
+  Future<void> expectText(
     TapKey key,
     String text, {
     Duration timeout = const Duration(seconds: 5),

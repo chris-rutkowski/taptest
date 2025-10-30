@@ -19,11 +19,11 @@ void main() {
     await tester.exists(_Keys.screen);
 
     // Verify initial state
-    await tester.text(_Keys.remoteTextLabel, 'Initial text');
+    await tester.expectText(_Keys.remoteTextLabel, 'Initial text');
 
     // Update and verify
     await tester.updateRemoteText('Updated text');
-    await tester.text(_Keys.remoteTextLabel, 'Updated text');
+    await tester.expectText(_Keys.remoteTextLabel, 'Updated text');
   });
 }
 

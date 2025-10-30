@@ -25,13 +25,13 @@ part 'tap_tester_actions/absent.dart';
 part 'tap_tester_actions/change_locale.dart';
 part 'tap_tester_actions/change_theme_mode.dart';
 part 'tap_tester_actions/exists.dart';
+part 'tap_tester_actions/expect_text.dart';
 part 'tap_tester_actions/go.dart';
 part 'tap_tester_actions/info.dart';
 part 'tap_tester_actions/pop.dart';
 part 'tap_tester_actions/scroll_to.dart';
 part 'tap_tester_actions/snapshot.dart';
 part 'tap_tester_actions/tap.dart';
-part 'tap_tester_actions/text.dart';
 part 'tap_tester_actions/type.dart';
 part 'tap_tester_actions/wait.dart';
 
