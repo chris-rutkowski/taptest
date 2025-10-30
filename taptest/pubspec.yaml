@@ -24,7 +24,7 @@ dependencies:
   platform:
   qr:
   taptest_runtime:
-    path: ./taptest_runtime
+    path: ../taptest_runtime
 
 dev_dependencies:
   flutter_lints:
