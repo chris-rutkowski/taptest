@@ -12,7 +12,6 @@ void main() {
     ),
   );
 
-
   tapTest('expect text', config, (tester) async {
     // Ensure the app displays the expected screen (good general practice)
     await tester.exists(_Keys.screen);
@@ -45,15 +44,8 @@ abstract class _Keys {
   static const richTextWithWidget = ValueKey('richTextWithWidget');
 }
 
-final class _Screen extends StatefulWidget {
+class _Screen extends StatelessWidget {
   const _Screen({super.key});
-
-  @override
-  State<_Screen> createState() => _ScreenState();
-}
-
-final class _ScreenState extends State<_Screen> {
-  var status = 'Idle';
 
   @override
   Widget build(BuildContext context) {
