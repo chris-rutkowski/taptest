@@ -116,6 +116,7 @@ final class TapTester {
             themeMode: themeModeNotifier,
             locale: localeNotifier,
             initialRoute: config.initialRoute,
+            extensions: config.extensions,
           ),
         ),
       ),
