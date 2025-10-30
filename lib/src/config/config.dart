@@ -7,7 +7,7 @@ import 'snapshot_config.dart';
 
 final class Config {
   final String? suite;
-  final String? initialRoute; // TODO: consider '/'
+  final String? initialRoute;
   final double pixelDensity;
   final Size screenSize;
   final Iterable<CustomFont> customFonts;

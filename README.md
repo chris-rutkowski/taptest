@@ -7,6 +7,7 @@ TODO:
 - readme
 - check all samples
 - retry
+- consider snapshot on failure
 - snapshots to be in global directory, currently test in folder will create another golden path
 - snapshots to have enum SnapshotScope { matrix, current }, current method in private
 - use configurable logger https://pub.dev/packages/logger instead of printing

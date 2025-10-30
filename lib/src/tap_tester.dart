@@ -16,6 +16,7 @@ import 'private/list_extensions.dart';
 import 'private/load_custom_fonts.dart';
 import 'private/load_material_icons_font.dart';
 import 'private/snapshot_comparator.dart';
+import 'private/tap_test_failure.dart';
 import 'private/test_type.dart';
 import 'sync_type.dart';
 import 'tap_key.dart';
@@ -48,7 +49,6 @@ void tapTest(String description, Config config, TapTesterCallback callback) {
     try {
       await callback(tester);
     } catch (e) {
-      // TODO: consider snapshot on failure
       rethrow;
     } finally {
       timeDilation = 1;
@@ -213,6 +213,10 @@ final class TapTester {
       try {
         return await expectation();
       } catch (e) {
+        if (e is TapTestFailure && !e.retriable) {
+          rethrow;
+        }
+
         await widgetTester.pump(retryDelay);
         firstCheck = false;
 
