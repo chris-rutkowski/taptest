@@ -29,7 +29,7 @@ jobs:
 
     - name: Get package dependencies
       run: flutter pub get
-      working-directory: ./
+      working-directory: ./taptest
 
     - name: Get example dependencies
       run: flutter pub get
@@ -37,7 +37,7 @@ jobs:
 
     - name: Run package tests
       run: flutter test
-      working-directory: ./
+      working-directory: ./taptest
 
     - name: Run example tests
       run: flutter test
