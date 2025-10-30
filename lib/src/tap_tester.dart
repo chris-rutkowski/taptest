@@ -16,6 +16,7 @@ import 'private/list_extensions.dart';
 import 'private/load_custom_fonts.dart';
 import 'private/load_material_icons_font.dart';
 import 'private/snapshot_comparator.dart';
+import 'private/tap_test_failure.dart';
 import 'private/test_type.dart';
 import 'sync_type.dart';
 import 'tap_key.dart';
@@ -24,13 +25,13 @@ part 'tap_tester_actions/absent.dart';
 part 'tap_tester_actions/change_locale.dart';
 part 'tap_tester_actions/change_theme_mode.dart';
 part 'tap_tester_actions/exists.dart';
+part 'tap_tester_actions/expect_text.dart';
 part 'tap_tester_actions/go.dart';
 part 'tap_tester_actions/info.dart';
 part 'tap_tester_actions/pop.dart';
 part 'tap_tester_actions/scroll_to.dart';
 part 'tap_tester_actions/snapshot.dart';
 part 'tap_tester_actions/tap.dart';
-part 'tap_tester_actions/text.dart';
 part 'tap_tester_actions/type.dart';
 part 'tap_tester_actions/wait.dart';
 
@@ -48,7 +49,6 @@ void tapTest(String description, Config config, TapTesterCallback callback) {
     try {
       await callback(tester);
     } catch (e) {
-      // TODO: consider snapshot on failure
       rethrow;
     } finally {
       timeDilation = 1;
@@ -213,6 +213,10 @@ final class TapTester {
       try {
         return await expectation();
       } catch (e) {
+        if (e is TapTestFailure && !e.retriable) {
+          rethrow;
+        }
+
         await widgetTester.pump(retryDelay);
         firstCheck = false;
 
