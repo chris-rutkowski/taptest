@@ -12,7 +12,6 @@ void main() {
     ),
   );
 
-  const String objectReplacementCharacter = '\uFFFC';
 
   tapTest('expect text', config, (tester) async {
     // Ensure the app displays the expected screen (good general practice)
