@@ -35,6 +35,8 @@ final class Config {
   }) : assert(themeModes.isNotEmpty, 'themeModes must contain at least one ThemeMode'),
        assert(locales.isNotEmpty, 'locales must contain at least one Locale');
 
+  T extension<T>() => extensions.whereType<T>().first;
+
   Config copyWith({
     String? suite,
     String? initialRoute,
