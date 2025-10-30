@@ -16,6 +16,7 @@ final class Config {
   final List<Locale> locales;
   final Iterable<MockHttpRequestHandler> httpRequestHandlers;
   final Iterable<ImageProvider> precachedImages;
+  final Iterable<dynamic> extensions;
   final Widget Function(RuntimeParams params) builder;
 
   Config({
@@ -29,9 +30,12 @@ final class Config {
     this.locales = const [Locale('en'), Locale('en', 'US'), Locale('en', 'GB')],
     this.httpRequestHandlers = const [],
     this.precachedImages = const [],
+    this.extensions = const [],
     required this.builder,
   }) : assert(themeModes.isNotEmpty, 'themeModes must contain at least one ThemeMode'),
        assert(locales.isNotEmpty, 'locales must contain at least one Locale');
+
+  T extension<T>() => extensions.whereType<T>().first;
 
   Config copyWith({
     String? suite,
@@ -45,6 +49,7 @@ final class Config {
     List<Locale>? locales,
     Iterable<MockHttpRequestHandler>? httpRequestHandlers,
     Iterable<ImageProvider>? precachedImages,
+    Iterable<dynamic>? extensions,
     Widget Function(RuntimeParams)? builder,
   }) {
     assert((themeModes ?? this.themeModes).isNotEmpty, 'themeModes must contain at least one ThemeMode');
@@ -63,6 +68,7 @@ final class Config {
       locales: locales ?? this.locales,
       httpRequestHandlers: httpRequestHandlers ?? this.httpRequestHandlers,
       precachedImages: precachedImages ?? this.precachedImages,
+      extensions: extensions ?? this.extensions,
       builder: builder ?? this.builder,
     );
   }
