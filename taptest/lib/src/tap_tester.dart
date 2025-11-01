@@ -17,6 +17,7 @@ import 'private/app_wrapper.dart';
 import 'private/list_extensions.dart';
 import 'private/load_custom_fonts.dart';
 import 'private/load_material_icons_font.dart';
+import 'private/load_roboto_font.dart';
 import 'private/snapshot_comparator.dart';
 import 'private/tap_test_failure.dart';
 import 'private/test_type.dart';
@@ -103,6 +104,7 @@ final class TapTester {
     if (testType == TestType.widget) {
       await loadCustomFonts(config.customFonts);
       await loadMaterialIconsFont();
+      await loadRobotoFont();
     }
 
     final themeModeNotifier = ValueNotifier<ThemeMode>(config.themeModes.first);
