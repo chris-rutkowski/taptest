@@ -23,6 +23,7 @@ TODO:
 - consider dropping suite
 - go action clearly uses the api inappropriately - should be fixed
 - precache all images from the assets
+- rename tester to tt in callback readme, docs everywehere
 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.
