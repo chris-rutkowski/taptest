@@ -31,7 +31,7 @@ final class Config {
     this.customFonts = const [],
     this.snapshot = const SnapshotConfig(),
     this.themeModes = const [ThemeMode.light, ThemeMode.dark],
-    this.locales = const [Locale('en'), Locale('en', 'US'), Locale('en', 'GB')],
+    this.locales = const [Locale('en')],
     this.httpRequestHandlers = const [],
     this.precachedImages = const [],
     this.extensions = const [],
