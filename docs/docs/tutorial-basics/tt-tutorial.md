@@ -713,3 +713,19 @@ You may encounter the message like this:
 ```
 
 After compilation process you should witness the app running and being tested on the actual device. On My MacBook Pro (M3 Pro) it takes about 20 seconds to build this app, followed by 6 seconds to actually run the test on iPhone 17 Pro Simulator.
+
+## One more thing - Page Object Model
+
+Feel free to create an extensions to TapTester to encapsulate common operations on specific screens. This will make your tests more readable and maintainable.
+
+```dart
+extension MyTapTester on TapTester {
+  Future<void> expectAndDismissErrorDialog() async {
+    await exists(AppKeys.errorDialog);
+    await tap(AppKeys.errorDialogOKButton, sync: SyncType.settled);
+    await absent(AppKeys.errorDialog);
+  }
+}
+```
+
+Now you can use `await tester.expectAndDismissErrorDialog();` in your test steps.
