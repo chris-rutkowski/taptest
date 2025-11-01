@@ -44,7 +44,7 @@ void tapTest(String description, Config config, TapTesterCallback callback) {
   testWidgets(description, (widgetTester) async {
     timeDilation = 0.01;
 
-    final tester = await TapTester._bootstrap(widgetTester, description, false, config);
+    final tester = await TapTester._bootstrap(widgetTester, description, config);
 
     try {
       await callback(tester);
@@ -76,7 +76,6 @@ final class TapTester {
   static Future<TapTester> _bootstrap(
     WidgetTester widgetTester,
     String description,
-    bool integration,
     Config config,
   ) async {
     final testType = getTestType();
