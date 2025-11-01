@@ -34,6 +34,6 @@ extension TapTesterText on TapTester {
       timeout,
     );
 
-    _print('Text of ${_formatKey(key)} matches "$text"', _PrintType.success, overwrite: true);
+    logger.log(TapTesterLogType.stepSuccessful, 'Text of ${_formatKey(key)} matches "$text"');
   }
 }

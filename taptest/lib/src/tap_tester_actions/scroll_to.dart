@@ -7,7 +7,7 @@ extension TapTesterScrollTo on TapTester {
     double delta = 50,
     int maxScrolls = 1000,
   }) async {
-    _print('Scrolling to ${_formatKey(key)}', _PrintType.inProgress);
+    logger.log(TapTesterLogType.stepInProgress, 'Scrolling to ${_formatKey(key)}');
 
     final finder = _finder(key);
     var scrollableFinder = _finder(scrollable);
@@ -29,6 +29,6 @@ extension TapTesterScrollTo on TapTester {
 
     await widgetTester.pump();
 
-    _print('Scrolled to ${_formatKey(key)}', _PrintType.success, overwrite: true);
+    logger.log(TapTesterLogType.stepSuccessful, 'Scrolled to ${_formatKey(key)}');
   }
 }

@@ -2,7 +2,7 @@ part of '../tap_tester.dart';
 
 extension TapTesterInfo on TapTester {
   Future<void> info(String message) {
-    _print(message, _PrintType.info);
+    logger.log(TapTesterLogType.info, message);
     return Future.value();
   }
 }
