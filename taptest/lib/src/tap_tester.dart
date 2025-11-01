@@ -101,10 +101,12 @@ final class TapTester {
     final localeNotifier = ValueNotifier<Locale>(config.locales.first);
 
     if (config.precachedImages.isNotEmpty) {
-      await widgetTester.runAsync(() async {
-        for (final image in config.precachedImages) {
-          await precacheImage(image, widgetTester.binding.rootElement!);
-        }
+      await widgetTester.runAsync(() {
+        return Future.wait(
+          config.precachedImages.map(
+            (e) => precacheImage(e, widgetTester.binding.rootElement!),
+          ),
+        );
       });
     }
 
