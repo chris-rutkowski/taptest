@@ -13,14 +13,14 @@ extension TapTesterSnapshot on TapTester {
     double? acceptableDifference,
   }) async {
     if (!variations && (themeModes != null || locales != null)) {
-      _print(
+      logger.log(
+        TapTesterLogType.warning,
         "When variations=false, themeModes and locales are ignored. Current theme/locale will be used instead.",
-        _PrintType.warning,
       );
     }
 
     if (!config.snapshot.isEnabled()) {
-      _print('Skipping snapshot $name', _PrintType.ignore);
+      logger.log(TapTesterLogType.info, 'Skipping snapshot $name');
       return;
     }
 
@@ -41,7 +41,7 @@ extension TapTesterSnapshot on TapTester {
       );
     }
 
-    _print('Checking snapshot $name', _PrintType.inProgress);
+    logger.log(TapTesterLogType.stepInProgress, 'Checking snapshot $name');
 
     assert(
       locales == null || locales.every(config.locales.contains),
@@ -117,13 +117,12 @@ extension TapTesterSnapshot on TapTester {
 
     await _revertIfNeeded(themeMode: startingThemeMode, locale: startingLocale);
     if (worstResult != null && worstResult!.diffPercent > 0) {
-      _print(
+      logger.log(
+        TapTesterLogType.stepSuccessful,
         'Snapshot matches $name - ${((1 - worstResult!.diffPercent) * 100).toStringAsFixed(2)}%',
-        _PrintType.success,
-        overwrite: true,
       );
     } else {
-      _print('Snapshot matches $name', _PrintType.success, overwrite: true);
+      logger.log(TapTesterLogType.stepSuccessful, 'Snapshot matches $name');
     }
   }
 

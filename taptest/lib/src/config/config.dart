@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:taptest_runtime/taptest_runtime.dart';
 
+import '../logger/console_tap_tester_logger.dart';
+import '../logger/tap_tester_logger.dart';
 import '../networking/mock_http_request_handler.dart';
 import 'custom_font.dart';
 import 'snapshot_config.dart';
 
 final class Config {
+  final TapTesterLoggerFactory loggerFactory;
   final String? suite;
   final String? initialRoute;
   final double pixelDensity;
@@ -19,7 +22,8 @@ final class Config {
   final Iterable<dynamic> extensions;
   final Widget Function(RuntimeParams params) builder;
 
-  Config({
+  const Config({
+    this.loggerFactory = defaultLoggerFactory,
     this.suite,
     this.initialRoute,
     this.pixelDensity = 2.0,
@@ -32,12 +36,12 @@ final class Config {
     this.precachedImages = const [],
     this.extensions = const [],
     required this.builder,
-  }) : assert(themeModes.isNotEmpty, 'themeModes must contain at least one ThemeMode'),
-       assert(locales.isNotEmpty, 'locales must contain at least one Locale');
+  });
 
   T extension<T>() => extensions.whereType<T>().first;
 
   Config copyWith({
+    TapTesterLoggerFactory? loggerFactory,
     String? suite,
     String? initialRoute,
     double? pixelDensity,
@@ -52,10 +56,8 @@ final class Config {
     Iterable<dynamic>? extensions,
     Widget Function(RuntimeParams)? builder,
   }) {
-    assert((themeModes ?? this.themeModes).isNotEmpty, 'themeModes must contain at least one ThemeMode');
-    assert((locales ?? this.locales).isNotEmpty, 'locales must contain at least one Locale');
-
     return Config(
+      loggerFactory: loggerFactory ?? this.loggerFactory,
       suite: suite ?? this.suite,
       initialRoute: initialRoute ?? this.initialRoute,
       pixelDensity: pixelDensity ?? this.pixelDensity,

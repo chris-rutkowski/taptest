@@ -16,6 +16,6 @@ extension TapTesterAbsent on TapTester {
       timeout,
     );
 
-    _print('Absent ${_formatKey(key)}', _PrintType.success, overwrite: true);
+    logger.log(TapTesterLogType.stepSuccessful, 'Absent ${_formatKey(key)}');
   }
 }

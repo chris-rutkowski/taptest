@@ -8,7 +8,7 @@ extension TapTesterType on TapTester {
     SyncType sync = SyncType.instant,
   }) async {
     final printText = secret ? '*' * text.length : text;
-    _print('Typing into ${_formatKey(key)}: "$printText"', _PrintType.inProgress);
+    logger.log(TapTesterLogType.stepInProgress, 'Typing into ${_formatKey(key)}: "$printText"');
 
     final finder = _finder(key);
 
@@ -19,6 +19,6 @@ extension TapTesterType on TapTester {
     await widgetTester.enterText(finder, text);
     await _sync(sync);
 
-    _print('Typed into ${_formatKey(key)}: "$printText"', _PrintType.success, overwrite: true);
+    logger.log(TapTesterLogType.stepSuccessful, 'Typed into ${_formatKey(key)}: "$printText"');
   }
 }

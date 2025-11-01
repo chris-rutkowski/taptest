@@ -6,9 +6,9 @@ extension TapTesterTap on TapTester {
 
     for (var i = 0; i < count; i++) {
       if (count == 1) {
-        _print('Tapping ${_formatKey(key)}', _PrintType.inProgress);
+        logger.log(TapTesterLogType.stepInProgress, 'Tapping ${_formatKey(key)}');
       } else {
-        _print('Tapping ${_formatKey(key)} ${i + 1}/$count', _PrintType.inProgress, overwrite: i != 0);
+        logger.log(TapTesterLogType.stepInProgress, 'Tapping ${_formatKey(key)} ${i + 1}/$count');
       }
 
       await widgetTester.tap(finder);
@@ -20,9 +20,9 @@ extension TapTesterTap on TapTester {
 
     await _sync(sync);
     if (count == 1) {
-      _print('Tapped ${_formatKey(key)}', _PrintType.success, overwrite: true);
+      logger.log(TapTesterLogType.stepSuccessful, 'Tapped ${_formatKey(key)}');
     } else {
-      _print('Tapped ${_formatKey(key)} $count times', _PrintType.success, overwrite: true);
+      logger.log(TapTesterLogType.stepSuccessful, 'Tapped ${_formatKey(key)} $count times');
     }
   }
 }

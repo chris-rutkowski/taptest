@@ -9,7 +9,7 @@ extension TapTesterPop on TapTester {
   /// Therefore, it is preferred to tap the close/back button by a dedicated key (using `tester.tap(MyKey.backButton)`).
   /// Use this method as a convenience for apps with a single [Navigator].
   Future<void> pop({SyncType sync = SyncType.settled}) async {
-    _print('Popping screen', _PrintType.inProgress);
+    logger.log(TapTesterLogType.stepInProgress, 'Popping screen');
 
     // Two other ways to pop, but they don't trigger PopScope etc
 
@@ -23,6 +23,6 @@ extension TapTesterPop on TapTester {
 
     await _sync(sync);
 
-    _print('Popped screen', _PrintType.success, overwrite: true);
+    logger.log(TapTesterLogType.stepSuccessful, 'Popped screen');
   }
 }

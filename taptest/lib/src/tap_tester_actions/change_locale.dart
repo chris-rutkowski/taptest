@@ -10,11 +10,11 @@ extension TapTesterChangeLocale on TapTester {
       'Provided locale `$locale` must be in config.locales',
     );
 
-    _print('Changing locale to $locale', _PrintType.inProgress);
+    logger.log(TapTesterLogType.stepInProgress, 'Changing locale to $locale');
 
     _localeNotifier.value = locale;
     await _sync(sync);
 
-    _print('Locale changed to $locale', _PrintType.success, overwrite: true);
+    logger.log(TapTesterLogType.stepSuccessful, 'Locale changed to $locale');
   }
 }

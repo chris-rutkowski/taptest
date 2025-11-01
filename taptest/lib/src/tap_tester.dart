@@ -10,6 +10,8 @@ import 'package:meta/meta.dart';
 import 'package:taptest_runtime/taptest_runtime.dart';
 
 import 'config/config.dart';
+import 'logger/tap_tester_log_type.dart';
+import 'logger/tap_tester_logger.dart';
 import 'networking/mockable_http_overrides.dart';
 import 'private/app_wrapper.dart';
 import 'private/list_extensions.dart';
@@ -18,6 +20,7 @@ import 'private/load_material_icons_font.dart';
 import 'private/snapshot_comparator.dart';
 import 'private/tap_test_failure.dart';
 import 'private/test_type.dart';
+import 'private/validate_config.dart';
 import 'sync_type.dart';
 import 'tap_key.dart';
 
@@ -57,6 +60,7 @@ void tapTest(String description, Config config, TapTesterCallback callback) {
 }
 
 final class TapTester {
+  final TapTesterLogger logger;
   final TestType testType;
   final WidgetTester widgetTester;
   final String description;
@@ -65,6 +69,7 @@ final class TapTester {
   final ValueNotifier<Locale> _localeNotifier;
 
   const TapTester._(
+    this.logger,
     this.testType,
     this.widgetTester,
     this.description,
@@ -78,6 +83,9 @@ final class TapTester {
     String description,
     Config config,
   ) async {
+    validateConfig(config);
+
+    final logger = config.loggerFactory();
     final testType = getTestType();
 
     if (testType == TestType.integration) {
@@ -126,6 +134,7 @@ final class TapTester {
     await widgetTester.pumpAndSettle();
 
     return TapTester._(
+      logger,
       testType,
       widgetTester,
       description,
@@ -133,16 +142,6 @@ final class TapTester {
       themeModeNotifier,
       localeNotifier,
     );
-  }
-
-  void _print(String message, _PrintType type, {bool overwrite = false}) {
-    if (overwrite) {
-      // ignore: avoid_print
-      print('\x1B[1A\x1B[K${type.emoji} $message');
-    } else {
-      // ignore: avoid_print
-      print('${type.emoji} $message');
-    }
   }
 
   Finder _finder(TapKey keyOrKeys) {
@@ -202,12 +201,11 @@ final class TapTester {
       final elapsedSeconds = (elapsed.inMilliseconds / 1000);
 
       if (firstCheck) {
-        _print(message, _PrintType.inProgress);
+        logger.log(TapTesterLogType.stepInProgress, message);
       } else {
-        _print(
+        logger.log(
+          TapTesterLogType.stepInProgress,
           '$message ${elapsedSeconds.toStringAsFixed(2)}s/${totalSeconds.toStringAsFixed(2)}s',
-          _PrintType.inProgress,
-          overwrite: true,
         );
       }
 
@@ -225,31 +223,6 @@ final class TapTester {
           rethrow;
         }
       }
-    }
-  }
-}
-
-enum _PrintType {
-  info,
-  inProgress,
-  success,
-  ignore,
-  warning,
-}
-
-extension _PrintTypeExtension on _PrintType {
-  String get emoji {
-    switch (this) {
-      case _PrintType.info:
-        return '💡';
-      case _PrintType.inProgress:
-        return '➡️';
-      case _PrintType.success:
-        return '✅';
-      case _PrintType.ignore:
-        return '🚫';
-      case _PrintType.warning:
-        return '⚠️';
     }
   }
 }

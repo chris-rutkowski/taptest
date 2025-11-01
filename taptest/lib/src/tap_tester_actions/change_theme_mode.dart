@@ -10,11 +10,11 @@ extension TapTesterChangeThemeMode on TapTester {
       'Provided themeMode `$mode` must be in config.themes',
     );
 
-    _print('Changing theme to $mode', _PrintType.inProgress);
+    logger.log(TapTesterLogType.stepInProgress, 'Changing theme to $mode');
 
     _themeModeNotifier.value = mode;
     await _sync(sync);
 
-    _print('Theme changed to $mode', _PrintType.success, overwrite: true);
+    logger.log(TapTesterLogType.stepSuccessful, 'Theme changed to $mode');
   }
 }
