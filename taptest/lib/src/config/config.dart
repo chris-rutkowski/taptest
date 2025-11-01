@@ -37,8 +37,6 @@ final class Config {
     this.extensions = const [],
     required this.builder,
   });
-  //  : assert(themeModes.isNotEmpty, 'themeModes must contain at least one ThemeMode'),
-  //      assert(locales.isNotEmpty, 'locales must contain at least one Locale');
 
   T extension<T>() => extensions.whereType<T>().first;
 
@@ -58,9 +56,6 @@ final class Config {
     Iterable<dynamic>? extensions,
     Widget Function(RuntimeParams)? builder,
   }) {
-    assert((themeModes ?? this.themeModes).isNotEmpty, 'themeModes must contain at least one ThemeMode');
-    assert((locales ?? this.locales).isNotEmpty, 'locales must contain at least one Locale');
-
     return Config(
       loggerFactory: loggerFactory ?? this.loggerFactory,
       suite: suite ?? this.suite,

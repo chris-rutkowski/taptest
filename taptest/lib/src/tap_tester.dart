@@ -20,6 +20,7 @@ import 'private/load_material_icons_font.dart';
 import 'private/snapshot_comparator.dart';
 import 'private/tap_test_failure.dart';
 import 'private/test_type.dart';
+import 'private/validate_config.dart';
 import 'sync_type.dart';
 import 'tap_key.dart';
 
@@ -82,6 +83,8 @@ final class TapTester {
     String description,
     Config config,
   ) async {
+    validateConfig(config);
+
     final logger = config.loggerFactory();
     final testType = getTestType();
 
