@@ -7,11 +7,11 @@ title: Tap Test Tutorial
 Welcome to the official TapTest tutorial!
 
 * **🎯 What you'll build:** A comprehensive E2E automated test that verifies the app in less than 2 seconds
-* **⏱️ Time needed:** ~45 minutes  
+* **⏱️ Time needed:** 45 minutes  
 
 ## 📄 Starting source code
 
-We'll start with a simple two-screen app that showcases real-world patterns, includes buttons, text fields, handles bad input.
+We'll start with a simple two-screen app that showcases real-world patterns, includes buttons, text fields, handles bad user input.
 
 [Screenshot placeholder]
 
@@ -22,8 +22,6 @@ Create a brand new Flutter project and replace the contents of `lib/main.dart` w
 
 ```dart
 import 'package:flutter/material.dart';
-
-import 'app_keys.dart';
 
 void main() {
   runApp(const MyApp());
@@ -129,13 +127,14 @@ final class DetailScreen extends StatelessWidget {
     );
   }
 }
-
 ```
 </details>
 
+Run the app to see how it works, before we add TapTest.
+
 ## 📦 Add TapTest dependencies
 
-TapTest uses a two-package approach to keep your production app lean.
+TapTest uses a two-package approach to keep your production app lean while maintaining clean namespace separation and clear concerns.
 
 ```yaml title="pubspec.yaml"
 dependencies:
@@ -144,6 +143,8 @@ dependencies:
 dev_dependencies:
   taptest:          # 🚀 Full testing power (dev-only)
 ```
+
+Add the above dependencies to your `pubspec.yaml` and run `flutter pub get`.
 
 ## 📁 Project Structure
 
@@ -161,7 +162,7 @@ Your project
 
 ## 🧪 Widget tests
 
-> 💡 **Golden Rule:** Start with widget tests for 90% of your testing needs, then add integration tests for device-specific features!
+Widget tests are incredibly fast as they execute pure Dart code in memory without needing actual devices (Android or iPhone). The tradeoff is they don't have access to device capabilities, resources, and networking. However, with good dependency injection, you can mock this infrastructure and enjoy unparalleled testing speed and reliability.
 
 |                   | Widget Tests ⚡            | Integration Tests 📱       |
 | ----------------- | ------------------------- | ------------------------- |
@@ -170,13 +171,14 @@ Your project
 | **Network**       | ❌ has to be mocked        | ✅ Full access, mockable   |
 | **Platform APIs** | ❌ has to be mocked        | ✅ Full access, mockable   |
 
+> 💡 **Golden Rule:** Cover most of your app with widget tests (including comprehensive semi-E2E flows) - they're fast and reliable despite device limitations. Add just a few strategic integration tests to validate full E2E scenarios on real devices!
 
 ### 🧑‍💻 Let's start
 
-Create `e2e_test.dart` file in the `test` folder:
+Create `e2e_test.dart` file in the `test` folder. **E2E** means **End-to-End**. Together, step by step, we'll craft a comprehensive test that validates entire user journey.
 
 ```dart title="test/e2e_test.dart"
-import 'package:your_app/main.dart'; // 👈 Replace 'your_app' with your package name
+import 'package:your_app/main.dart'; // 👈 Replace 'your_app' with your project package name
 import 'package:flutter/material.dart';
 import 'package:taptest/taptest.dart';
 
@@ -188,7 +190,7 @@ void main() {
     },
   );
 
-  tapTest('E2E', config, (tester) async {
+  tapTest('My E2E Widget test', config, (tester) async {
     // 🎪 The magic happens here - coming up next!
   });
 }
@@ -203,31 +205,32 @@ flutter test test
 
 > 💡 **test test?** First _test_ is a command like _build_, _test_, _run_. Second _test_ indicates a folder. Above command will run all tests buried in the _test_ directory. To run a specific test, run `flutter test test/e2e_test.dart`.
 
+This test doesn't do anything meaningful yet, but we'll change that very soon! The initial run may take a few seconds for compilation, but feel free to run the command again and it should complete **under 1 second**.
+
 ### 🔑 Keys
 
-In TapTest, we identify and interact with widgets using **keys** - think of them as unique IDs for every interactive element. Create a file `app_keys.dart` in the `lib` folder:
+In TapTest, we identify and interact with widgets using **keys** - think of them as unique IDs for every interactive or inspectable element. Create a file `app_keys.dart` in the `lib` folder:
 
 ```dart title="lib/app_keys.dart"
 import 'package:flutter/material.dart';
 
 abstract class AppKeys {
-  static const homeScreen = ValueKey('homeScreen');
+  static const homeScreen = ValueKey('HomeScreen');
   // more keys coming soon
 }
 ```
 
-> 🏗️ **Scaling Strategy:** As your app grows, organize keys by feature (`AuthKeys`, `ProfileKeys`, `ShoppingKeys`) - but for now, one file is perfect!
+> 🏗️ **Scaling Strategy:** As your app grows, organize keys by feature (`AuthKeys`, `ProfileKeys`, `OnboardingKeys`) - but for now, one file is perfect!
 
-Update your `main.dart` to import and use the keys:
+Update your `main.dart` to import this file and assign the created key:
 
 ```dart title="lib/main.dart"
-import 'app_keys.dart';                     // 👈 import app_keys.dart
-
-...
+import 'app_keys.dart'; // 👈 here
+// other imports
 
 Widget build(BuildContext context) {
   return Scaffold(
-    key: AppKeys.homeScreen,                // 👈 add key in HomeScreen widget
+    key: AppKeys.homeScreen, // 👈 and here in HomeScreen widget
     appBar: AppBar(title: Text('Welcome')),
 ```
 
@@ -238,7 +241,7 @@ import 'package:your_app/app_keys.dart'; // 👈 import app_keys.dart
 
 ...
 
-tapTest('🎯 Complete E2E Journey', config, (tester) async {
+tapTest('My E2E Widget test', config, (tester) async {
   // 🎉 Your first assertion!
   await tester.exists(AppKeys.homeScreen);
 });
@@ -247,34 +250,34 @@ tapTest('🎯 Complete E2E Journey', config, (tester) async {
 **Run it:** `flutter test test`, expected output:
 
 ```
-E2E
-✅ Exists homeScreen
+My E2E Widget test
+✅ Exists HomeScreen
 00:01 +1: All tests passed!
 ```
 
-> 🎉 **Achievement Unlocked!** You've just verified your app starts correctly.
+> 🎉 **Achievement Unlocked!** You've just verified your app starts correctly. Don't worry that you can't witness it executing - that's totally normal! Widget tests run invisibly, but with snapshots (soon) you can capture the output.
 
 ### 🎯 Testing the Counter
 
-Time to test something interactive! Our counter feature has two key behaviors:
+Time to test something interactive! Our counter feature has two behaviors:
 
-1. **Display** the current count
-2. **Increment** when the + button is tapped
+1. **Display** the current count in the label
+2. **Increment** when the [+] button is tapped
 
 Let's give our test the power to interact with these elements! Update `app_keys.dart` with counter-specific keys:
 
 ```dart title="lib/app_keys.dart"
 abstract class AppKeys {
   ...
-  static const counterLabel = ValueKey('counterLabel');
-  static const incrementButton = ValueKey('incrementButton');
+  static const counterLabel = ValueKey('CounterLabel');
+  static const incrementButton = ValueKey('IncrementButton');
 }
 ```
 
 and update your `main.dart` to add keys to the counter elements:
 
 
-```dart title="main.dart"
+```dart title="lib/main.dart"
 Text(
   'Click counter: $counter',
   key: AppKeys.counterLabel, // 👈 here
@@ -282,13 +285,13 @@ Text(
 
 FloatingActionButton(
   key: AppKeys.incrementButton, // 👈 and here
-),
+  onPressed: () {
 ```
 
 Now let's orchestrate the perfect counter test:
 
 ```dart title="test/e2e_test.dart"
-tapTest('E2E', config, (tester) async {
+tapTest('My E2E Widget test', config, (tester) async {
   await tester.exists(AppKeys.homeScreen);
   await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
   await tester.tap(AppKeys.incrementButton);
@@ -299,11 +302,11 @@ tapTest('E2E', config, (tester) async {
 Run the test `flutter test test` and you should see the following output:
 
 ```
-E2E
-✅ Exists homeScreen
-✅ Text of counterLabel matches "Click counter: 0"
-✅ Tapped incrementButton  
-✅ Text of counterLabel matches "Click counter: 1"
+My E2E Widget test
+✅ Exists HomeScreen
+✅ Text of CounterLabel matches "Click counter: 0"
+✅ Tapped IncrementButton
+✅ Text of CounterLabel matches "Click counter: 1"
 00:01 +1: All tests passed!
 ```
 
@@ -322,7 +325,7 @@ This approach is revolutionary because:
 Ready for something that will blow your mind? Let's demonstrate TapTest's incredible speed with a performance showcase that would take a human tester **over 16 minutes** to complete manually!
 
 ```dart title="test/e2e_test.dart"
-tapTest('E2E', config, (tester) async {
+tapTest('My E2E Widget test', config, (tester) async {
   await tester.exists(AppKeys.homeScreen);
   await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
   await tester.tap(AppKeys.incrementButton);
@@ -348,25 +351,25 @@ tapTest('E2E', config, (tester) async {
 Run the test `flutter test test` and you should see the following output:
 
 ```
-E2E                   
-✅ Exists homeScreen
-✅ Text of counterLabel matches "Click counter: 0"
-✅ Tapped incrementButton
-✅ Text of counterLabel matches "Click counter: 1"
-✅ Tapped incrementButton
-✅ Tapped incrementButton
-✅ Text of counterLabel matches "Click counter: 3"
-✅ Tapped incrementButton 7 times
-✅ Text of counterLabel matches "Click counter: 10"
-✅ Tapped incrementButton
-✅ Text of counterLabel matches "Click counter: 11"
-✅ Tapped incrementButton
-✅ Text of counterLabel matches "Click counter: 12"
+My E2E Widget test
+✅ Exists HomeScreen
+✅ Text of CounterLabel matches "Click counter: 0"
+✅ Tapped IncrementButton
+✅ Text of CounterLabel matches "Click counter: 1"
+✅ Tapped IncrementButton
+✅ Tapped IncrementButton
+✅ Text of CounterLabel matches "Click counter: 3"
+✅ Tapped IncrementButton 7 times
+✅ Text of CounterLabel matches "Click counter: 10"
+✅ Tapped IncrementButton
+✅ Text of CounterLabel matches "Click counter: 11"
+✅ Tapped IncrementButton
+✅ Text of CounterLabel matches "Click counter: 12"
 ...
-✅ Tapped incrementButton
-✅ Text of counterLabel matches "Click counter: 999"
-✅ Tapped incrementButton
-✅ Text of counterLabel matches "Click counter: 1000"
+✅ Tapped IncrementButton
+✅ Text of CounterLabel matches "Click counter: 999"
+✅ Tapped IncrementButton
+✅ Text of CounterLabel matches "Click counter: 1000"
 00:08 +1: All tests passed!
 ```
 
@@ -386,7 +389,7 @@ With this kind of speed, you can write **comprehensive test suites** that cover:
 Amazing demonstration, right? Now let's return to building a comprehensive, practical test suite. Here's our refined counter test:
 
 ```dart title="test/e2e_test.dart"
-tapTest('e2e', config, (tester) async {
+tapTest('My E2E Widget test', config, (tester) async {
   await tester.exists(AppKeys.homeScreen);
   await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
   await tester.tap(AppKeys.incrementButton);
@@ -409,10 +412,10 @@ Let's prepare keys to interact with this feature:
 ```dart title="lib/app_keys.dart"
 abstract class AppKeys {
   ...
-  static const nameField = ValueKey('nameField');
-  static const submitButton = ValueKey('submitButton');
-  static const detailsScreen = ValueKey('detailsScreen');
-  static const welcomeMessage = ValueKey('welcomeMessage');
+  static const nameField = ValueKey('NameField');
+  static const submitButton = ValueKey('SubmitButton');
+  static const detailsScreen = ValueKey('DetailsScreen');
+  static const welcomeMessage = ValueKey('WelcomeMessage');
 }
 ```
 
@@ -450,9 +453,10 @@ await tester.type(AppKeys.nameField, 'John Doe');
 
 > ✨ **The `type` action:** simulates keyboard input just like a real user.
 
-### ⚡ Animation Synchronization
+### ⚡ Animation sync
 
-The submit button triggers an **animated screen transition** - unlike our simple increment counter button before. Tap it with a `SyncType.settled` to wait for **all animations to complete** before proceeding to next step. This ensures your test doesn't race ahead of the UI - bulletproof reliability!
+The submit button triggers an **animated screen transition** - unlike the simple increment button that responds instantly. You can tap it the same way, but we should add `sync: SyncType.settled` to ensure all animations complete before moving to the next step. **This prevents your test from racing ahead of the UI.**
+
 
 ```dart title="test/e2e_test.dart"
 await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
@@ -482,11 +486,11 @@ If you run the test `flutter test test` you should see the following output:
 
 ```
 ...
-✅ Typed into nameField: "John Doe"
-✅ Tapped submitButton
+✅ Typed into NameField: "John Doe"
+✅ Tapped SubmitButton
 💡 On Details screen
-✅ Exists detailsScreen
-✅ Text of welcomeMessage matches "Welcome John Doe!"
+✅ Exists DetailsScreen
+✅ Text of WelcomeMessage matches "Welcome John Doe!"
 ```
 
 > 🎉 **Achievement Unlocked:** You've mastered form handling and screen navigation testing!
@@ -518,34 +522,37 @@ Let's add keys:
 ```dart title="lib/app_keys.dart"
 abstract class AppKeys {
   ...
-  static const errorDialog = ValueKey('errorDialog');
-  static const errorDialogOKButton = ValueKey('errorDialogOKButton');
+  static const errorDialog = ValueKey('ErrorDialog');
+  static const errorDialogOKButton = ValueKey('ErrorDialogOKButton');
 }
 ```
 
 ... and assign them to widgets:
 
-```dart title="main.dart"
+```dart title="lib/main.dart"
 showDialog(
   context: context,
   builder: (context) => AlertDialog(
-    key: AppKeys.errorDialog,                         // 👈 here
+    key: AppKeys.errorDialog, // 👈 here
     title: Text('No name'),
     content: Text('Please enter a name.'),
     actions: [
       TextButton(
-        key: AppKeys.errorDialogOKButton,             // 👈 and here
+        key: AppKeys.errorDialogOKButton, // 👈 and here
         onPressed: () => Navigator.of(context).pop(),
-        child: Text('OK a'),
+        child: Text('OK'),
       ),
     ],
   ),
 );
 ```
 
-#### Submit the form with empty name
+Now let's test the error scenario - what happens when users submit empty form? Let's clear the name field, submit it, and handle the error dialog that appears. Remember to use `sync: SyncType.settled` for dialog interactions since they have fade in/out animations. While omitting it might not cause issues now, it's excellent practice to build this into your testing muscle memory for reliable, race-condition-free tests!
+
 
 ```dart title="test/e2e_test.dart"
+// previous steps
+
 await tester.type(AppKeys.nameField, '');
 await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
 await tester.exists(AppKeys.errorDialog);
@@ -553,26 +560,21 @@ await tester.tap(AppKeys.errorDialogOKButton, sync: SyncType.settled);
 await tester.absent(AppKeys.errorDialog);
 ```
 
-> 💡 **TapTest Insight:** The `type` action **replaces** existing text - perfect for testing different input scenarios!
-
-> 🛡️ **Reliability Tip:** The `absent` assertion ensures the dialog is completely dismissed before continuing - preventing test race conditions!
-
-> ⚡ **Animation Awareness:** Remember `sync: SyncType.settled` for dialog animations - TapTest waits for fade in/out transitions to complete!
-
+> 💡 **Pro Tips:** The `type` action **replaces** existing text. The `absent` assertion is optional but excellent practice - it explicitly verifies the dialog actually disappeared, making your tests more reliable and self-documenting!
 
 ### 🔍 All Edge Cases
 
 With TapTest's blazing speed, we can afford to be **thorough**. Let's test all edge cases:
 
 ```dart title="test/e2e_test.dart"
-// Whitespace-only input should also trigger error
+// Edge Case 1: Whitespace-only input should trigger validation
 await tester.type(AppKeys.nameField, ' ');
 await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
 await tester.exists(AppKeys.errorDialog);
 await tester.tap(AppKeys.errorDialogOKButton, sync: SyncType.settled);
 await tester.absent(AppKeys.errorDialog);
 
-// Whitespace should be trimmed from welcome message
+// Edge Case 2: Input trimming - messy spacing should be cleaned up
 await tester.type(AppKeys.nameField, '  Alice   ');
 await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
 await tester.info('On Details screen');
@@ -582,14 +584,14 @@ await tester.expectText(AppKeys.welcomeMessage, 'Welcome Alice!');
 
 > 🏆 **Quality Mindset:** These edge cases catch bugs that plenty of developers miss - **but your users will definitely find them**!
 
-### 📄 Code Checkpoint
+### 📄 Code checkpoint
 
 We've covered a lot, let's ensure our comprehensive E2E test is perfectly aligned:
 
 <details>
 <summary>📄 **e2e_test.dart**</summary>
 ```
-  tapTest('e2e', config, (tester) async {
+  tapTest('My E2E Widget test', config, (tester) async {
     await tester.exists(AppKeys.homeScreen);
     await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
     await tester.tap(AppKeys.incrementButton);
@@ -599,27 +601,28 @@ We've covered a lot, let's ensure our comprehensive E2E test is perfectly aligne
 
     await tester.type(AppKeys.nameField, 'John Doe');
     await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
-    await tester.info('On Details screen');
+    await tester.info('On Details screen'); // 👈 here
     await tester.exists(AppKeys.detailsScreen);
     await tester.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
 
     await tester.pop();
     await tester.info('On Home screen');
     await tester.exists(AppKeys.homeScreen);
+
     await tester.type(AppKeys.nameField, '');
     await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
     await tester.exists(AppKeys.errorDialog);
     await tester.tap(AppKeys.errorDialogOKButton, sync: SyncType.settled);
     await tester.absent(AppKeys.errorDialog);
 
-    // White space should also trigger the error dialog
+    // Edge Case 1: Whitespace-only input should trigger validation
     await tester.type(AppKeys.nameField, ' ');
     await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
     await tester.exists(AppKeys.errorDialog);
     await tester.tap(AppKeys.errorDialogOKButton, sync: SyncType.settled);
     await tester.absent(AppKeys.errorDialog);
 
-    // White spaces should be trimmed from the welcome message
+    // Edge Case 2: Input trimming - messy spacing should be cleaned up
     await tester.type(AppKeys.nameField, '  Alice   ');
     await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
     await tester.info('On Details screen');
@@ -643,7 +646,7 @@ Our **functional tests are fantastic** - they catch logic bugs and broken workfl
 
 > 💡 **Pro Strategy:** Combine **functional assertions** with **visual snapshots** for bulletproof testing. Functional tests catch logic issues, snapshots catch design regressions!
 
-### 🎯 Strategic Snapshot Placement
+### 🎯 Strategic snapshot placement
 
 Add visual checkpoints at key moments in your user journey:
 
@@ -668,7 +671,7 @@ await tester.snapshot('DetailsScreen_JohnDoe');
 
 ### 🎬 Record current snapshots
 
-**First run:** the test with `--update-goldens` flag to record the current snapshots:
+Run the test with `--update-goldens` flag to record the current snapshots:
 
 ```bash
 flutter test test --update-goldens
@@ -687,13 +690,13 @@ Your project
  ┗ 📂 integration_test
 ```
 
-**Subsequent runs:** Compare current UI against golden masters
+Subsequent runs (without `--update-goldens`) will compare current UI against prerecorded.
 
 ```bash
 flutter test test
 ```
 
-> 🎯 **Workflow:** Record once with `--update-goldens`, then run normally. TapTest will catch any visual regressions!
+> 🎯 **Workflow:** Record once with `--update-goldens`, then run as usual. TapTest will catch any visual regressions.
 
 ### 🎨 Dark Theme and drop the debug ribbon
 
@@ -710,7 +713,7 @@ import 'package:taptest_runtime/taptest_runtime.dart';
 // ... other imports
 
 final class MyApp extends StatelessWidget {
-  final RuntimeParams? params; // 🎯 Provided only during TapTest testing
+  final RuntimeParams? params; // 🎯 Provided by TapTest during testing
   
   const MyApp({
     super.key,
@@ -798,3 +801,4 @@ Watch your app come alive on device as TapTest executes your comprehensive test 
 
 > 📋 **Device selection:** If you have connected more than one compatible device you will be presented with the choice menu where to run your tests. You can select the device upfront by passing the `-d` parameter (device ID) e.g. `flutter test integration_test -d D3166B06-2B21...`.
 
+> 🎉 **Achievement Unlocked!** You can now run integration tests as well. Skip the `--update-goldens` flag in subsequent runs.
