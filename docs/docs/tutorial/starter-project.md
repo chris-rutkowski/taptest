@@ -1,6 +1,6 @@
 # 🚀 Starter project
 
-Let's start fresh! Create a brand new Flutter project using the **Empty Application** template - this gives us a clean slate without any boilerplate code. Once your project is created, navigate to `lib/main.dart` and replace the entire contents with the following source code. This creates a simple two-screen app with a counter, text input field, form validation, and navigation - perfect for demonstrating TapTest's capabilities!
+Let's start fresh! Create a brand new Flutter project, ideally using the **Empty Application** template - this gives us a clean slate without any boilerplate code. Once your project is created, navigate to `lib/main.dart` and replace the entire contents with the following source code. This creates a simple two-screen app with a counter, text input field, form validation, and navigation - perfect for demonstrating TapTest's capabilities!
 
 ```dart title="lib/main.dart"
 import 'package:flutter/material.dart';
