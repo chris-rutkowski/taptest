@@ -20,6 +20,7 @@ const sidebars: SidebarsConfig = {
       label: 'TapTest Tutorial',
       items: [
         'tutorial/getting-started',
+        'tutorial/starter-project',
         'tutorial/first-test',
         'tutorial/advanced-techniques',
         'tutorial/configuration',
