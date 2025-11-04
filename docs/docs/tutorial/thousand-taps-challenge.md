@@ -62,7 +62,7 @@ With this kind of speed, you can write **comprehensive test suites** that cover:
 - 📱 Multiple screen sizes and themes
 - 🤯 Complex multi-step workflows
 
-## 🔄 Rollback to Practical Testing
+## 🔄 Rollback to practical testing
 
 Amazing demonstration, right? You've seen TapTest's incredible performance capabilities! However, for practical test development, we don't need such extreme scenarios. Let's drop this performance showcase and return to building a clean, comprehensive test suite that focuses on real-world functionality.
 
@@ -79,6 +79,6 @@ tapTest('My E2E Widget test', config, (tester) async {
 });
 ```
 
-## 📚 Next Steps
+## 📚 Next steps
 
-👉 **[Continue to next page →](./thousand-taps-challenge)**
+- **[Continue to next page →](./testing-form)**

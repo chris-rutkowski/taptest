@@ -21,6 +21,6 @@ Integration tests will be covered as the final step - perfect for confirming eve
 
 **Widget tests** are your primary testing workhorses due to their speed and reliability. **Integration tests** serve as your final safety net, validating everything works perfectly on real devices before shipping to users.
 
-## 📚 Next Steps
+## 📚 Next steps
 
-👉 **[Continue to next  page →](./first-test.md)**
+👉 **[Continue to next page →](./first-test.md)**

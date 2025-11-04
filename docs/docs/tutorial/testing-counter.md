@@ -69,8 +69,8 @@ This approach is revolutionary because:
 - 🚀 **Fast feedback** - Catches real issues quickly
 - 🎪 **Comprehensive** - Tests the complete user journey
 
-## 📚 Next Steps
+## 📚 Next steps
 
-👉 **[Continue to next page →](./thousand-taps-challenge)**
-
-Learn more about tap and expectText actions **TODO LINKS**.
+- **[Continue to next page →](./thousand-taps-challenge)**
+- **[Learn more about `tap` →](../actions/tap)**
+- **[Learn more about `expectText` →](../actions/expect-text)**

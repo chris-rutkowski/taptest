@@ -42,6 +42,6 @@ mkdir test integration_test
 
 > 💡 **Folder Purpose:** The `test` folder is for so-called widget tests (underrated), while `integration_test` is for tests that run on real devices or emulators.
 
-## 📚 Next Steps
+## 📚 Next steps
 
-👉 **[Continue to next  page →](./widget-vs-integration-tests.md)**
+- **[Continue to next page →](./widget-vs-integration-tests.md)**

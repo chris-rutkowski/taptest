@@ -140,6 +140,6 @@ Run this project and get familiar with the app before we dive into testing.
 
 Understanding your app's behavior is crucial before writing tests. Play around with it, break it if you can, and notice the user flows - this hands-on exploration will make the testing tutorial much more meaningful!
 
-## 📚 Next Steps
+## 📚 Next steps
 
-👉 **[Continue to next  page →](./add-taptest.md)**
+👉 **[Continue to next page →](./add-taptest.md)**
