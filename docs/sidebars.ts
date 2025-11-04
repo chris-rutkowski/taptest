@@ -26,6 +26,8 @@ const sidebars: SidebarsConfig = {
         'tutorial/first-test',
         'tutorial/testing-counter',
         'tutorial/thousand-taps-challenge',
+        'tutorial/testing-form',
+        'tutorial/pop-screen',
         'tutorial/advanced-techniques',
         'tutorial/configuration',
         'tutorial/best-practices',
