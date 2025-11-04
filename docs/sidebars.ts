@@ -29,6 +29,7 @@ const sidebars: SidebarsConfig = {
         'tutorial/testing-form',
         'tutorial/pop-screen',
         'tutorial/error-handling',
+        'tutorial/all-edge-cases',
         'tutorial/advanced-techniques',
         'tutorial/configuration',
         'tutorial/best-practices',

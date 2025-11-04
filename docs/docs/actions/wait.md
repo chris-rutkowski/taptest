@@ -3,7 +3,7 @@ title: Wait
 description: Learn how to add delays in your tests using the wait action in taptest
 ---
 
-# Wait Action
+# Wait action
 
 The `wait` action allows you to introduce deliberate delays in your test execution:
 

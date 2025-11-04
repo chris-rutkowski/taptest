@@ -66,3 +66,12 @@ My E2E Widget test
 ✅ ErrorDialog is absent
 00:01 +1: All tests passed!
 ```
+
+## 🎉 Achievement Unlocked!
+
+You've mastered error scenario testing! Your test now handles form validation, dialog interactions, and error recovery - all the messy edge cases that separate professional apps from amateur ones. And notice that even as our E2E test gets more and more advanced, it still completes **under 1 second**! 🚀
+
+## 📚 Next steps
+
+- **[Continue to next page →](./all-edge-cases)**
+- **[Learn more about `absent` →](../actions/absent)**
