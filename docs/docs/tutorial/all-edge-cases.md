@@ -8,6 +8,8 @@ Users love to be creative! Some will try submitting forms with just spaces, thin
 
 ```dart title="test/e2e_test.dart"
 // previous steps
+
+// Whitespace-only input should trigger validation
 await tester.type(AppKeys.nameField, ' ');
 await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
 await tester.exists(AppKeys.errorDialog);
@@ -21,6 +23,8 @@ Real users type messily - extra spaces at the beginning, end, or even multiple s
 
 ```dart title="test/e2e_test.dart"
 // previous steps
+
+// Input trimming - messy spacing should be cleaned up
 await tester.type(AppKeys.nameField, '  Alice   ');
 await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
 await tester.info('On Details screen');
@@ -31,3 +35,7 @@ await tester.expectText(AppKeys.welcomeMessage, 'Welcome Alice!');
 ## 🎉 Achievement Unlocked!
 
 Your comprehensive test now handles the tricky scenarios that separate amateur apps from professional ones - whitespace validation, input trimming, and user behavior edge cases. These are the bugs that plenty of developers miss, **but your users will definitely find them**. With TapTest's speed, you can afford to be thorough!
+
+## 📚 Next steps
+
+- **[Continue to next page →](./code-checkpoint)**

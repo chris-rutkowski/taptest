@@ -30,6 +30,8 @@ const sidebars: SidebarsConfig = {
         'tutorial/pop-screen',
         'tutorial/error-handling',
         'tutorial/all-edge-cases',
+        'tutorial/code-checkpoint',
+        'tutorial/snapshots',
         'tutorial/advanced-techniques',
         'tutorial/configuration',
         'tutorial/best-practices',
