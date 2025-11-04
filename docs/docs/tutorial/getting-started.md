@@ -1,7 +1,7 @@
 ---
 ---
 
-# Getting Started with TapTest
+# 👋 Getting Started with TapTest
 
 Welcome to TapTest! This comprehensive tutorial will guide you through everything you need to know to start writing effective Flutter UI tests using TapTest.
 

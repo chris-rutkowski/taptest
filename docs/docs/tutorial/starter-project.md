@@ -123,7 +123,7 @@ final class DetailScreen extends StatelessWidget {
 }
 ```
 
-## 🚀 Run and Explore
+## 📱 Run and Explore
 
 Don't forget to:
 
@@ -142,4 +142,4 @@ Understanding your app's behavior is crucial before writing tests. Play around w
 
 ## 📚 Next Steps
 
-👉 **[Continue to next  page →](../tutorial-basics/tt-tutorial.md)**
+👉 **[Continue to next  page →](./add-taptest.md)**

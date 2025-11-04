@@ -1,375 +1,89 @@
----
----
+# 🧑‍💻 First test
 
-# Writing Your First Test
+Create `e2e_test.dart` file in the `test` folder. **E2E** means **End-to-End**. Together, step by step, we'll craft a comprehensive test that validates entire user journey.
 
-Now that you have TapTest installed, let's write your first comprehensive test! We'll build a test for a simple counter app step by step, covering the most common TapTest features.
+```dart title="test/e2e_test.dart"
+// ‼️ Replace 'your_app' with your app package
+import 'package:your_app/main.dart';
+import 'package:flutter/material.dart';
+import 'package:taptest/taptest.dart';
 
-## The App We're Testing
+void main() {
+  final config = Config(
+    screenSize: const Size(350, 600),
+    builder: (params) {
+      return MyApp();
+    },
+  );
 
-For this tutorial, we'll test a simple counter app that has:
-- A counter display
-- An increment button (+)
-- A decrement button (-)
-- A reset button
+  tapTest('My E2E Widget test', config, (tester) async {
+    // 🎪 The magic happens here - coming up next!
+  });
+}
+```
 
-Here's the app code we'll be testing:
+> ⚠️ **Important:** All test files must end with `_test.dart` - Flutter's testing convention!
 
-```dart
-// lib/counter_app.dart
+Run test with the command as follows:
+
+```bash
+flutter test test
+```
+
+> 💡 **test test?** First _test_ is a command like _build_, _test_, _run_. Second _test_ indicates a folder. Above command will run all tests buried in the _test_ directory. To run a specific test, run `flutter test test/e2e_test.dart`.
+
+This test doesn't do anything meaningful yet, but we'll change that very soon! The initial run may take a few seconds for compilation, but feel free to run the command again and it should complete **under 1 second**.
+
+## 🔑 Keys
+
+In TapTest, we identify and interact with widgets using **keys** - think of them as unique IDs for every interactive or inspectable element. Create a file `app_keys.dart` in the `lib` folder:
+
+```dart title="lib/app_keys.dart"
 import 'package:flutter/material.dart';
 
-class CounterApp extends StatefulWidget {
-  @override
-  _CounterAppState createState() => _CounterAppState();
-}
-
-class _CounterAppState extends State<CounterApp> {
-  int _counter = 0;
-
-  void _increment() => setState(() => _counter++);
-  void _decrement() => setState(() => _counter--);
-  void _reset() => setState(() => _counter = 0);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Counter App')),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Counter Value:', style: TextStyle(fontSize: 18)),
-              Text('$_counter', 
-                   key: Key('counter-display'),
-                   style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    key: Key('decrement-button'),
-                    onPressed: _decrement,
-                    child: Text('-'),
-                  ),
-                  ElevatedButton(
-                    key: Key('reset-button'),
-                    onPressed: _reset,
-                    child: Text('Reset'),
-                  ),
-                  ElevatedButton(
-                    key: Key('increment-button'),
-                    onPressed: _increment,
-                    child: Text('+'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+abstract class AppKeys {
+  static const homeScreen = ValueKey('HomeScreen');
+  // more keys coming soon
 }
 ```
 
-## Setting Up Your Test File
+> 🏗️ **Scaling Strategy:** As your app grows, organize keys by feature (`AuthKeys`, `ProfileKeys`, `OnboardingKeys`) - but for now, one file is perfect!
 
-Create a new test file:
+Update your `main.dart` to import this file and assign the created key:
 
-```dart
-// test/integration/counter_app_test.dart
-import 'package:flutter_test/flutter_test.dart';
-import 'package:taptest/taptest.dart';
-import 'package:your_app/counter_app.dart';
+```dart title="lib/main.dart" {1,6}
+import 'app_keys.dart'; // 👈 here
+// other imports
 
-void main() {
-  group('Counter App Tests', () {
-    // We'll add our tests here
-  });
-}
+Widget build(BuildContext context) {
+  return Scaffold(
+    key: AppKeys.homeScreen, // 👈 and here in HomeScreen widget
+    appBar: AppBar(title: Text('Welcome')),
 ```
 
-## Basic Test Structure
+## 🔬 First assertion
 
-Every TapTest follows this basic pattern:
+Update your test to perform its first check:
 
-```dart
-testWidgets('test description', (WidgetTester tester) async {
-  // 1. Setup: Pump your widget
-  await tester.pumpWidget(CounterApp());
-  
-  // 2. Create TapTester instance
-  final tt = TapTester(tester);
-  
-  // 3. Perform actions and assertions
-  await tt.tap('increment-button');
-  await tt.expectText('1');
+```dart title="test/e2e_test.dart" {1,6}
+import 'package:your_app/app_keys.dart'; // 👈 import app_keys.dart
+
+...
+
+tapTest('My E2E Widget test', config, (tester) async {
+  await tester.exists(AppKeys.homeScreen);
 });
 ```
 
-## Test 1: Basic Counter Increment
+**Run it:** `flutter test test`, expected output:
 
-Let's write our first test:
-
-```dart
-testWidgets('should increment counter when + button is tapped', (WidgetTester tester) async {
-  // Setup
-  await tester.pumpWidget(CounterApp());
-  final tt = TapTester(tester);
-  
-  // Verify initial state
-  await tt.expectText('0');
-  
-  // Perform action
-  await tt.tap('increment-button');
-  
-  // Verify result
-  await tt.expectText('1');
-  
-  // Test multiple increments
-  await tt.tap('increment-button');
-  await tt.tap('increment-button');
-  await tt.expectText('3');
-});
+```
+My E2E Widget test
+✅ HomeScreen exists
+00:01 +1: All tests passed!
 ```
 
-### Key TapTest Methods Used:
+## 🎉 Achievement Unlocked!
 
-- **`expectText(text)`**: Verifies that text exists on screen
-- **`tap(finder)`**: Simulates a tap on a widget (by key, text, or type)
+You've just verified your app starts correctly. Don't worry that you can't witness it executing - that's totally normal! Widget tests run invisibly, but with snapshots (soon) you can capture the output.
 
-## Test 2: Counter Decrement
-
-```dart
-testWidgets('should decrement counter when - button is tapped', (WidgetTester tester) async {
-  await tester.pumpWidget(CounterApp());
-  final tt = TapTester(tester);
-  
-  // Start with some increments
-  await tt.tap('increment-button');
-  await tt.tap('increment-button');
-  await tt.expectText('2');
-  
-  // Test decrement
-  await tt.tap('decrement-button');
-  await tt.expectText('1');
-  
-  // Test going to negative
-  await tt.tap('decrement-button');
-  await tt.tap('decrement-button');
-  await tt.expectText('-1');
-});
-```
-
-## Test 3: Reset Functionality
-
-```dart
-testWidgets('should reset counter to 0 when reset button is tapped', (WidgetTester tester) async {
-  await tester.pumpWidget(CounterApp());
-  final tt = TapTester(tester);
-  
-  // Get to a non-zero state
-  await tt.tap('increment-button');
-  await tt.tap('increment-button');
-  await tt.tap('increment-button');
-  await tt.expectText('3');
-  
-  // Test reset
-  await tt.tap('reset-button');
-  await tt.expectText('0');
-});
-```
-
-## Test 4: Visual Snapshot Testing
-
-TapTest makes it easy to add visual regression testing:
-
-```dart
-testWidgets('should maintain visual consistency', (WidgetTester tester) async {
-  await tester.pumpWidget(CounterApp());
-  final tt = TapTester(tester);
-  
-  // Test initial state snapshot
-  await tt.snapshot('counter_initial_state');
-  
-  // Test after some interactions
-  await tt.tap('increment-button');
-  await tt.tap('increment-button');
-  await tt.snapshot('counter_incremented_state');
-  
-  // Test negative value appearance
-  await tt.tap('decrement-button');
-  await tt.tap('decrement-button');
-  await tt.tap('decrement-button');
-  await tt.snapshot('counter_negative_state');
-});
-```
-
-### Understanding Snapshots:
-
-- **First run**: Creates golden files in `test/goldens/`
-- **Subsequent runs**: Compares current state with golden files
-- **Failures**: Show pixel-by-pixel differences
-- **Update goldens**: Run `flutter test --update-goldens`
-
-## Test 5: Testing Widget Properties
-
-You can also test widget properties and states:
-
-```dart
-testWidgets('should have correct widget properties', (WidgetTester tester) async {
-  await tester.pumpWidget(CounterApp());
-  final tt = TapTester(tester);
-  
-  // Test that buttons are enabled
-  await tt.expectEnabled('increment-button');
-  await tt.expectEnabled('decrement-button');
-  await tt.expectEnabled('reset-button');
-  
-  // Test widget visibility
-  await tt.expectVisible('counter-display');
-  
-  // Test specific widget by type
-  await tt.expectWidgetType<ElevatedButton>('increment-button');
-});
-```
-
-## Running Your Tests
-
-### Run a single test file:
-```bash
-flutter test test/integration/counter_app_test.dart
-```
-
-### Run all tests:
-```bash
-flutter test
-```
-
-### Run with coverage:
-```bash
-flutter test --coverage
-```
-
-### Update golden files:
-```bash
-flutter test --update-goldens
-```
-
-## Complete Test File
-
-Here's the complete test file with all our tests:
-
-```dart
-// test/integration/counter_app_test.dart
-import 'package:flutter_test/flutter_test.dart';
-import 'package:taptest/taptest.dart';
-import 'package:your_app/counter_app.dart';
-
-void main() {
-  group('Counter App Tests', () {
-    testWidgets('should increment counter when + button is tapped', (WidgetTester tester) async {
-      await tester.pumpWidget(CounterApp());
-      final tt = TapTester(tester);
-      
-      await tt.expectText('0');
-      await tt.tap('increment-button');
-      await tt.expectText('1');
-      
-      await tt.tap('increment-button');
-      await tt.tap('increment-button');
-      await tt.expectText('3');
-    });
-
-    testWidgets('should decrement counter when - button is tapped', (WidgetTester tester) async {
-      await tester.pumpWidget(CounterApp());
-      final tt = TapTester(tester);
-      
-      await tt.tap('increment-button');
-      await tt.tap('increment-button');
-      await tt.expectText('2');
-      
-      await tt.tap('decrement-button');
-      await tt.expectText('1');
-      
-      await tt.tap('decrement-button');
-      await tt.tap('decrement-button');
-      await tt.expectText('-1');
-    });
-
-    testWidgets('should reset counter to 0 when reset button is tapped', (WidgetTester tester) async {
-      await tester.pumpWidget(CounterApp());
-      final tt = TapTester(tester);
-      
-      await tt.tap('increment-button');
-      await tt.tap('increment-button');
-      await tt.tap('increment-button');
-      await tt.expectText('3');
-      
-      await tt.tap('reset-button');
-      await tt.expectText('0');
-    });
-
-    testWidgets('should maintain visual consistency', (WidgetTester tester) async {
-      await tester.pumpWidget(CounterApp());
-      final tt = TapTester(tester);
-      
-      await tt.snapshot('counter_initial_state');
-      
-      await tt.tap('increment-button');
-      await tt.tap('increment-button');
-      await tt.snapshot('counter_incremented_state');
-      
-      await tt.tap('decrement-button');
-      await tt.tap('decrement-button');
-      await tt.tap('decrement-button');
-      await tt.snapshot('counter_negative_state');
-    });
-
-    testWidgets('should have correct widget properties', (WidgetTester tester) async {
-      await tester.pumpWidget(CounterApp());
-      final tt = TapTester(tester);
-      
-      await tt.expectEnabled('increment-button');
-      await tt.expectEnabled('decrement-button');
-      await tt.expectEnabled('reset-button');
-      
-      await tt.expectVisible('counter-display');
-      await tt.expectWidgetType<ElevatedButton>('increment-button');
-    });
-  });
-}
-```
-
-## What You've Learned
-
-Congratulations! You've just written your first comprehensive TapTest suite. You now know how to:
-
-- ✅ Set up basic test structure
-- ✅ Use `tap()` to simulate user interactions
-- ✅ Use `expectText()` to verify content
-- ✅ Create visual snapshots with `snapshot()`
-- ✅ Test widget properties and states
-- ✅ Run and manage your tests
-
-## Debugging Tips
-
-### Test Failing?
-- Use `await tt.printWidgetTree()` to see all available widgets
-- Check widget keys and text exactly match
-- Ensure proper async/await usage
-
-### Golden file issues?
-- Run `flutter test --update-goldens` to regenerate
-- Check image resolution consistency across devices
-- Consider using custom snapshot configurations
-
----
-
-## Where to Go Next
-
-You're now ready to learn more advanced TapTest techniques! In the next section, we'll explore complex scenarios like form testing, navigation, HTTP mocking, and more.
-
-👉 **[Advanced Testing Techniques →](./advanced-techniques)**
