@@ -24,6 +24,8 @@ const sidebars: SidebarsConfig = {
         'tutorial/add-taptest',
         'tutorial/widget-vs-integration-tests',
         'tutorial/first-test',
+        'tutorial/testing-counter',
+        'tutorial/thousand-taps-challenge',
         'tutorial/advanced-techniques',
         'tutorial/configuration',
         'tutorial/best-practices',

@@ -89,3 +89,6 @@ Notice how TapTest only knows about the `HomeScreen`'s key - it doesn't care abo
 
 You've just verified your app starts correctly. Don't worry that you can't witness it executing - that's totally normal! Widget tests run invisibly, but with snapshots (soon) you can capture the output.
 
+## 📚 Next Steps
+
+👉 **[Continue to next  page →](./testing-counter.md)**
