@@ -83,6 +83,8 @@ My E2E Widget test
 00:01 +1: All tests passed!
 ```
 
+Notice how TapTest only knows about the `HomeScreen`'s key - it doesn't care about your internal implementation or state management. By importing just the keys, TapTest interacts with a thin layer of your app's public interface, making tests resilient to refactoring and focused on user-visible behavior!
+
 ## 🎉 Achievement Unlocked!
 
 You've just verified your app starts correctly. Don't worry that you can't witness it executing - that's totally normal! Widget tests run invisibly, but with snapshots (soon) you can capture the output.
