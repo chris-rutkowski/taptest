@@ -1,6 +1,7 @@
 export 'src/config/config.dart';
 export 'src/config/custom_font.dart';
 export 'src/config/snapshot_config.dart';
+export 'src/config/variant.dart';
 export 'src/constants.dart';
 export 'src/logger/console_tap_tester_logger.dart';
 export 'src/logger/tap_tester_log_type.dart';

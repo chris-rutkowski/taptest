@@ -14,7 +14,6 @@ import 'logger/tap_tester_log_type.dart';
 import 'logger/tap_tester_logger.dart';
 import 'networking/mockable_http_overrides.dart';
 import 'private/app_wrapper.dart';
-import 'private/list_extensions.dart';
 import 'private/load_custom_fonts.dart';
 import 'private/load_material_icons_font.dart';
 import 'private/load_roboto_font.dart';
@@ -47,12 +46,24 @@ typedef TapTesterCallback = Future<void> Function(TapTester tester);
 @isTest
 void tapTest(String description, Config config, TapTesterCallback callback, {bool? skip}) {
   testWidgets(description, (widgetTester) async {
+    validateConfig(config);
+
     timeDilation = config.timeDilation;
 
-    final tester = await TapTester._bootstrap(widgetTester, description, config);
-
     try {
-      await callback(tester);
+      final logger = config.loggerFactory();
+
+      for (final (index, variant) in config.variants.indexed) {
+        if (index > 0) {
+          logger.log(
+            TapTesterLogType.info,
+            'Changing variant to screenSize=${variant.screenSize}, locale=${variant.locale}, themeMode=${variant.themeMode}',
+          );
+        }
+
+        final tester = await TapTester._bootstrap(widgetTester, description, logger, config, variant);
+        await callback(tester);
+      }
     } catch (e) {
       rethrow;
     } finally {
@@ -67,6 +78,7 @@ final class TapTester {
   final WidgetTester widgetTester;
   final String description;
   final Config config;
+  final Variant variant;
   final ValueNotifier<ThemeMode> _themeModeNotifier;
   final ValueNotifier<Locale> _localeNotifier;
 
@@ -76,6 +88,7 @@ final class TapTester {
     this.widgetTester,
     this.description,
     this.config,
+    this.variant,
     this._themeModeNotifier,
     this._localeNotifier,
   );
@@ -83,18 +96,17 @@ final class TapTester {
   static Future<TapTester> _bootstrap(
     WidgetTester widgetTester,
     String description,
+    TapTesterLogger logger,
     Config config,
+    Variant variant,
   ) async {
-    validateConfig(config);
-
-    final logger = config.loggerFactory();
     final testType = getTestType();
 
     if (testType == TestType.integration) {
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
     } else {
       widgetTester.view.devicePixelRatio = config.pixelDensity;
-      widgetTester.view.physicalSize = config.screenSize * config.pixelDensity;
+      widgetTester.view.physicalSize = variant.screenSize * config.pixelDensity;
     }
 
     HttpOverrides.global = MockableHttpOverrides(
@@ -108,8 +120,8 @@ final class TapTester {
       await loadRobotoFont();
     }
 
-    final themeModeNotifier = ValueNotifier<ThemeMode>(config.themeModes.first);
-    final localeNotifier = ValueNotifier<Locale>(config.locales.first);
+    final themeModeNotifier = ValueNotifier<ThemeMode>(variant.themeMode);
+    final localeNotifier = ValueNotifier<Locale>(variant.locale);
 
     if (config.precachedImages.isNotEmpty) {
       await widgetTester.runAsync(() {
@@ -123,6 +135,7 @@ final class TapTester {
 
     await widgetTester.pumpWidget(
       AppWrapper(
+        key: UniqueKey(),
         child: config.builder(
           RuntimeParams(
             themeMode: themeModeNotifier,
@@ -142,6 +155,7 @@ final class TapTester {
       widgetTester,
       description,
       config,
+      variant,
       themeModeNotifier,
       localeNotifier,
     );

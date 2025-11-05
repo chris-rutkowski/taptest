@@ -4,23 +4,11 @@ import 'package:taptest/src/private/validate_config.dart';
 import 'package:taptest/taptest.dart';
 
 void main() {
-  test('no theme modes', () async {
+  test('no variants', () async {
     expect(
       () => validateConfig(
         Config(
-          themeModes: [],
-          builder: (params) => MaterialApp(),
-        ),
-      ),
-      throwsA(isA<ArgumentError>()),
-    );
-  });
-
-  test('no locales', () async {
-    expect(
-      () => validateConfig(
-        Config(
-          locales: [],
+          variants: [],
           builder: (params) => MaterialApp(),
         ),
       ),
