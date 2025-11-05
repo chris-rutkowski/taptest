@@ -1,1 +1,2 @@
-See [https://pub.dev/packages/taptest/changelog](TapTest changelog).
+## 0.0.3
+See https://pub.dev/packages/taptest/changelog
