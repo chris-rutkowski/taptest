@@ -69,5 +69,5 @@ Snapshots help with more than just visual regression - they're fantastic debuggi
 
 ## 📚 Next steps
 
-- **[Continue to next page →](./pop-screen)**
+- **[Continue to next page →](./dark-theme)**
 - **[Learn more about `snapshot` →](../actions/snapshot)**

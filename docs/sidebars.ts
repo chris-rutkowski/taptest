@@ -32,6 +32,7 @@ const sidebars: SidebarsConfig = {
         'tutorial/all-edge-cases',
         'tutorial/code-checkpoint',
         'tutorial/snapshots',
+        'tutorial/dark-theme',
       ],
     },
     {

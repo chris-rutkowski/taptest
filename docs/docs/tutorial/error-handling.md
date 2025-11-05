@@ -1,4 +1,4 @@
-# 🚨 Error Handling
+# 🚨 Error handling
 
 Happy path testing is fantastic, but **error scenarios** separate amateur from professional testing! Users will inevitably:
 - 📝 Submit empty forms
