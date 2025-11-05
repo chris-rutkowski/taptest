@@ -11,9 +11,9 @@ Users love to be creative! Some will try submitting forms with just spaces, thin
 
 // Whitespace-only input should trigger validation
 await tester.type(AppKeys.nameField, ' ');
-await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
+await tester.tap(AppKeys.submitButton);
 await tester.exists(AppKeys.errorDialog);
-await tester.tap(AppKeys.errorDialogOKButton, sync: SyncType.settled);
+await tester.tap(AppKeys.errorDialogOKButton);
 await tester.absent(AppKeys.errorDialog);
 ```
 
@@ -26,7 +26,7 @@ Real users type messily - extra spaces at the beginning, end, or even multiple s
 
 // Input trimming - messy spacing should be cleaned up
 await tester.type(AppKeys.nameField, '  Alice   ');
-await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
+await tester.tap(AppKeys.submitButton);
 await tester.info('On Details screen');
 await tester.exists(AppKeys.detailsScreen);
 await tester.expectText(AppKeys.welcomeMessage, 'Welcome Alice!');

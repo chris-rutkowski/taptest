@@ -26,7 +26,7 @@ await tester.expectText(AppKeys.counterLabel, 'Click counter: 3');
 await tester.snapshot('HomeScreen_counter3');
 
 await tester.type(AppKeys.nameField, 'John Doe');
-await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
+await tester.tap(AppKeys.submitButton);
 await tester.info('🚀 Navigated to Details screen');
 await tester.exists(AppKeys.detailsScreen);
 await tester.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');

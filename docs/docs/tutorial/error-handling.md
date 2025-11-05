@@ -46,9 +46,9 @@ Now let's test the error scenario - what happens when users submit empty form? L
 // previous steps
 
 await tester.type(AppKeys.nameField, '');
-await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
+await tester.tap(AppKeys.submitButton);
 await tester.exists(AppKeys.errorDialog);
-await tester.tap(AppKeys.errorDialogOKButton, sync: SyncType.settled);
+await tester.tap(AppKeys.errorDialogOKButton);
 await tester.absent(AppKeys.errorDialog);
 ```
 
