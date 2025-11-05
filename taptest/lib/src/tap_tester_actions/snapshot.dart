@@ -6,19 +6,9 @@ const _headlessName = 'headless';
 extension TapTesterSnapshot on TapTester {
   Future<void> snapshot(
     final String name, {
-    bool variations = true,
     TapKey key,
-    List<ThemeMode>? themeModes,
-    List<Locale>? locales,
     double? acceptableDifference,
   }) async {
-    if (!variations && (themeModes != null || locales != null)) {
-      logger.log(
-        TapTesterLogType.warning,
-        "When variations=false, themeModes and locales are ignored. Current theme/locale will be used instead.",
-      );
-    }
-
     if (!config.snapshot.isEnabled()) {
       logger.log(TapTesterLogType.info, 'Skipping snapshot $name');
       return;
@@ -43,79 +33,38 @@ extension TapTesterSnapshot on TapTester {
 
     logger.log(TapTesterLogType.stepInProgress, 'Checking snapshot $name');
 
-    assert(
-      locales == null || locales.every(config.locales.contains),
-      'All provided locales must be in config.locales',
-    );
-    assert(
-      themeModes == null || themeModes.every(config.themeModes.contains),
-      'All provided themeModes must be in config.themeModes',
-    );
-
-    final startingThemeMode = _themeModeNotifier.value;
-    final startingLocale = _localeNotifier.value;
-
-    final themeModesToUse = variations ? themeModes ?? config.themeModes : [startingThemeMode];
-    final localesToUse = variations ? locales ?? config.locales : [startingLocale];
-
     final deviceName = await _getDeviceName();
     await widgetTester.pumpAndSettle();
-    await themeModesToUse.cycle(
-      from: themeModesToUse.first,
-      callback: (theme) async {
-        var shouldPumpAndSettle = false;
 
-        if (_themeModeNotifier.value != theme) {
-          _themeModeNotifier.value = theme;
-          shouldPumpAndSettle = true;
-        }
+    await _waitForDeferredToDisappear();
 
-        await localesToUse.cycle(
-          from: localesToUse.first,
-          callback: (locale) async {
-            if (_localeNotifier.value != locale) {
-              _localeNotifier.value = locale;
-              shouldPumpAndSettle = true;
-            }
+    final finder = key == null ? find.byType(AppWrapper) : _finder(key);
 
-            if (shouldPumpAndSettle) {
-              await widgetTester.pumpAndSettle();
-            }
-
-            await _waitForDeferredToDisappear();
-
-            final finder = key == null ? find.byType(AppWrapper) : _finder(key);
-
-            Future<void> take() => expectLater(
-              finder,
-              matchesGoldenFile(
-                _makeSnapshotPath(
-                  template: config.snapshot.path,
-                  suite: config.suite ?? _defaultSuiteName,
-                  name: name,
-                  theme: theme,
-                  locale: locale,
-                  device: deviceName,
-                ),
-              ),
-            );
-
-            try {
-              await take();
-            } catch (e) {
-              if (e.toString().contains('!renderObject.debugNeedsPaint')) {
-                await widgetTester.pumpAndSettle();
-                await take();
-              } else {
-                rethrow;
-              }
-            }
-          },
-        );
-      },
+    Future<void> take() => expectLater(
+      finder,
+      matchesGoldenFile(
+        _makeSnapshotPath(
+          template: config.snapshot.path,
+          suite: config.suite ?? _defaultSuiteName,
+          name: name,
+          theme: _themeModeNotifier.value,
+          locale: _localeNotifier.value,
+          device: deviceName,
+        ),
+      ),
     );
 
-    await _revertIfNeeded(themeMode: startingThemeMode, locale: startingLocale);
+    try {
+      await take();
+    } catch (e) {
+      if (e.toString().contains('!renderObject.debugNeedsPaint')) {
+        await widgetTester.pumpAndSettle();
+        await take();
+      } else {
+        rethrow;
+      }
+    }
+
     if (worstResult != null && worstResult!.diffPercent > 0) {
       logger.log(
         TapTesterLogType.stepSuccessful,
@@ -123,24 +72,6 @@ extension TapTesterSnapshot on TapTester {
       );
     } else {
       logger.log(TapTesterLogType.stepSuccessful, 'Snapshot matches $name');
-    }
-  }
-
-  Future<void> _revertIfNeeded({required ThemeMode themeMode, required Locale locale}) async {
-    var shouldPumpAndSettle = false;
-
-    if (_themeModeNotifier.value != themeMode) {
-      _themeModeNotifier.value = themeMode;
-      shouldPumpAndSettle = true;
-    }
-
-    if (_localeNotifier.value != locale) {
-      _localeNotifier.value = locale;
-      shouldPumpAndSettle = true;
-    }
-
-    if (shouldPumpAndSettle) {
-      await widgetTester.pumpAndSettle();
     }
   }
 
@@ -152,17 +83,23 @@ extension TapTesterSnapshot on TapTester {
     required Locale locale,
     required String device,
   }) {
-    String safe(String input) => input.toLowerCase().replaceAll(RegExp(r'[\\/ ]'), '_');
+    String safe(String? input) {
+      if (input == null || input.trim().isEmpty) return '';
+
+      return input.trim().replaceAll(RegExp(r'[\\/ ]'), '_');
+    }
 
     return template
         .replaceAll('[suite]', safe(suite))
         .replaceAll('[test]', safe(description)) // test's description
         .replaceAll('[name]', safe(name)) // snapshot name
+        .replaceAll('[variant]', safe(variant.name))
         .replaceAll('[theme]', safe(theme.name))
         .replaceAll('[locale]', safe(locale.toString()))
         .replaceAll('[device]', safe(device))
-        .replaceAll('[size]', safe('${config.screenSize.width.toInt()}x${config.screenSize.height.toInt()}'))
-        .replaceAll('[platform]', safe(_getPlatform()));
+        .replaceAll('[size]', safe('${variant.screenSize.width.toInt()}x${variant.screenSize.height.toInt()}'))
+        .replaceAll('[platform]', safe(_getPlatform()))
+        .replaceAll(RegExp(r'/+'), '/'); // Replace multiple slashes with single slash;
   }
 
   String _getPlatform() {
