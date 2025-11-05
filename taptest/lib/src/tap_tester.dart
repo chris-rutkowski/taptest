@@ -10,6 +10,7 @@ import 'package:meta/meta.dart';
 import 'package:taptest_runtime/taptest_runtime.dart';
 
 import 'config/config.dart';
+import 'config/variant.dart';
 import 'logger/tap_tester_log_type.dart';
 import 'logger/tap_tester_logger.dart';
 import 'networking/mockable_http_overrides.dart';
