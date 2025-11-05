@@ -91,5 +91,5 @@ You've mastered **multi-theme testing with variants**! Your test suite now valid
 ## 📚 Next steps
 
 - **[Continue to next page →](../tutorial-extras/invisible-testing)**  
-- **[Learn more about `Variant` →](../config/variant)**
-- **[Runtime parameters guide →](../config/runtime-params)**
+- **[Learn about `changeTheme` →](../actions/change-theme)**
+
