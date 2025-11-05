@@ -7,7 +7,7 @@ import '_utils/default_tap_tester_config.dart';
 void main() {
   final config = defaultTapTesterConfig.copyWith();
 
-  tapTest('overall', config, (tester) async {
+  tapTest('limitations', config, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
     await tester.tap(WelcomeKeys.limitationsButton);
