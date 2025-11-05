@@ -16,6 +16,6 @@ extension TapTesterExists on TapTester {
       timeout,
     );
 
-    logger.log(TapTesterLogType.stepSuccessful, 'Exists ${_formatKey(key)}');
+    logger.log(TapTesterLogType.stepSuccessful, '${_formatKey(key)} exists');
   }
 }

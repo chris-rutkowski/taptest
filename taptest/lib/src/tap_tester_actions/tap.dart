@@ -20,9 +20,9 @@ extension TapTesterTap on TapTester {
 
     await _sync(sync);
     if (count == 1) {
-      logger.log(TapTesterLogType.stepSuccessful, 'Tapped ${_formatKey(key)}');
+      logger.log(TapTesterLogType.stepSuccessful, '${_formatKey(key)} tapped');
     } else {
-      logger.log(TapTesterLogType.stepSuccessful, 'Tapped ${_formatKey(key)} $count times');
+      logger.log(TapTesterLogType.stepSuccessful, '${_formatKey(key)} tapped $count times');
     }
   }
 }
