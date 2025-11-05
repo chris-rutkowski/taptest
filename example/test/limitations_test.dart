@@ -13,7 +13,7 @@ void main() {
   tapTest('overall', config, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.limitationsButton, sync: SyncType.settled);
+    await tester.tap(WelcomeKeys.limitationsButton);
 
     await tester.info('On Limitations screen');
     await tester.exists(LimitationsKeys.screen);

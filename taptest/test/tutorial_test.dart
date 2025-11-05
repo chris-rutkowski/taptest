@@ -38,9 +38,9 @@ void main() {
     await tester.exists(AppKeys.homeScreen);
 
     await tester.type(AppKeys.nameField, '');
-    await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
+    await tester.tap(AppKeys.submitButton);
     await tester.exists(AppKeys.errorDialog);
-    await tester.tap(AppKeys.errorDialogOKButton, sync: SyncType.settled);
+    await tester.tap(AppKeys.errorDialogOKButton);
     await tester.absent(AppKeys.errorDialog);
 
     // Whitespace-only input should trigger validation
@@ -52,17 +52,27 @@ void main() {
 
     // Input trimming - messy spacing should be cleaned up
     await tester.type(AppKeys.nameField, '  Alice   ');
-    await tester.tap(AppKeys.submitButton, sync: SyncType.settled);
+    await tester.tap(AppKeys.submitButton);
     await tester.info('On Details screen');
     await tester.exists(AppKeys.detailsScreen);
     await tester.expectText(AppKeys.welcomeMessage, 'Welcome Alice!');
   });
 
-  tapTest('1000-taps challenge', config, (tester) async {
+  tapTest('100-taps challenge', config, (tester) async {
     await tester.exists(AppKeys.homeScreen);
     await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
     await tester.tap(AppKeys.incrementButton);
     await tester.expectText(AppKeys.counterLabel, 'Click counter: 1');
+    await tester.tap(AppKeys.incrementButton);
+    await tester.tap(AppKeys.incrementButton);
+    await tester.expectText(AppKeys.counterLabel, 'Click counter: 3');
+    await tester.tap(AppKeys.incrementButton, count: 7);
+    await tester.expectText(AppKeys.counterLabel, 'Click counter: 10');
+
+    for (var i = 11; i <= 100; i++) {
+      await tester.tap(AppKeys.incrementButton);
+      await tester.expectText(AppKeys.counterLabel, 'Click counter: $i');
+    }
   });
 }
 

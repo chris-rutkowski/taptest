@@ -9,7 +9,7 @@ void main() {
     for (var i = 0; i < 10; i++) {
       await tester.info('On Welcome screen ${i + 1}/10');
       await tester.exists(WelcomeKeys.screen);
-      await tester.tap(WelcomeKeys.dummyButton, sync: SyncType.settled);
+      await tester.tap(WelcomeKeys.dummyButton);
 
       await tester.info('On Dummy screen');
       await tester.exists(DummyKeys.screen);

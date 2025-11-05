@@ -45,7 +45,7 @@ void main() {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
     await tester.snapshot('welcome_screen');
-    await tester.tap(WelcomeKeys.productsButton, sync: SyncType.settled);
+    await tester.tap(WelcomeKeys.productsButton);
 
     await tester.info('On Products screen');
     await tester.exists(ProductScreenKeys.screen);
