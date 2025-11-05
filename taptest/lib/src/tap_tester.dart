@@ -34,6 +34,7 @@ part 'tap_tester_actions/go.dart';
 part 'tap_tester_actions/info.dart';
 part 'tap_tester_actions/pop.dart';
 part 'tap_tester_actions/scroll_to.dart';
+part 'tap_tester_actions/settle.dart';
 part 'tap_tester_actions/snapshot.dart';
 part 'tap_tester_actions/tap.dart';
 part 'tap_tester_actions/type.dart';
@@ -46,7 +47,7 @@ typedef TapTesterCallback = Future<void> Function(TapTester tester);
 @isTest
 void tapTest(String description, Config config, TapTesterCallback callback, {bool? skip}) {
   testWidgets(description, (widgetTester) async {
-    timeDilation = 0.01;
+    timeDilation = config.timeDilation;
 
     final tester = await TapTester._bootstrap(widgetTester, description, config);
 

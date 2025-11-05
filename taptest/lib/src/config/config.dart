@@ -9,6 +9,7 @@ import 'snapshot_config.dart';
 
 final class Config {
   final TapTesterLoggerFactory loggerFactory;
+  final double timeDilation;
   final String? suite;
   final String? initialRoute;
   final double pixelDensity;
@@ -24,6 +25,7 @@ final class Config {
 
   const Config({
     this.loggerFactory = defaultLoggerFactory,
+    this.timeDilation = 0.01,
     this.suite,
     this.initialRoute,
     this.pixelDensity = 2.0,
@@ -42,6 +44,7 @@ final class Config {
 
   Config copyWith({
     TapTesterLoggerFactory? loggerFactory,
+    double? timeDilation,
     String? suite,
     String? initialRoute,
     double? pixelDensity,
@@ -58,6 +61,7 @@ final class Config {
   }) {
     return Config(
       loggerFactory: loggerFactory ?? this.loggerFactory,
+      timeDilation: timeDilation ?? this.timeDilation,
       suite: suite ?? this.suite,
       initialRoute: initialRoute ?? this.initialRoute,
       pixelDensity: pixelDensity ?? this.pixelDensity,
