@@ -17,6 +17,6 @@ void main() {
 
     await tester.info('On Limitations screen');
     await tester.exists(LimitationsKeys.screen);
-    await tester.snapshot('screen', locales: [Locale('en')], themeModes: [ThemeMode.light]);
+    await tester.snapshot('screen', locales: [const Locale('en')], themeModes: [ThemeMode.light]);
   });
 }

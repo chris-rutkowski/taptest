@@ -25,7 +25,7 @@ final class WelcomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const FlagWidget(),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(AppLocalizations.of(context)!.internationalisation),
               ],
             ),
