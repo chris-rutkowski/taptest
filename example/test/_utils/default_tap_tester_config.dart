@@ -8,15 +8,12 @@ import 'package:taptest/taptest.dart';
 
 final defaultTapTesterConfig = Config(
   variants: [
-    // en, light and dark
-    const Variant(),
-    const Variant(themeMode: ThemeMode.dark),
-    // en-US, light and dark
-    const Variant(locale: Locale('en', 'US')),
-    const Variant(locale: Locale('en', 'US'), themeMode: ThemeMode.dark),
-    // es, light and dark
-    const Variant(locale: Locale('es')),
-    const Variant(locale: Locale('es'), themeMode: ThemeMode.dark),
+    const Variant(name: 'en_light'),
+    const Variant(name: 'en_dark', themeMode: ThemeMode.dark),
+    const Variant(name: 'en_us_light', locale: Locale('en', 'US')),
+    const Variant(name: 'en_us_dark', locale: Locale('en', 'US'), themeMode: ThemeMode.dark),
+    const Variant(name: 'es_light', locale: Locale('es')),
+    const Variant(name: 'es_dark', locale: Locale('es'), themeMode: ThemeMode.dark),
   ],
   customFonts: [
     CustomFont(familyName: 'NotoSans', file: 'assets/fonts/noto_sans.ttf'),
