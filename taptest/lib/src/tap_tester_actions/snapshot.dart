@@ -161,6 +161,7 @@ extension TapTesterSnapshot on TapTester {
         .replaceAll('[theme]', safe(theme.name))
         .replaceAll('[locale]', safe(locale.toString()))
         .replaceAll('[device]', safe(device))
+        .replaceAll('[size]', safe('${config.screenSize.width.toInt()}x${config.screenSize.height.toInt()}'))
         .replaceAll('[platform]', safe(_getPlatform()));
   }
 

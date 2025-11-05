@@ -12,6 +12,7 @@ final class SnapshotConfig {
   /// - [locale]: Locale (e.g., en, en_US)
   /// - [device]: Device model (e.g., iPhone_16_Pro, Pixel_9_Pro, headless for unit tests)
   /// - [platform]: Platform (e.g., ios, android)
+  /// - [size]: Screen size (e.g., 393x852)
   final String path;
   final bool Function() isEnabled;
   final double acceptableDifference;
@@ -20,7 +21,7 @@ final class SnapshotConfig {
   final Iterable<TapKey> deferredKeys;
 
   const SnapshotConfig({
-    this.path = 'goldens/[suite]/[test]/[name]-[theme]-[locale]-[platform].png',
+    this.path = 'goldens/[suite]/[test]/[name]-[theme]-[locale]-[size]-[platform].png',
     this.isEnabled = _true,
     this.acceptableDifference = 0.0002,
     this.deferredKeys = const [],
