@@ -5,8 +5,7 @@ import 'package:taptest/taptest.dart';
 import '_utils/default_tap_tester_config.dart';
 
 void main() {
-  final config = defaultTapTesterConfig.copyWith(
-  );
+  final config = defaultTapTesterConfig.copyWith();
 
   tapTest('overall', config, (tester) async {
     await tester.info('On Welcome screen');
@@ -15,6 +14,6 @@ void main() {
 
     await tester.info('On Limitations screen');
     await tester.exists(LimitationsKeys.screen);
-    await tester.snapshot('screen2');
+    await tester.snapshot('screen');
   });
 }

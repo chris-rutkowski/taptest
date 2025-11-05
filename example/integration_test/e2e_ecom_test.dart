@@ -9,8 +9,7 @@ import 'package:taptest/taptest.dart';
 import '_utils/default_integration_tap_tester_config.dart';
 
 void main() {
-  final config = defaultIntegrationTapTesterConfig.copyWith(
-  );
+  final config = defaultIntegrationTapTesterConfig.copyWith();
 
   tapTest('flow', config, (tester) async {
     await tester.info('On Welcome screen');
