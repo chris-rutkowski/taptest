@@ -5,7 +5,6 @@ Create `e2e_test.dart` file in the `test` folder. **E2E** means **End-to-End**. 
 ```dart title="test/e2e_test.dart"
 // ‼️ Replace 'your_app' with your app package
 import 'package:your_app/main.dart';
-import 'package:flutter/material.dart';
 import 'package:taptest/taptest.dart';
 
 void main() {

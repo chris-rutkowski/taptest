@@ -41,15 +41,18 @@ Run the test with `--update-goldens` flag to record the current snapshots:
 flutter test test --update-goldens
 ```
 
-TapTest creates the `goldens` folder with your reference images:
+TapTest creates the matching directory structure containing your reference images:
 
 ```
 Your project
  ┣ 📂 lib
  ┣ 📂 test
- ┃ ┣ 📂 goldens
- ┃ ┃ ┣ 🌇 🌁 🌅 snapshots are here
- ┃ ┃ ┗ ☀️ 🌙 in light and dark themes
+ ┃ ┣ 📂 snapshots
+ ┃ ┃ ┣ 📂 my_e2e_widget_test
+ ┃ ┃ ┃ ┗ 📂 light
+ ┃ ┃ ┃   ┣ 🌇 homescreen_initial.png
+ ┃ ┃ ┃   ┣ 🌁 homescreen_counter3.png
+ ┃ ┃ ┃   ┗ 🌅 detailsscreen_johndoe.png
  ┃ ┗ 📄 e2e_test.dart
  ┗ 📂 integration_test
 ```
@@ -59,6 +62,10 @@ Subsequent runs (without `--update-goldens`) will compare current UI against pre
 ## 🎉 Achievement Unlocked!
 
 You've mastered visual regression testing! Your test suite now combines functional testing with pixel-perfect visual validation. You're protecting against both logic bugs and design regressions.
+
+## 🧑‍💻 Debugging with snapshots
+
+Snapshots help with more than just visual regression - they're fantastic debugging tools! Add them temporarily to see your test's progress step-by-step and quickly identify where issues occur.
 
 ## 📚 Next steps
 
