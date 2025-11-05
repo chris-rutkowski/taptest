@@ -95,6 +95,7 @@ extension TapTesterSnapshot on TapTester {
         .replaceAll('[device]', safe(device))
         .replaceAll('[size]', safe('${variant.screenSize.width.toInt()}x${variant.screenSize.height.toInt()}'))
         .replaceAll('[platform]', safe(_getPlatform()))
+        .toLowerCase()
         .replaceAll(RegExp(r'/+'), '/'); // Replace multiple slashes with single slash;
   }
 
