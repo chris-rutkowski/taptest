@@ -44,7 +44,7 @@ const _singleFrameDuration = Duration(milliseconds: 17);
 typedef TapTesterCallback = Future<void> Function(TapTester tester);
 
 @isTest
-void tapTest(String description, Config config, TapTesterCallback callback) {
+void tapTest(String description, Config config, TapTesterCallback callback, {bool? skip}) {
   testWidgets(description, (widgetTester) async {
     timeDilation = 0.01;
 
@@ -57,7 +57,7 @@ void tapTest(String description, Config config, TapTesterCallback callback) {
     } finally {
       timeDilation = 1;
     }
-  });
+  }, skip: skip);
 }
 
 final class TapTester {
