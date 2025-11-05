@@ -32,9 +32,6 @@ const sidebars: SidebarsConfig = {
         'tutorial/all-edge-cases',
         'tutorial/code-checkpoint',
         'tutorial/snapshots',
-        'tutorial/advanced-techniques',
-        'tutorial/configuration',
-        'tutorial/best-practices',
       ],
     },
     {

@@ -10,7 +10,6 @@ import 'package:taptest/taptest.dart';
 
 void main() {
   final config = Config(
-    screenSize: const Size(350, 600),
     builder: (params) {
       return MyApp();
     },
