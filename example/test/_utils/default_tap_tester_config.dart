@@ -7,7 +7,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taptest/taptest.dart';
 
 final defaultTapTesterConfig = Config(
-  screenSize: const Size(390, 844),
+  variants: [
+    // en, light and dark
+    const Variant(),
+    const Variant(themeMode: ThemeMode.dark),
+    // en-US, light and dark
+    const Variant(locale: Locale('en', 'US')),
+    const Variant(locale: Locale('en', 'US'), themeMode: ThemeMode.dark),
+    // es, light and dark
+    const Variant(locale: Locale('es')),
+    const Variant(locale: Locale('es'), themeMode: ThemeMode.dark),
+  ],
   customFonts: [
     CustomFont(familyName: 'NotoSans', file: 'assets/fonts/noto_sans.ttf'),
   ],
@@ -20,11 +30,6 @@ final defaultTapTesterConfig = Config(
       return true;
     },
   ),
-  locales: [
-    const Locale('en'),
-    const Locale('en', 'US'),
-    const Locale('es'),
-  ],
   builder: (params) {
     SharedPreferences.setMockInitialValues({});
     // StubableNetworkImage.stubBuilder = defaultWidgetQRStubBuilder;

@@ -20,10 +20,16 @@ final defaultIntegrationTapTesterConfig = Config(
       CommonKeys.loadingNetworkImage,
     ],
   ),
-  locales: [
-    const Locale('en'),
-    const Locale('en', 'US'),
-    const Locale('es'),
+  variants: [
+    // en, light and dark
+    const Variant(),
+    const Variant(themeMode: ThemeMode.dark),
+    // en-US, light and dark
+    const Variant(locale: Locale('en', 'US')),
+    const Variant(locale: Locale('en', 'US'), themeMode: ThemeMode.dark),
+    // es, light and dark
+    const Variant(locale: Locale('es')),
+    const Variant(locale: Locale('es'), themeMode: ThemeMode.dark),
   ],
   builder: (params) {
     SharedPreferences.setMockInitialValues({});
