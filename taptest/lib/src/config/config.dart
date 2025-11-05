@@ -6,18 +6,16 @@ import '../logger/tap_tester_logger.dart';
 import '../networking/mock_http_request_handler.dart';
 import 'custom_font.dart';
 import 'snapshot_config.dart';
+import 'variant.dart';
 
 final class Config {
   final TapTesterLoggerFactory loggerFactory;
   final double timeDilation;
-  final String? suite;
+  final List<Variant> variants;
   final String? initialRoute;
   final double pixelDensity;
-  final Size screenSize;
   final Iterable<CustomFont> customFonts;
   final SnapshotConfig snapshot;
-  final List<ThemeMode> themeModes;
-  final List<Locale> locales;
   final Iterable<MockHttpRequestHandler> httpRequestHandlers;
   final Iterable<ImageProvider> precachedImages;
   final Iterable<dynamic> extensions;
@@ -26,14 +24,11 @@ final class Config {
   const Config({
     this.loggerFactory = defaultLoggerFactory,
     this.timeDilation = 0.01,
-    this.suite,
+    this.variants = const [Variant(name: Variant.defaultLightName)],
     this.initialRoute,
     this.pixelDensity = 2.0,
-    this.screenSize = const Size(393, 852),
     this.customFonts = const [],
     this.snapshot = const SnapshotConfig(),
-    this.themeModes = const [ThemeMode.light, ThemeMode.dark],
-    this.locales = const [Locale('en')],
     this.httpRequestHandlers = const [],
     this.precachedImages = const [],
     this.extensions = const [],
@@ -45,11 +40,9 @@ final class Config {
   Config copyWith({
     TapTesterLoggerFactory? loggerFactory,
     double? timeDilation,
-    String? suite,
+    List<Variant>? variants,
     String? initialRoute,
     double? pixelDensity,
-    Size? screenSize,
-    double? screenHeight,
     Iterable<CustomFont>? customFonts,
     SnapshotConfig? snapshot,
     List<ThemeMode>? themeModes,
@@ -62,26 +55,15 @@ final class Config {
     return Config(
       loggerFactory: loggerFactory ?? this.loggerFactory,
       timeDilation: timeDilation ?? this.timeDilation,
-      suite: suite ?? this.suite,
+      variants: variants ?? this.variants,
       initialRoute: initialRoute ?? this.initialRoute,
       pixelDensity: pixelDensity ?? this.pixelDensity,
-      screenSize: (screenSize ?? this.screenSize).copyWith(
-        height: screenHeight,
-      ),
       customFonts: customFonts ?? this.customFonts,
       snapshot: snapshot ?? this.snapshot,
-      themeModes: themeModes ?? this.themeModes,
-      locales: locales ?? this.locales,
       httpRequestHandlers: httpRequestHandlers ?? this.httpRequestHandlers,
       precachedImages: precachedImages ?? this.precachedImages,
       extensions: extensions ?? this.extensions,
       builder: builder ?? this.builder,
     );
-  }
-}
-
-extension on Size {
-  Size copyWith({double? height}) {
-    return Size(width, height ?? this.height);
   }
 }

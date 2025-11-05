@@ -21,10 +21,9 @@ void main() {
         ],
       ),
     ],
-    suite: 'http',
   );
 
-  tapTest('flow', config, (tester) async {
+  tapTest('http', config, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
     await tester.snapshot('welcome_screen');
