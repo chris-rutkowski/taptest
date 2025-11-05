@@ -16,7 +16,6 @@ void main() {
       //   ],
       // ),
     ],
-    suite: 'http_integration',
   );
 
   tapTest('tap on the floating action button, verify counter', config, (

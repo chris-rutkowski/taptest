@@ -21,7 +21,6 @@ void main() {
         ],
       ),
     ],
-    suite: 'http',
   );
 
   tapTest('flow', config, (tester) async {

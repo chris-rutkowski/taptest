@@ -38,7 +38,6 @@ void main() {
       const AssetImage('assets/images/uk.png'),
       const AssetImage('assets/images/usa.png'),
     ],
-    suite: 'e2e_ecom',
   );
 
   tapTest('flow', config, (tester) async {

@@ -10,7 +10,6 @@ import '_utils/default_integration_tap_tester_config.dart';
 
 void main() {
   final config = defaultIntegrationTapTesterConfig.copyWith(
-    suite: 'e2e_ecom',
   );
 
   tapTest('flow', config, (tester) async {

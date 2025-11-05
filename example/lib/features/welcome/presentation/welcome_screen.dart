@@ -94,13 +94,6 @@ final class WelcomeScreen extends StatelessWidget {
               GoRouter.of(context).go('/products');
             },
           ),
-          ListTile(
-            key: WelcomeKeys.disappearingButton,
-            title: const Text('Disappearing Widget'),
-            onTap: () {
-              GoRouter.of(context).go('/disappearing');
-            },
-          ),
         ],
       ),
     );
