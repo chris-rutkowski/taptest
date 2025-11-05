@@ -1,6 +1,6 @@
 name: taptest
 description: "Lightning-fast Flutter testing framework for comprehensive E2E and granular tests with snapshot support."
-version: 0.0.4
+version: 0.0.5
 homepage: https://taptest.dev
 repository: https://github.com/chris-rutkowski/taptest/tree/main/taptest
 
@@ -9,25 +9,25 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  crypto:
-  device_info_plus:
-  fake_http_client:
-  file:
+  crypto: ">=3.0.0"
+  device_info_plus: ">=12.0.0"
+  fake_http_client: ">=2.0.0"
+  file: ">=7.0.0"
   flutter:
     sdk: flutter
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
-  meta:
-  path:
-  platform:
-  qr:
+  meta: ">=1.16.0"
+  path: ">=1.8.0"
+  platform: ">=3.0.0"
+  qr: ">=3.0.0"
   taptest_runtime: ^0.0.3
     # path: ../taptest_runtime
 
 dev_dependencies:
   flutter_lints:
-  go_router:
+  go_router: ">=8.0.0 <17.0.0"
 
 flutter:
