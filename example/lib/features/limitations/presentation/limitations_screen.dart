@@ -12,9 +12,9 @@ final class LimitationsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Limitations'),
       ),
-      body: ListTile(
-        title: const Text('Emojis display as tofu boxes during widget tests'),
-        subtitle: const Text('smiley: 😊, UK Flag: 🇬🇧'),
+      body: const ListTile(
+        title: Text('Emojis display as tofu boxes during widget tests'),
+        subtitle: Text('smiley: 😊, UK Flag: 🇬🇧'),
       ),
     );
   }

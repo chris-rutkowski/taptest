@@ -14,7 +14,7 @@ void main() {
     await tester.snapshot('initial', variations: false);
     await tester.changeThemeMode(ThemeMode.dark);
     await tester.snapshot('dark', variations: false);
-    await tester.changeLocale(Locale('es'));
+    await tester.changeLocale(const Locale('es'));
     await tester.snapshot('dark_spanish', variations: false);
 
     // should cycle all languages and locale…

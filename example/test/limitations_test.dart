@@ -13,10 +13,10 @@ void main() {
   tapTest('overall', config, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.limitationsButton, sync: SyncType.settled);
+    await tester.tap(WelcomeKeys.limitationsButton);
 
     await tester.info('On Limitations screen');
     await tester.exists(LimitationsKeys.screen);
-    await tester.snapshot('screen', locales: [Locale('en')], themeModes: [ThemeMode.light]);
+    await tester.snapshot('screen', locales: [const Locale('en')], themeModes: [ThemeMode.light]);
   });
 }

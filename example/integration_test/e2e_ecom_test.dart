@@ -16,7 +16,7 @@ void main() {
   tapTest('flow', config, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.productsButton, sync: SyncType.settled);
+    await tester.tap(WelcomeKeys.productsButton);
 
     await tester.info('On Products screen');
     await tester.exists(ProductScreenKeys.screen);

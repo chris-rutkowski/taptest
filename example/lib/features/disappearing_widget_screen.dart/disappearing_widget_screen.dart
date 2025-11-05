@@ -37,16 +37,16 @@ final class _DisappearingWidgetScreenState extends State<DisappearingWidgetScree
                 ),
                 width: 200,
                 height: 200,
-                padding: EdgeInsets.all(32),
+                padding: const EdgeInsets.all(32),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'I will disappear\nin 2 seconds',
                   textAlign: TextAlign.center,
                 ),
               )
             : Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blueGrey, width: 1),
+                  border: Border.all(color: Colors.blueGrey),
                   borderRadius: BorderRadius.circular(24),
                 ),
                 width: 200,

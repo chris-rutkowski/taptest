@@ -8,13 +8,13 @@ void main() {
   tapTest('Disappearing Widget will disappear', defaultTapTesterConfig, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.disappearingButton, sync: SyncType.settled);
+    await tester.tap(WelcomeKeys.disappearingButton);
 
     await tester.info('On Disappearing Widget screen');
     await tester.exists(DisappearingKeys.screen);
     await tester.exists(DisappearingKeys.disappearingWidget);
     await tester.snapshot('before');
-    await tester.wait(Duration(seconds: 2));
+    await tester.wait(const Duration(seconds: 2));
     await tester.absent(DisappearingKeys.disappearingWidget);
     await tester.snapshot('after 2 seconds');
   });
