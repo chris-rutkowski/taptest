@@ -1,5 +1,5 @@
 name: taptest_runtime
-description: "A new Flutter package project."
+description: "Runtime package for TapTest framework"
 version: 0.0.1
 homepage: https://taptest.dev
 repository: https://github.com/chris-rutkowski/taptest
