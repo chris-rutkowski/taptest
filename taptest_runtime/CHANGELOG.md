@@ -1,3 +1,1 @@
-## 0.0.1
-
-* TODO: Describe initial release.
+See [https://pub.dev/packages/taptest/changelog](TapTest changelog).
