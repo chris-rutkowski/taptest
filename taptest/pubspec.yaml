@@ -1,11 +1,11 @@
 name: taptest
-description: "A new Flutter package project."
-version: 0.0.1
-homepage:
-publish_to: none
+description: "Lightning-fast Flutter testing framework for comprehensive E2E and granular tests with snapshot support."
+version: 0.0.3
+homepage: https://taptest.dev
+repository: https://github.com/chris-rutkowski/taptest
 
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.9.2
   flutter: ">=1.17.0"
 
 dependencies:
@@ -23,8 +23,8 @@ dependencies:
   path:
   platform:
   qr:
-  taptest_runtime:
-    path: ../taptest_runtime
+  taptest_runtime: ^0.0.3
+    # path: ../taptest_runtime
 
 dev_dependencies:
   flutter_lints:
