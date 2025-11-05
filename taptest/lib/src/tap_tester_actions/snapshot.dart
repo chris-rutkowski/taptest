@@ -1,6 +1,5 @@
 part of '../tap_tester.dart';
 
-const _defaultSuiteName = 'default';
 const _headlessName = 'headless';
 
 extension TapTesterSnapshot on TapTester {
@@ -45,7 +44,6 @@ extension TapTesterSnapshot on TapTester {
       matchesGoldenFile(
         _makeSnapshotPath(
           template: config.snapshot.path,
-          suite: config.suite ?? _defaultSuiteName,
           name: name,
           theme: _themeModeNotifier.value,
           locale: _localeNotifier.value,
@@ -77,7 +75,6 @@ extension TapTesterSnapshot on TapTester {
 
   String _makeSnapshotPath({
     required String template,
-    required String suite,
     required String name,
     required ThemeMode theme,
     required Locale locale,
@@ -90,7 +87,6 @@ extension TapTesterSnapshot on TapTester {
     }
 
     return template
-        .replaceAll('[suite]', safe(suite))
         .replaceAll('[test]', safe(description)) // test's description
         .replaceAll('[name]', safe(name)) // snapshot name
         .replaceAll('[variant]', safe(variant.name))

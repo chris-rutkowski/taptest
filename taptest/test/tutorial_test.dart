@@ -4,14 +4,9 @@ import 'package:taptest_runtime/taptest_runtime.dart';
 
 void main() {
   final config = Config(
-    screenSize: const Size(350, 600),
+    variants: Variant.lightAndDarkVariants,
     builder: (params) {
-      return ListenableBuilder(
-        listenable: Listenable.merge([params.themeMode, params.locale]),
-        builder: (context, _) {
-          return _MyApp(params: params);
-        },
-      );
+      return _MyApp(params: params);
     },
   );
 

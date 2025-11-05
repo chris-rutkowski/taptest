@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 final class Variant {
+  static const defaultLightName = 'light';
+  static const defaultDarkName = 'dark';
+
   final String? name;
   final Size screenSize;
   final Locale locale;
@@ -25,5 +28,18 @@ final class Variant {
       locale: locale ?? this.locale,
       themeMode: themeMode ?? this.themeMode,
     );
+  }
+
+  static List<Variant> get lightAndDarkVariants {
+    return [
+      const Variant(
+        name: Variant.defaultLightName,
+        themeMode: ThemeMode.light,
+      ),
+      const Variant(
+        name: Variant.defaultDarkName,
+        themeMode: ThemeMode.dark,
+      ),
+    ];
   }
 }

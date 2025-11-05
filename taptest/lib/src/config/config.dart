@@ -12,7 +12,6 @@ final class Config {
   final TapTesterLoggerFactory loggerFactory;
   final double timeDilation;
   final List<Variant> variants;
-  final String? suite;
   final String? initialRoute;
   final double pixelDensity;
   final Iterable<CustomFont> customFonts;
@@ -25,8 +24,7 @@ final class Config {
   const Config({
     this.loggerFactory = defaultLoggerFactory,
     this.timeDilation = 0.01,
-    this.variants = const [Variant()],
-    this.suite,
+    this.variants = const [Variant(name: Variant.defaultLightName)],
     this.initialRoute,
     this.pixelDensity = 2.0,
     this.customFonts = const [],
@@ -43,7 +41,6 @@ final class Config {
     TapTesterLoggerFactory? loggerFactory,
     double? timeDilation,
     List<Variant>? variants,
-    String? suite,
     String? initialRoute,
     double? pixelDensity,
     Iterable<CustomFont>? customFonts,
@@ -59,7 +56,6 @@ final class Config {
       loggerFactory: loggerFactory ?? this.loggerFactory,
       timeDilation: timeDilation ?? this.timeDilation,
       variants: variants ?? this.variants,
-      suite: suite ?? this.suite,
       initialRoute: initialRoute ?? this.initialRoute,
       pixelDensity: pixelDensity ?? this.pixelDensity,
       customFonts: customFonts ?? this.customFonts,
