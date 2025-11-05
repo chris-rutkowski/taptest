@@ -9,74 +9,74 @@ void main() {
       return ListenableBuilder(
         listenable: Listenable.merge([params.themeMode, params.locale]),
         builder: (context, _) {
-          return MyApp(params: params);
+          return _MyApp(params: params);
         },
       );
     },
   );
 
   tapTest('Tutorial', config, (tester) async {
-    await tester.exists(AppKeys.homeScreen);
-    await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
+    await tester.exists(_AppKeys.homeScreen);
+    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 0');
     await tester.snapshot('HomeScreen_initial');
 
-    await tester.tap(AppKeys.incrementButton);
-    await tester.expectText(AppKeys.counterLabel, 'Click counter: 1');
-    await tester.tap(AppKeys.incrementButton, count: 2);
-    await tester.expectText(AppKeys.counterLabel, 'Click counter: 3');
+    await tester.tap(_AppKeys.incrementButton);
+    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 1');
+    await tester.tap(_AppKeys.incrementButton, count: 2);
+    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 3');
     await tester.snapshot('HomeScreen_counter3');
 
-    await tester.type(AppKeys.nameField, 'John Doe');
-    await tester.tap(AppKeys.submitButton);
+    await tester.type(_AppKeys.nameField, 'John Doe');
+    await tester.tap(_AppKeys.submitButton);
     await tester.info('On Details screen');
-    await tester.exists(AppKeys.detailsScreen);
-    await tester.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
+    await tester.exists(_AppKeys.detailsScreen);
+    await tester.expectText(_AppKeys.welcomeMessage, 'Welcome John Doe!');
     await tester.snapshot('DetailsScreen_JohnDoe');
 
     await tester.pop();
     await tester.info('On Home screen');
-    await tester.exists(AppKeys.homeScreen);
+    await tester.exists(_AppKeys.homeScreen);
 
-    await tester.type(AppKeys.nameField, '');
-    await tester.tap(AppKeys.submitButton);
-    await tester.exists(AppKeys.errorDialog);
-    await tester.tap(AppKeys.errorDialogOKButton);
-    await tester.absent(AppKeys.errorDialog);
+    await tester.type(_AppKeys.nameField, '');
+    await tester.tap(_AppKeys.submitButton);
+    await tester.exists(_AppKeys.errorDialog);
+    await tester.tap(_AppKeys.errorDialogOKButton);
+    await tester.absent(_AppKeys.errorDialog);
 
     // Whitespace-only input should trigger validation
-    await tester.type(AppKeys.nameField, ' ');
-    await tester.tap(AppKeys.submitButton);
-    await tester.exists(AppKeys.errorDialog);
-    await tester.tap(AppKeys.errorDialogOKButton);
-    await tester.absent(AppKeys.errorDialog);
+    await tester.type(_AppKeys.nameField, ' ');
+    await tester.tap(_AppKeys.submitButton);
+    await tester.exists(_AppKeys.errorDialog);
+    await tester.tap(_AppKeys.errorDialogOKButton);
+    await tester.absent(_AppKeys.errorDialog);
 
     // Input trimming - messy spacing should be cleaned up
-    await tester.type(AppKeys.nameField, '  Alice   ');
-    await tester.tap(AppKeys.submitButton);
+    await tester.type(_AppKeys.nameField, '  Alice   ');
+    await tester.tap(_AppKeys.submitButton);
     await tester.info('On Details screen');
-    await tester.exists(AppKeys.detailsScreen);
-    await tester.expectText(AppKeys.welcomeMessage, 'Welcome Alice!');
+    await tester.exists(_AppKeys.detailsScreen);
+    await tester.expectText(_AppKeys.welcomeMessage, 'Welcome Alice!');
   });
 
   tapTest('100-taps challenge', config, (tester) async {
-    await tester.exists(AppKeys.homeScreen);
-    await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
-    await tester.tap(AppKeys.incrementButton);
-    await tester.expectText(AppKeys.counterLabel, 'Click counter: 1');
-    await tester.tap(AppKeys.incrementButton);
-    await tester.tap(AppKeys.incrementButton);
-    await tester.expectText(AppKeys.counterLabel, 'Click counter: 3');
-    await tester.tap(AppKeys.incrementButton, count: 7);
-    await tester.expectText(AppKeys.counterLabel, 'Click counter: 10');
+    await tester.exists(_AppKeys.homeScreen);
+    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 0');
+    await tester.tap(_AppKeys.incrementButton);
+    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 1');
+    await tester.tap(_AppKeys.incrementButton);
+    await tester.tap(_AppKeys.incrementButton);
+    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 3');
+    await tester.tap(_AppKeys.incrementButton, count: 7);
+    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 10');
 
     for (var i = 11; i <= 100; i++) {
-      await tester.tap(AppKeys.incrementButton);
-      await tester.expectText(AppKeys.counterLabel, 'Click counter: $i');
+      await tester.tap(_AppKeys.incrementButton);
+      await tester.expectText(_AppKeys.counterLabel, 'Click counter: $i');
     }
   });
 }
 
-abstract class AppKeys {
+abstract class _AppKeys {
   static const homeScreen = ValueKey('HomeScreen');
   static const counterLabel = ValueKey('CounterLabel');
   static const incrementButton = ValueKey('IncrementButton');
@@ -88,18 +88,17 @@ abstract class AppKeys {
   static const errorDialogOKButton = ValueKey('ErrorDialogOKButton');
 }
 
-final class MyApp extends StatelessWidget {
+final class _MyApp extends StatelessWidget {
   final RuntimeParams? params;
 
-  const MyApp({
-    super.key,
+  const _MyApp({
     this.params,
   });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      home: _HomeScreen(),
       themeMode: params?.themeMode.value,
       debugShowCheckedModeBanner: params == null,
       theme: ThemeData.light(),
@@ -108,14 +107,14 @@ final class MyApp extends StatelessWidget {
   }
 }
 
-final class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+final class _HomeScreen extends StatefulWidget {
+  const _HomeScreen();
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<_HomeScreen> createState() => _HomeScreenState();
 }
 
-final class _HomeScreenState extends State<HomeScreen> {
+final class _HomeScreenState extends State<_HomeScreen> {
   final nameController = TextEditingController();
   var counter = 0;
 
@@ -129,12 +128,12 @@ final class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        key: AppKeys.errorDialog,
+        key: _AppKeys.errorDialog,
         title: Text('No name'),
         content: Text('Please enter a name.'),
         actions: [
           TextButton(
-            key: AppKeys.errorDialogOKButton,
+            key: _AppKeys.errorDialogOKButton,
             onPressed: () => Navigator.of(context).pop(),
             child: Text('OK'),
           ),
@@ -146,7 +145,7 @@ final class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: AppKeys.homeScreen,
+      key: _AppKeys.homeScreen,
       appBar: AppBar(title: Text('Welcome')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -158,14 +157,14 @@ final class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(
                   child: TextField(
-                    key: AppKeys.nameField,
+                    key: _AppKeys.nameField,
                     controller: nameController,
                     decoration: InputDecoration(labelText: 'Enter name'),
                   ),
                 ),
                 SizedBox(width: 16),
                 ElevatedButton(
-                  key: AppKeys.submitButton,
+                  key: _AppKeys.submitButton,
                   onPressed: () {
                     final trimmedName = nameController.text.trim();
                     if (trimmedName.isEmpty) {
@@ -175,7 +174,7 @@ final class _HomeScreenState extends State<HomeScreen> {
 
                     final navigator = Navigator.of(context);
                     navigator.push(
-                      MaterialPageRoute(builder: (context) => DetailScreen(name: trimmedName)),
+                      MaterialPageRoute(builder: (context) => _DetailScreen(name: trimmedName)),
                     );
                   },
                   child: Text('Submit'),
@@ -185,13 +184,13 @@ final class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 32),
             Text(
               'Click counter: $counter',
-              key: AppKeys.counterLabel,
+              key: _AppKeys.counterLabel,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        key: AppKeys.incrementButton,
+        key: _AppKeys.incrementButton,
         onPressed: () {
           setState(() {
             counter++;
@@ -203,20 +202,20 @@ final class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-final class DetailScreen extends StatelessWidget {
+final class _DetailScreen extends StatelessWidget {
   final String name;
 
-  const DetailScreen({super.key, required this.name});
+  const _DetailScreen({required this.name});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: AppKeys.detailsScreen,
+      key: _AppKeys.detailsScreen,
       appBar: AppBar(title: Text('Detail Screen')),
       body: Center(
         child: Text(
           'Welcome $name!',
-          key: AppKeys.welcomeMessage,
+          key: _AppKeys.welcomeMessage,
         ),
       ),
     );
