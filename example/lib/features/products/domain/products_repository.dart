@@ -7,7 +7,7 @@ part 'products_repository.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<List<Product>> productsRepository(Ref ref) async {
-  final webservice = ProductsWebservice();
+  final webservice = const ProductsWebservice();
   final dtos = await webservice.getProducts();
   return dtos.map(Product.fromDto).toList();
 }

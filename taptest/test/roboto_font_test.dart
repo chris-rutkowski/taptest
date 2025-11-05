@@ -31,6 +31,6 @@ void main() {
     await tester.exists(key);
 
     // Verify fonts via snapshot
-    await tester.snapshot('default');
+    await tester.snapshot('screen');
   });
 }

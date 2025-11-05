@@ -25,7 +25,7 @@ final class WelcomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const FlagWidget(),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(AppLocalizations.of(context)!.internationalisation),
               ],
             ),
@@ -92,13 +92,6 @@ final class WelcomeScreen extends StatelessWidget {
             title: const Text('Products'),
             onTap: () {
               GoRouter.of(context).go('/products');
-            },
-          ),
-          ListTile(
-            key: WelcomeKeys.disappearingButton,
-            title: const Text('Disappearing Widget'),
-            onTap: () {
-              GoRouter.of(context).go('/disappearing');
             },
           ),
         ],

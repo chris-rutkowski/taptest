@@ -21,14 +21,13 @@ void main() {
         ],
       ),
     ],
-    suite: 'http',
   );
 
-  tapTest('flow', config, (tester) async {
+  tapTest('http', config, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
     await tester.snapshot('welcome_screen');
-    await tester.tap(WelcomeKeys.httpButton, sync: SyncType.settled);
+    await tester.tap(WelcomeKeys.httpButton);
 
     await tester.info('On Http screen');
     await tester.exists(HttpKeys.screen);

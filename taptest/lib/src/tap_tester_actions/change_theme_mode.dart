@@ -3,13 +3,8 @@ part of '../tap_tester.dart';
 extension TapTesterChangeThemeMode on TapTester {
   Future<void> changeThemeMode(
     ThemeMode mode, {
-    SyncType sync = SyncType.instant,
+    SyncType sync = SyncType.settled,
   }) async {
-    assert(
-      config.themeModes.contains(mode),
-      'Provided themeMode `$mode` must be in config.themes',
-    );
-
     logger.log(TapTesterLogType.stepInProgress, 'Changing theme to $mode');
 
     _themeModeNotifier.value = mode;

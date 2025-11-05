@@ -40,7 +40,7 @@ final class ProductsScreen extends ConsumerWidget {
 
         loading: () => const Center(child: Text('loading...')),
 
-        error: (_, _) => Center(
+        error: (_, _) => const Center(
           child: Text('Error'),
         ),
       ),

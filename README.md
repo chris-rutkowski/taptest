@@ -3,13 +3,11 @@ TODO:
 - driver tests
 - analytics
 - snapshots to have device name attached [device]
-- snapshots to have dimensions [width x height]
 - readme
 - check all samples
 - retry
 - consider snapshot on failure
 - snapshots to be in global directory, currently test in folder will create another golden path
-- snapshots to have enum SnapshotScope { matrix, current }, current method in private
 - use configurable logger https://pub.dev/packages/logger instead of printing
 - StackTrace print('this is platform ${StackTrace.current.toString()}'); can help creating path for goldens
 - ability to provide keys to be awaited disappearance during snapshot tests
@@ -20,10 +18,11 @@ TODO:
 - make nav test using ordinary Navigator 2.0 not only GoRouter
 - make some mini package with start app Params - location theme as well as initial route
 - consider initial route as a '/' instead of null
-- consider dropping suite
 - go action clearly uses the api inappropriately - should be fixed
 - precache all images from the assets
 - rename tester to tt in callback readme, docs everywehere
+- quick navigation integration test has some trouble in Spanish locale
+-     debugDumpApp();
 
 TODO: Put a short description of the package here that helps potential users
 know whether this package might be useful for them.

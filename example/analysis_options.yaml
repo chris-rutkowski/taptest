@@ -2,8 +2,29 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
-    - avoid_relative_lib_imports
-    - prefer_relative_imports
+    avoid_redundant_argument_values: true
+    avoid_relative_lib_imports: true
+    close_sinks: true
+    comment_references: true
+    hash_and_equals: true
+    no_adjacent_strings_in_list: true
+    omit_local_variable_types: true
+    prefer_collection_literals: true
+    prefer_const_constructors: true
+    prefer_final_fields: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_is_empty: true
+    prefer_relative_imports: true
+    prefer_single_quotes: true
+    prefer_spread_collections: true
+    prefer_typing_uninitialized_variables: true
+    require_trailing_commas: true
+    sort_child_properties_last: true
+    sort_pub_dependencies: true
+    unawaited_futures: true
+    unnecessary_breaks: true
+    unnecessary_lambdas: true
 
 analyzer:
 

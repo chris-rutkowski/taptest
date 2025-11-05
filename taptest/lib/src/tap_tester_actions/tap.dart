@@ -1,7 +1,7 @@
 part of '../tap_tester.dart';
 
 extension TapTesterTap on TapTester {
-  Future<void> tap(TapKey key, {SyncType sync = SyncType.instant, int count = 1}) async {
+  Future<void> tap(TapKey key, {SyncType sync = SyncType.settled, int count = 1}) async {
     final finder = _finder(key);
 
     for (var i = 0; i < count; i++) {

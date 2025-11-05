@@ -38,14 +38,13 @@ void main() {
       const AssetImage('assets/images/uk.png'),
       const AssetImage('assets/images/usa.png'),
     ],
-    suite: 'e2e_ecom',
   );
 
-  tapTest('flow', config, (tester) async {
+  tapTest('e2e_ecom', config, (tester) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
     await tester.snapshot('welcome_screen');
-    await tester.tap(WelcomeKeys.productsButton, sync: SyncType.settled);
+    await tester.tap(WelcomeKeys.productsButton);
 
     await tester.info('On Products screen');
     await tester.exists(ProductScreenKeys.screen);

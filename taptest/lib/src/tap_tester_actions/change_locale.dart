@@ -5,11 +5,6 @@ extension TapTesterChangeLocale on TapTester {
     Locale locale, {
     SyncType sync = SyncType.instant,
   }) async {
-    assert(
-      config.locales.contains(locale),
-      'Provided locale `$locale` must be in config.locales',
-    );
-
     logger.log(TapTesterLogType.stepInProgress, 'Changing locale to $locale');
 
     _localeNotifier.value = locale;

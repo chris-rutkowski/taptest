@@ -16,7 +16,6 @@ void main() {
       //   ],
       // ),
     ],
-    suite: 'http_integration',
   );
 
   tapTest('tap on the floating action button, verify counter', config, (
@@ -24,7 +23,7 @@ void main() {
   ) async {
     await tester.info('On Welcome screen');
     await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.httpButton, sync: SyncType.settled);
+    await tester.tap(WelcomeKeys.httpButton);
 
     await tester.info('On Http screen');
     await tester.exists(HttpKeys.screen);
