@@ -20,7 +20,6 @@ TODO:
 - consider initial route as a '/' instead of null
 - go action clearly uses the api inappropriately - should be fixed
 - precache all images from the assets
-- rename tester to tt in callback readme, docs everywehere
 - quick navigation integration test has some trouble in Spanish locale
 -     debugDumpApp();
 

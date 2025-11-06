@@ -3,25 +3,25 @@
 Ready for something that will blow your mind? Let's demonstrate TapTest's incredible speed with a performance showcase that would take a human tester **over 16 minutes** to complete manually!
 
 ```dart title="test/e2e_test.dart" {7-20}
-tapTest('My E2E Widget test', config, (tester) async {
-  await tester.exists(AppKeys.homeScreen);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
-  await tester.tap(AppKeys.incrementButton);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 1');
+tapTest('My E2E Widget test', config, (tt) async {
+  await tt.exists(AppKeys.homeScreen);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 0');
+  await tt.tap(AppKeys.incrementButton);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 1');
 
   // 👉 Add more taps
-  await tester.tap(AppKeys.incrementButton);
-  await tester.tap(AppKeys.incrementButton);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 3');
+  await tt.tap(AppKeys.incrementButton);
+  await tt.tap(AppKeys.incrementButton);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 3');
 
   // 👉 There is also count parameter
-  await tester.tap(AppKeys.incrementButton, count: 7);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 10');
+  await tt.tap(AppKeys.incrementButton, count: 7);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 10');
 
   // 👉 Feel free to use typical language features like for loops
   for (var i = 11; i <= 1000; i++) {
-    await tester.tap(AppKeys.incrementButton);
-    await tester.expectText(AppKeys.counterLabel, 'Click counter: $i');
+    await tt.tap(AppKeys.incrementButton);
+    await tt.expectText(AppKeys.counterLabel, 'Click counter: $i');
   }
 });
 ```
@@ -69,13 +69,13 @@ Amazing demonstration, right? You've seen TapTest's incredible performance capab
 Here's our refined counter test - much more maintainable and focused on actual user behavior:
 
 ```dart title="test/e2e_test.dart"
-tapTest('My E2E Widget test', config, (tester) async {
-  await tester.exists(AppKeys.homeScreen);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
-  await tester.tap(AppKeys.incrementButton);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 1');
-  await tester.tap(AppKeys.incrementButton, count: 2);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 3');
+tapTest('My E2E Widget test', config, (tt) async {
+  await tt.exists(AppKeys.homeScreen);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 0');
+  await tt.tap(AppKeys.incrementButton);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 1');
+  await tt.tap(AppKeys.incrementButton, count: 2);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 3');
 });
 ```
 

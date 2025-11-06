@@ -37,8 +37,8 @@ dev_dependencies:
   riverpod_lint:
   taptest:
     path: ../taptest
-  taptest_runtime:
-    path: ../taptest_runtime
+  taptest_runtime: ^0.0.3
+    # path: ../taptest_runtime
 
 flutter:
   generate: true

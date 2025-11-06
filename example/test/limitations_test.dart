@@ -7,13 +7,13 @@ import '_utils/default_tap_tester_config.dart';
 void main() {
   final config = defaultTapTesterConfig.copyWith();
 
-  tapTest('limitations', config, (tester) async {
-    await tester.info('On Welcome screen');
-    await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.limitationsButton);
+  tapTest('limitations', config, (tt) async {
+    await tt.info('On Welcome screen');
+    await tt.exists(WelcomeKeys.screen);
+    await tt.tap(WelcomeKeys.limitationsButton);
 
-    await tester.info('On Limitations screen');
-    await tester.exists(LimitationsKeys.screen);
-    await tester.snapshot('screen');
+    await tt.info('On Limitations screen');
+    await tt.exists(LimitationsKeys.screen);
+    await tt.snapshot('screen');
   });
 }

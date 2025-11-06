@@ -14,7 +14,7 @@ void main() {
     },
   );
 
-  tapTest('My E2E Widget test', config, (tester) async {
+  tapTest('My E2E Widget test', config, (tt) async {
     // 🎪 The magic happens here - coming up next!
   });
 }
@@ -68,8 +68,8 @@ import 'package:your_app/app_keys.dart'; // 👈 import app_keys.dart
 
 ...
 
-tapTest('My E2E Widget test', config, (tester) async {
-  await tester.exists(AppKeys.homeScreen);
+tapTest('My E2E Widget test', config, (tt) async {
+  await tt.exists(AppKeys.homeScreen);
 });
 ```
 

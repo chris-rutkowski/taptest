@@ -10,63 +10,63 @@ void main() {
     },
   );
 
-  tapTest('Tutorial', config, (tester) async {
-    await tester.exists(_AppKeys.homeScreen);
-    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 0');
-    await tester.snapshot('HomeScreen_initial');
+  tapTest('Tutorial', config, (tt) async {
+    await tt.exists(_AppKeys.homeScreen);
+    await tt.expectText(_AppKeys.counterLabel, 'Click counter: 0');
+    await tt.snapshot('HomeScreen_initial');
 
-    await tester.tap(_AppKeys.incrementButton);
-    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 1');
-    await tester.tap(_AppKeys.incrementButton, count: 2);
-    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 3');
-    await tester.snapshot('HomeScreen_counter3');
+    await tt.tap(_AppKeys.incrementButton);
+    await tt.expectText(_AppKeys.counterLabel, 'Click counter: 1');
+    await tt.tap(_AppKeys.incrementButton, count: 2);
+    await tt.expectText(_AppKeys.counterLabel, 'Click counter: 3');
+    await tt.snapshot('HomeScreen_counter3');
 
-    await tester.type(_AppKeys.nameField, 'John Doe');
-    await tester.tap(_AppKeys.submitButton);
-    await tester.info('On Details screen');
-    await tester.exists(_AppKeys.detailsScreen);
-    await tester.expectText(_AppKeys.welcomeMessage, 'Welcome John Doe!');
-    await tester.snapshot('DetailsScreen_JohnDoe');
+    await tt.type(_AppKeys.nameField, 'John Doe');
+    await tt.tap(_AppKeys.submitButton);
+    await tt.info('On Details screen');
+    await tt.exists(_AppKeys.detailsScreen);
+    await tt.expectText(_AppKeys.welcomeMessage, 'Welcome John Doe!');
+    await tt.snapshot('DetailsScreen_JohnDoe');
 
-    await tester.pop();
-    await tester.info('On Home screen');
-    await tester.exists(_AppKeys.homeScreen);
+    await tt.pop();
+    await tt.info('On Home screen');
+    await tt.exists(_AppKeys.homeScreen);
 
-    await tester.type(_AppKeys.nameField, '');
-    await tester.tap(_AppKeys.submitButton);
-    await tester.exists(_AppKeys.errorDialog);
-    await tester.tap(_AppKeys.errorDialogOKButton);
-    await tester.absent(_AppKeys.errorDialog);
+    await tt.type(_AppKeys.nameField, '');
+    await tt.tap(_AppKeys.submitButton);
+    await tt.exists(_AppKeys.errorDialog);
+    await tt.tap(_AppKeys.errorDialogOKButton);
+    await tt.absent(_AppKeys.errorDialog);
 
     // Whitespace-only input should trigger validation
-    await tester.type(_AppKeys.nameField, ' ');
-    await tester.tap(_AppKeys.submitButton);
-    await tester.exists(_AppKeys.errorDialog);
-    await tester.tap(_AppKeys.errorDialogOKButton);
-    await tester.absent(_AppKeys.errorDialog);
+    await tt.type(_AppKeys.nameField, ' ');
+    await tt.tap(_AppKeys.submitButton);
+    await tt.exists(_AppKeys.errorDialog);
+    await tt.tap(_AppKeys.errorDialogOKButton);
+    await tt.absent(_AppKeys.errorDialog);
 
     // Input trimming - messy spacing should be cleaned up
-    await tester.type(_AppKeys.nameField, '  Alice   ');
-    await tester.tap(_AppKeys.submitButton);
-    await tester.info('On Details screen');
-    await tester.exists(_AppKeys.detailsScreen);
-    await tester.expectText(_AppKeys.welcomeMessage, 'Welcome Alice!');
+    await tt.type(_AppKeys.nameField, '  Alice   ');
+    await tt.tap(_AppKeys.submitButton);
+    await tt.info('On Details screen');
+    await tt.exists(_AppKeys.detailsScreen);
+    await tt.expectText(_AppKeys.welcomeMessage, 'Welcome Alice!');
   });
 
-  tapTest('100-taps challenge', config, (tester) async {
-    await tester.exists(_AppKeys.homeScreen);
-    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 0');
-    await tester.tap(_AppKeys.incrementButton);
-    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 1');
-    await tester.tap(_AppKeys.incrementButton);
-    await tester.tap(_AppKeys.incrementButton);
-    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 3');
-    await tester.tap(_AppKeys.incrementButton, count: 7);
-    await tester.expectText(_AppKeys.counterLabel, 'Click counter: 10');
+  tapTest('100-taps challenge', config, (tt) async {
+    await tt.exists(_AppKeys.homeScreen);
+    await tt.expectText(_AppKeys.counterLabel, 'Click counter: 0');
+    await tt.tap(_AppKeys.incrementButton);
+    await tt.expectText(_AppKeys.counterLabel, 'Click counter: 1');
+    await tt.tap(_AppKeys.incrementButton);
+    await tt.tap(_AppKeys.incrementButton);
+    await tt.expectText(_AppKeys.counterLabel, 'Click counter: 3');
+    await tt.tap(_AppKeys.incrementButton, count: 7);
+    await tt.expectText(_AppKeys.counterLabel, 'Click counter: 10');
 
     for (var i = 11; i <= 100; i++) {
-      await tester.tap(_AppKeys.incrementButton);
-      await tester.expectText(_AppKeys.counterLabel, 'Click counter: $i');
+      await tt.tap(_AppKeys.incrementButton);
+      await tt.expectText(_AppKeys.counterLabel, 'Click counter: $i');
     }
   });
 }

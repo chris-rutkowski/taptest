@@ -36,11 +36,11 @@ FloatingActionButton(
 Now let's orchestrate the perfect counter test:
 
 ```dart title="test/e2e_test.dart" {3-5}
-tapTest('My E2E Widget test', config, (tester) async {
-  await tester.exists(AppKeys.homeScreen);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
-  await tester.tap(AppKeys.incrementButton);
-  await tester.expectText(AppKeys.counterLabel, 'Click counter: 1');
+tapTest('My E2E Widget test', config, (tt) async {
+  await tt.exists(AppKeys.homeScreen);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 0');
+  await tt.tap(AppKeys.incrementButton);
+  await tt.expectText(AppKeys.counterLabel, 'Click counter: 1');
 });
 ```
 

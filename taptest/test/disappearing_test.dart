@@ -8,11 +8,11 @@ void main() {
     ),
   );
 
-  tapTest('Disappearing', config, (tester) async {
-    await tester.exists(_Keys.screen);
-    await tester.exists(_Keys.widget);
-    await tester.wait(const Duration(seconds: 2));
-    await tester.absent(_Keys.widget);
+  tapTest('Disappearing', config, (tt) async {
+    await tt.exists(_Keys.screen);
+    await tt.exists(_Keys.widget);
+    await tt.wait(const Duration(seconds: 2));
+    await tt.absent(_Keys.widget);
   });
 }
 

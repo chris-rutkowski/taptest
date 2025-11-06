@@ -18,8 +18,8 @@ In integration tests, the `wait` action **actually waits** for the specified dur
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
+| Parameter  | Type       | Default  | Description                |
+| ---------- | ---------- | -------- | -------------------------- |
 | `duration` | `Duration` | required | The amount of time to wait |
 
 ## Examples
@@ -27,13 +27,13 @@ In integration tests, the `wait` action **actually waits** for the specified dur
 Wait for 2 seconds:
 
 ```dart
-await tester.wait(Duration(seconds: 2));
+await tt.wait(Duration(seconds: 2));
 ```
 
 Wait for 500 milliseconds:
 
 ```dart
-await tester.wait(Duration(milliseconds: 500));
+await tt.wait(Duration(milliseconds: 500));
 ```
 
 ## Best practices
@@ -44,7 +44,7 @@ await tester.wait(Duration(milliseconds: 500));
 ### Debounced search
 
 ```dart
-await tester.type(MyKeys.searchField, 'flutter');
-await tester.wait(Duration(milliseconds: 300)); // Wait for debounce
-await tester.exists(MyKeys.searchResults[0]);
+await tt.type(MyKeys.searchField, 'flutter');
+await tt.wait(Duration(milliseconds: 300)); // Wait for debounce
+await tt.exists(MyKeys.searchResults[0]);
 ```

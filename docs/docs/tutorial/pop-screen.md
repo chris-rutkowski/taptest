@@ -9,9 +9,9 @@ Let's use TapTest's `pop` action to simulate the system back button:
 ```dart title="test/e2e_test.dart"
 // previous steps
 
-await tester.pop();
-await tester.info('On Home screen');
-await tester.exists(AppKeys.homeScreen);
+await tt.pop();
+await tt.info('On Home screen');
+await tt.exists(AppKeys.homeScreen);
 ```
 
 > 🎯 **Best Practice:** Always validate screen state after navigation, like in this case - existence of Home Screen - it makes debugging complex test failures much easier!
