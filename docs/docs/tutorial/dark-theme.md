@@ -90,6 +90,6 @@ You've mastered **multi-theme testing with variants**! Your test suite now valid
 
 ## 📚 Next steps
 
-- **[Continue to next page →](../tutorial-extras/invisible-testing)**  
+- **[Continue to next page →](../tutorial/integration-tests)**  
 - **[Learn about `changeTheme` →](../actions/change-theme)**
 
