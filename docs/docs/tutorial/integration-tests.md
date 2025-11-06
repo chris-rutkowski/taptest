@@ -69,4 +69,4 @@ You've mastered both widget and integration testing with TapTest! You now unders
 
 ## 📚 Next steps
 
-- **[Continue to next page →](../tutorial-extras/congratulations)**
+- **[Continue to next page →](../tutorial/congratulations)**
