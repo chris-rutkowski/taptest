@@ -28,30 +28,19 @@ jobs:
 
     - name: Get package dependencies
       run: flutter pub get
-      working-directory: ./taptest
-
-    - name: Get runtime dependencies
-      run: flutter pub get
-      working-directory: ./taptest_runtime
 
     - name: Get example dependencies
       run: flutter pub get
       working-directory: ./example
 
-    - name: Check formatting - library
+    - name: Check formatting
       run: |
         find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
-      working-directory: ./taptest
 
-    - name: Check formatting - runtime
-      run: |
-        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
-      working-directory: ./taptest_runtime
-
-    - name: Check formatting - example
-      run: |
-        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
-      working-directory: ./example
+    # - name: Check formatting - example
+    #   run: |
+    #     find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
+    #   working-directory: ./example
 
     # - name: Check generated code - library
     #   run: |
@@ -67,11 +56,6 @@ jobs:
 
     - name: Analyse - library
       run: flutter analyze --fatal-infos
-      working-directory: ./taptest
-
-    - name: Analyse - runtime
-      run: flutter analyze --fatal-infos
-      working-directory: ./taptest_runtime
 
     - name: Analyze - example
       run: flutter analyze --fatal-infos
