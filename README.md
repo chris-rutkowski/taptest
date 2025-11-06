@@ -1,6 +1,6 @@
 # TapTest
 
-**TapTest** is a revolutionary testing framework built on top of Flutter tester that encourages writing useful, user-facing tests capable of surviving massive refactors. Tests interact with your app the way users do - by tapping buttons and interface elements, validating label content, checking element presence and capturing visual snapshots.
+**TapTest** is a revolutionary testing framework built on top of Flutter tester that encourages writing useful, user-facing tests capable of surviving massive refactors. Tests interact with your app the way users do - by tapping buttons and interface elements, validating labels content, checking elements presence and capturing visual snapshots.
 
 ## 🚀 Why TapTest?
 
