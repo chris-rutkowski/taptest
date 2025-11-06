@@ -1,51 +1,51 @@
-TODO:
-- ci prevent outdated codegen
-- driver tests
-- analytics
-- snapshots to have device name attached [device]
-- readme
-- check all samples
-- retry
-- consider snapshot on failure
-- snapshots to be in global directory, currently test in folder will create another golden path
-- use configurable logger https://pub.dev/packages/logger instead of printing
-- StackTrace print('this is platform ${StackTrace.current.toString()}'); can help creating path for goldens
-- ability to provide keys to be awaited disappearance during snapshot tests
-- action to go - navigating using router, testing deeplinks etc
-- MockHttpRequestHandler doesn't need path if the uri can be uri.path
-- Info in wait about gesture detector
-- maybe test detect timers in progress and wait for all of them - configurable
-- make nav test using ordinary Navigator 2.0 not only GoRouter
-- make some mini package with start app Params - location theme as well as initial route
-- consider initial route as a '/' instead of null
-- go action clearly uses the api inappropriately - should be fixed
-- precache all images from the assets
-- quick navigation integration test has some trouble in Spanish locale
--     debugDumpApp();
+# TapTest
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+See [https://taptest.dev](https://taptest.dev) for Tutorials and more information.
 
 ```dart
-const like = 'sample';
+void main() {
+  final config = Config(
+    variants: Variant.lightAndDarkVariants, // ☀️ 🌙
+    httpRequestHandlers: [
+      // required for ultra fast Widget tests
+      // optional for Integration tests
+      MockRegistrationWebservice(success: true),
+    ],
+    builder: (params) {
+      return MyApp(params: params);
+    },
+  );
+
+  tapTest('E2E test (with Page Object)', config, (tt) async {
+    await tt
+        .onHomeScreen()
+        .snapshot('HomeScreen_initial')
+        .enterUsername('John Doe')
+        .enterPassword('password123')
+        .tapRegister()
+        .expectError('Please accept terms.')
+        .tapAcceptTerms()
+        .tapRegister();
+
+    await tt
+        .onWelcomeScreen()
+        .expectWelcomeMessage('Welcome John Doe!')
+        .snapshot('WelcomeScreen_JohnDoe');
+  });
+
+  tapTest('E2E test (plain)', config, (tt) async {
+    await tt.expect(AppKeys.homeScreen);
+    await tt.snapshot("HomeScreen_initial");
+    await tt.type(AppKeys.usernameField, 'John Doe');
+    await tt.type(AppKeys.passwordField, 'password123');
+    await tt.tap(AppKeys.registerButton);
+    await tt.expectText(AppKeys.errorMessage, 'Please accept terms.');
+    await tt.tap(AppKeys.acceptTermsCheckbox);
+    await tt.tap(AppKeys.registerButton);
+
+    await tt.expect(AppKeys.welcomeScreen);
+    await tt.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
+    await tt.snapshot("WelcomeScreen_JohnDoe");
+  });
+}
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.

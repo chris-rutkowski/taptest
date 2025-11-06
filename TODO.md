@@ -1,0 +1,24 @@
+TODO:
+- ci prevent outdated codegen
+- driver tests
+- analytics
+- snapshots to have device name attached [device]
+- readme
+- check all samples
+- retry
+- consider snapshot on failure
+- snapshots to be in global directory, currently test in folder will create another golden path
+- use configurable logger https://pub.dev/packages/logger instead of printing
+- StackTrace print('this is platform ${StackTrace.current.toString()}'); can help creating path for goldens
+- ability to provide keys to be awaited disappearance during snapshot tests
+- action to go - navigating using router, testing deeplinks etc
+- MockHttpRequestHandler doesn't need path if the uri can be uri.path
+- Info in wait about gesture detector
+- maybe test detect timers in progress and wait for all of them - configurable
+- make nav test using ordinary Navigator 2.0 not only GoRouter
+- make some mini package with start app Params - location theme as well as initial route
+- consider initial route as a '/' instead of null
+- go action clearly uses the api inappropriately - should be fixed
+- precache all images from the assets
+- quick navigation integration test has some trouble in Spanish locale
+-     debugDumpApp();
