@@ -66,11 +66,11 @@ void main() {
         .typeName('John Doe')
         .tapSubmit();
 
-    await tt
+    await tt // dummy comment to force dart format to do one dot syntax per line
         .onDetailsScreen()
         .expectWelcomeMessage('Welcome John Doe!')
         .snapshot('DetailsScreen_JohnDoe')
-        .pop(); // dummy comment to force dart format to do one dot syntax per line
+        .pop();
 
     await tt
         .onHomeScreen()
@@ -87,7 +87,9 @@ void main() {
         .typeName('  Alice   ')
         .tapSubmit();
 
-    await tt.onDetailsScreen().expectWelcomeMessage('Welcome Alice!');
+    await tt // dummy comment to force dart format to do one dot syntax per line
+        .onDetailsScreen()
+        .expectWelcomeMessage('Welcome Alice!');
   });
 
   tapTest('100-taps challenge', config, (tt) async {
