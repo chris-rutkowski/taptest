@@ -18,9 +18,7 @@ void main() {
     ],
   );
 
-  tapTest('tap on the floating action button, verify counter', config, (
-    tester,
-  ) async {
+  tapTest('tap on the floating action button, verify counter', config, (tt) async {
     await tt.info('On Welcome screen');
     await tt.exists(WelcomeKeys.screen);
     await tt.tap(WelcomeKeys.httpButton);
