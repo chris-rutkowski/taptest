@@ -29,18 +29,16 @@ jobs:
 
     - name: Get package dependencies
       run: flutter pub get
-      working-directory: ./taptest
 
     - name: Get example dependencies
       run: flutter pub get
       working-directory: ./example
 
     - name: Run package tests
-      run: flutter test
-      working-directory: ./taptest
+      run: flutter test test
 
     - name: Run example tests
-      run: flutter test
+      run: flutter test test
       working-directory: ./example
 
     - name: Upload snapshot failures
