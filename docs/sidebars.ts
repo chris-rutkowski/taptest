@@ -34,6 +34,7 @@ const sidebars: SidebarsConfig = {
         'tutorial/snapshots',
         'tutorial/dark-theme',
         'tutorial/integration-tests',
+        'tutorial/congratulations'
       ],
     },
     {
