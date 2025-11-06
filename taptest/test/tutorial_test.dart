@@ -53,6 +53,43 @@ void main() {
     await tt.expectText(_AppKeys.welcomeMessage, 'Welcome Alice!');
   });
 
+  tapTest('Tutorial (PageObject)', config, (tt) async {
+    await tt
+        .onHomeScreen()
+        .expectCounterLabel('Click counter: 0')
+        .snapshot('HomeScreen_initial')
+        .tapIncrementButton()
+        .expectCounterLabel('Click counter: 1')
+        .tapIncrementButton(count: 2)
+        .expectCounterLabel('Click counter: 3')
+        .snapshot('HomeScreen_counter3')
+        .typeName('John Doe')
+        .tapSubmit();
+
+    await tt
+        .onDetailsScreen()
+        .expectWelcomeMessage('Welcome John Doe!')
+        .snapshot('DetailsScreen_JohnDoe')
+        .pop(); // dummy comment to force dart format to do one dot syntax per line
+
+    await tt
+        .onHomeScreen()
+        .typeName('')
+        .tapSubmit()
+        .expectErrorDialog()
+        .closeErrorDialog()
+        // Whitespace-only input should trigger validation
+        .typeName(' ')
+        .tapSubmit()
+        .expectErrorDialog()
+        .closeErrorDialog()
+        // Input trimming - messy spacing should be cleaned up
+        .typeName('  Alice   ')
+        .tapSubmit();
+
+    await tt.onDetailsScreen().expectWelcomeMessage('Welcome Alice!');
+  });
+
   tapTest('100-taps challenge', config, (tt) async {
     await tt.exists(_AppKeys.homeScreen);
     await tt.expectText(_AppKeys.counterLabel, 'Click counter: 0');
@@ -70,6 +107,8 @@ void main() {
     }
   });
 }
+
+// --- Below is the app being tested with the test(s) above ---
 
 abstract class _AppKeys {
   static const homeScreen = ValueKey('HomeScreen');
@@ -215,4 +254,83 @@ final class _DetailScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+// --- Below is the Page Object syntax ---
+
+extension on TapTester {
+  Future<_HomeScreenPageObject> onHomeScreen() async {
+    await info('On Home screen');
+    await exists(_AppKeys.homeScreen);
+    return _HomeScreenPageObject(this);
+  }
+
+  Future<_DetailsScreenPageObject> onDetailsScreen() async {
+    await info('On Details screen');
+    await exists(_AppKeys.detailsScreen);
+    return _DetailsScreenPageObject(this);
+  }
+}
+
+final class _HomeScreenPageObject extends PageObject<_HomeScreenPageObject> {
+  const _HomeScreenPageObject(super.tt);
+
+  Future<_HomeScreenPageObject> tapIncrementButton({int count = 1}) async {
+    await tt.tap(_AppKeys.incrementButton, count: count);
+    return this;
+  }
+
+  Future<_HomeScreenPageObject> expectCounterLabel(String text) async {
+    await tt.expectText(_AppKeys.counterLabel, text);
+    return this;
+  }
+
+  Future<_HomeScreenPageObject> typeName(String name) async {
+    await tt.type(_AppKeys.nameField, name);
+    return this;
+  }
+
+  Future<_HomeScreenPageObject> tapSubmit() async {
+    await tt.tap(_AppKeys.submitButton);
+    return this;
+  }
+
+  Future<_HomeScreenPageObject> expectErrorDialog() async {
+    await tt.exists(_AppKeys.errorDialog);
+    return this;
+  }
+
+  Future<_HomeScreenPageObject> closeErrorDialog() async {
+    await tt.tap(_AppKeys.errorDialogOKButton);
+    await tt.absent(_AppKeys.errorDialog);
+    return this;
+  }
+}
+
+extension on Future<_HomeScreenPageObject> {
+  Future<_HomeScreenPageObject> tapIncrementButton({int count = 1}) => then((r) => r.tapIncrementButton(count: count));
+  Future<_HomeScreenPageObject> expectCounterLabel(String text) => then((r) => r.expectCounterLabel(text));
+  Future<_HomeScreenPageObject> typeName(String name) => then((r) => r.typeName(name));
+  Future<_HomeScreenPageObject> tapSubmit() => then((r) => r.tapSubmit());
+  Future<_HomeScreenPageObject> expectErrorDialog() => then((r) => r.expectErrorDialog());
+  Future<_HomeScreenPageObject> closeErrorDialog() => then((r) => r.closeErrorDialog());
+}
+
+final class _DetailsScreenPageObject extends PageObject<_DetailsScreenPageObject> {
+  const _DetailsScreenPageObject(super.tt);
+
+  Future<_DetailsScreenPageObject> expectWelcomeMessage(String message) async {
+    await tt.expectText(_AppKeys.welcomeMessage, message);
+    return this;
+  }
+
+  Future<_DetailsScreenPageObject> pop() async {
+    await tt.pop();
+    return this;
+  }
+}
+
+extension on Future<_DetailsScreenPageObject> {
+  Future<_DetailsScreenPageObject> expectWelcomeMessage(String message) => then((r) => r.expectWelcomeMessage(message));
+  Future<_DetailsScreenPageObject> pop() => then((r) => r.pop());
 }

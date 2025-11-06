@@ -10,6 +10,7 @@ export 'src/networking/http_method.dart';
 export 'src/networking/mock_http_request_handler.dart';
 export 'src/networking/mock_http_response.dart';
 export 'src/networking/to_qr_image_http_request_handler.dart';
+export 'src/page_object.dart';
 export 'src/stubs/widget_qr_stub.dart';
 export 'src/sync_type.dart';
 export 'src/tap_tester.dart';
