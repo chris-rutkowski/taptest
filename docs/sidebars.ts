@@ -33,6 +33,7 @@ const sidebars: SidebarsConfig = {
         'tutorial/code-checkpoint',
         'tutorial/snapshots',
         'tutorial/dark-theme',
+        'tutorial/integration-tests',
       ],
     },
     {

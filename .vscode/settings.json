@@ -49,6 +49,7 @@
         "udevadm",
         "udid",
         "unawaited",
+        "webservices",
         "xcrun"
     ]
 }
