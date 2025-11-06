@@ -40,26 +40,26 @@ void main() {
     ],
   );
 
-  tapTest('e2e_ecom', config, (tester) async {
-    await tester.info('On Welcome screen');
-    await tester.exists(WelcomeKeys.screen);
-    await tester.snapshot('welcome_screen');
-    await tester.tap(WelcomeKeys.productsButton);
+  tapTest('e2e_ecom', config, (tt) async {
+    await tt.info('On Welcome screen');
+    await tt.exists(WelcomeKeys.screen);
+    await tt.snapshot('welcome_screen');
+    await tt.tap(WelcomeKeys.productsButton);
 
-    await tester.info('On Products screen');
-    await tester.exists(ProductScreenKeys.screen);
-    await tester.exists(ProductScreenKeys.tile(0));
-    // await tester.wait(Duration(seconds: 3));
-    // await tester.snapshot('http_screen');
+    await tt.info('On Products screen');
+    await tt.exists(ProductScreenKeys.screen);
+    await tt.exists(ProductScreenKeys.tile(0));
+    // await tt.wait(Duration(seconds: 3));
+    // await tt.snapshot('http_screen');
 
-    // await tester.absent(LongKeys.cell(72));
-    // await tester.scrollTo([LongKeys.cell(72), LongKeys.cellTitle], scrollable: LongKeys.list);
-    // await tester.snapshot('long_screen_72');
-    await tester.snapshot('http_screen');
+    // await tt.absent(LongKeys.cell(72));
+    // await tt.scrollTo([LongKeys.cell(72), LongKeys.cellTitle], scrollable: LongKeys.list);
+    // await tt.snapshot('long_screen_72');
+    await tt.snapshot('http_screen');
 
-    // await tester.pop();
+    // await tt.pop();
 
-    // await tester.snapshot('long_screen_popped');
+    // await tt.snapshot('long_screen_popped');
   });
 }
 

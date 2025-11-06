@@ -45,11 +45,11 @@ Now let's test the error scenario - what happens when users submit empty form? L
 ```dart title="test/e2e_test.dart"
 // previous steps
 
-await tester.type(AppKeys.nameField, '');
-await tester.tap(AppKeys.submitButton);
-await tester.exists(AppKeys.errorDialog);
-await tester.tap(AppKeys.errorDialogOKButton);
-await tester.absent(AppKeys.errorDialog);
+await tt.type(AppKeys.nameField, '');
+await tt.tap(AppKeys.submitButton);
+await tt.exists(AppKeys.errorDialog);
+await tt.tap(AppKeys.errorDialogOKButton);
+await tt.absent(AppKeys.errorDialog);
 ```
 
 > 💡 **Pro Tips:** The `type` action **replaces** existing text. The `absent` assertion is optional but excellent practice - it explicitly verifies the dialog actually disappeared, making your tests more reliable and self-documenting!

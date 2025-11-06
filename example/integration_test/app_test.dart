@@ -21,23 +21,23 @@ void main() {
   tapTest('tap on the floating action button, verify counter', config, (
     tester,
   ) async {
-    await tester.info('On Welcome screen');
-    await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.httpButton);
+    await tt.info('On Welcome screen');
+    await tt.exists(WelcomeKeys.screen);
+    await tt.tap(WelcomeKeys.httpButton);
 
-    await tester.info('On Http screen');
-    await tester.exists(HttpKeys.screen);
-    await tester.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 3));
-    await tester.snapshot('http_screen');
+    await tt.info('On Http screen');
+    await tt.exists(HttpKeys.screen);
+    await tt.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 3));
+    await tt.snapshot('http_screen');
 
-    // await tester.pumpWidget(ProviderScope(child: const ExampleApp()));
+    // await tt.pumpWidget(ProviderScope(child: const ExampleApp()));
     // final button = find.byKey(WelcomeKeys.httpButton);
-    // await tester.tap(button);
-    // await tester.pumpAndSettle();
+    // await tt.tap(button);
+    // await tt.pumpAndSettle();
     // expect(find.byKey(HttpKeys.screen), findsOneWidget);
 
     // await Future.delayed(const Duration(seconds: 2));
-    // await tester.pumpAndSettle();
+    // await tt.pumpAndSettle();
 
     // expect(find.byKey(HttpKeys.cell(0)), findsOneWidget);
   });

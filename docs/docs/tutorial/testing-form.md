@@ -50,10 +50,10 @@ We will introduce a new action - `type` - to simulate user input in the text fie
 ```dart title="test/e2e_test.dart"
 // previous steps
 
-await tester.type(AppKeys.nameField, 'John Doe');
-await tester.tap(AppKeys.submitButton);
-await tester.exists(AppKeys.detailsScreen);
-await tester.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
+await tt.type(AppKeys.nameField, 'John Doe');
+await tt.tap(AppKeys.submitButton);
+await tt.exists(AppKeys.detailsScreen);
+await tt.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
 ```
 
 Run the test `flutter test test` and you should see the following output:
@@ -80,10 +80,10 @@ For longer test cases, I recommend adding some logging with `info` action to ann
 
 
 ```dart title="test/e2e_test.dart" {2}
-await tester.tap(AppKeys.submitButton);
-await tester.info('On Details screen');
-await tester.exists(AppKeys.detailsScreen);
-await tester.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
+await tt.tap(AppKeys.submitButton);
+await tt.info('On Details screen');
+await tt.exists(AppKeys.detailsScreen);
+await tt.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
 ```
 
 If you run the test again you should see the following output:

@@ -42,7 +42,7 @@ part 'tap_tester_actions/wait.dart';
 
 const _singleFrameDuration = Duration(milliseconds: 17);
 
-typedef TapTesterCallback = Future<void> Function(TapTester tester);
+typedef TapTesterCallback = Future<void> Function(TapTester tt);
 
 @isTest
 void tapTest(String description, Config config, TapTesterCallback callback, {bool? skip}) {
@@ -62,8 +62,8 @@ void tapTest(String description, Config config, TapTesterCallback callback, {boo
           );
         }
 
-        final tester = await TapTester._bootstrap(widgetTester, description, logger, config, variant);
-        await callback(tester);
+        final tt = await TapTester._bootstrap(widgetTester, description, logger, config, variant);
+        await callback(tt);
       }
     } catch (e) {
       rethrow;

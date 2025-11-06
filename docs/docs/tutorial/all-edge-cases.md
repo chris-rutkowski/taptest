@@ -10,11 +10,11 @@ Users love to be creative! Some will try submitting forms with just spaces, thin
 // previous steps
 
 // Whitespace-only input should trigger validation
-await tester.type(AppKeys.nameField, ' ');
-await tester.tap(AppKeys.submitButton);
-await tester.exists(AppKeys.errorDialog);
-await tester.tap(AppKeys.errorDialogOKButton);
-await tester.absent(AppKeys.errorDialog);
+await tt.type(AppKeys.nameField, ' ');
+await tt.tap(AppKeys.submitButton);
+await tt.exists(AppKeys.errorDialog);
+await tt.tap(AppKeys.errorDialogOKButton);
+await tt.absent(AppKeys.errorDialog);
 ```
 
 ## Input Trimming
@@ -25,11 +25,11 @@ Real users type messily - extra spaces at the beginning, end, or even multiple s
 // previous steps
 
 // Input trimming - messy spacing should be cleaned up
-await tester.type(AppKeys.nameField, '  Alice   ');
-await tester.tap(AppKeys.submitButton);
-await tester.info('On Details screen');
-await tester.exists(AppKeys.detailsScreen);
-await tester.expectText(AppKeys.welcomeMessage, 'Welcome Alice!');
+await tt.type(AppKeys.nameField, '  Alice   ');
+await tt.tap(AppKeys.submitButton);
+await tt.info('On Details screen');
+await tt.exists(AppKeys.detailsScreen);
+await tt.expectText(AppKeys.welcomeMessage, 'Welcome Alice!');
 ```
 
 ## 🎉 Achievement Unlocked!

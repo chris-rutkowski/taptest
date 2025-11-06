@@ -25,7 +25,7 @@ Your project
 Let's update the test name to reflect it's now an integration test:
 
 ```dart title="integration_test/e2e_test.dart"
-  tapTest('My E2E Integration test', config, (tester) async {
+  tapTest('My E2E Integration test', config, (tt) async {
 ```
 
 ## 🏁 Run the integration tests

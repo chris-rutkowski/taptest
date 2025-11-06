@@ -10,15 +10,15 @@ void main() {
     variants: defaultIntegrationTapTesterConfig.variants.where((e) => e.locale != const Locale('es')).toList(),
   );
 
-  tapTest('quick navigation', noSpanishConfig, (tester) async {
+  tapTest('quick navigation', noSpanishConfig, (tt) async {
     for (var i = 0; i < 10; i++) {
-      await tester.info('On Welcome screen ${i + 1}/10');
-      await tester.exists(WelcomeKeys.screen);
-      await tester.tap(WelcomeKeys.dummyButton);
+      await tt.info('On Welcome screen ${i + 1}/10');
+      await tt.exists(WelcomeKeys.screen);
+      await tt.tap(WelcomeKeys.dummyButton);
 
-      await tester.info('On Dummy screen');
-      await tester.exists(DummyKeys.screen);
-      await tester.pop();
+      await tt.info('On Dummy screen');
+      await tt.exists(DummyKeys.screen);
+      await tt.pop();
     }
   });
 }

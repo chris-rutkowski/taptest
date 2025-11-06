@@ -15,22 +15,22 @@ Snapshots catch these visual bugs automatically!
 Add visual checkpoints at key moments in your user journey:
 
 ```dart title="test/e2e_test.dart" {3,9,16}
-await tester.exists(AppKeys.homeScreen);
-await tester.expectText(AppKeys.counterLabel, 'Click counter: 0');
-await tester.snapshot('HomeScreen_initial');
+await tt.exists(AppKeys.homeScreen);
+await tt.expectText(AppKeys.counterLabel, 'Click counter: 0');
+await tt.snapshot('HomeScreen_initial');
 
-await tester.tap(AppKeys.incrementButton);
-await tester.expectText(AppKeys.counterLabel, 'Click counter: 1');
-await tester.tap(AppKeys.incrementButton, count: 2);
-await tester.expectText(AppKeys.counterLabel, 'Click counter: 3');
-await tester.snapshot('HomeScreen_counter3');
+await tt.tap(AppKeys.incrementButton);
+await tt.expectText(AppKeys.counterLabel, 'Click counter: 1');
+await tt.tap(AppKeys.incrementButton, count: 2);
+await tt.expectText(AppKeys.counterLabel, 'Click counter: 3');
+await tt.snapshot('HomeScreen_counter3');
 
-await tester.type(AppKeys.nameField, 'John Doe');
-await tester.tap(AppKeys.submitButton);
-await tester.info('🚀 Navigated to Details screen');
-await tester.exists(AppKeys.detailsScreen);
-await tester.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
-await tester.snapshot('DetailsScreen_JohnDoe');
+await tt.type(AppKeys.nameField, 'John Doe');
+await tt.tap(AppKeys.submitButton);
+await tt.info('🚀 Navigated to Details screen');
+await tt.exists(AppKeys.detailsScreen);
+await tt.expectText(AppKeys.welcomeMessage, 'Welcome John Doe!');
+await tt.snapshot('DetailsScreen_JohnDoe');
 ```
 
 ## 🎬 Record current snapshots

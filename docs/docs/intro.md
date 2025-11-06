@@ -74,7 +74,7 @@ import 'package:your_app/main.dart' as app;
 
 void main() {
   testWidgets('User can complete shopping flow', (WidgetTester tester) async {
-    await tester.pumpWidget(app.MyApp());
+    await tt.pumpWidget(app.MyApp());
     final tt = TapTester(tester);
     
     // Navigate to product

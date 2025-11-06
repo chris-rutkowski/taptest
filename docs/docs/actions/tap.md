@@ -13,11 +13,11 @@ The `tap` action allows you to simulate user taps on various interactive element
 
 ## Parameters
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `key` | `TapKey` | required | The key identifying the widget to tap |
-| `sync` | `SyncType` | `SyncType.instant` | How to synchronize after the tap |
-| `count` | `int` | `1` | Number of times to tap (for multi-tap gestures) |
+| Parameter | Type       | Default            | Description                                     |
+| --------- | ---------- | ------------------ | ----------------------------------------------- |
+| `key`     | `TapKey`   | required           | The key identifying the widget to tap           |
+| `sync`    | `SyncType` | `SyncType.instant` | How to synchronize after the tap                |
+| `count`   | `int`      | `1`                | Number of times to tap (for multi-tap gestures) |
 
 ## Examples
 
@@ -26,19 +26,19 @@ The `tap` action allows you to simulate user taps on various interactive element
 Tap a submit button:
 
 ```dart
-await tester.tap(MyKeys.submitButton);
+await tt.tap(MyKeys.submitButton);
 ```
 
 Toggle a checkbox:
 
 ```dart
-await tester.tap(MyKeys.acceptTermsCheckbox);
+await tt.tap(MyKeys.acceptTermsCheckbox);
 ```
 
 Tap a button within a repeatable component using nested keys:
 
 ```dart
-await tester.tap([MyKeys.tile(1), MyKeys.deleteButton]);
+await tt.tap([MyKeys.tile(1), MyKeys.deleteButton]);
 ```
 
 ### Tap and settle
@@ -46,7 +46,7 @@ await tester.tap([MyKeys.tile(1), MyKeys.deleteButton]);
 By default, the screen refreshes only once after this action to prioritize fast test execution. To wait for all animations to complete (e.g., page transitions, bottom sheets, or custom animations), set `sync` to `SyncType.settled`.
 
 ```dart
-await tester.tap(MyKeys.profileButton, sync: SyncType.settled);
+await tt.tap(MyKeys.profileButton, sync: SyncType.settled);
 ```
 
 ### Double tap
@@ -54,7 +54,7 @@ await tester.tap(MyKeys.profileButton, sync: SyncType.settled);
 Use the `count` parameter to simulate double taps or longer tap sequences. Subsequent taps are delayed by 40ms (`kDoubleTapMinTime`). This delay is only noticeable in integration tests where it slightly increases execution time.
 
 ```dart
-await tester.tap(MyKeys.deleteButton, count: 2);
+await tt.tap(MyKeys.deleteButton, count: 2);
 ```
 
 ## Troubleshooting

@@ -14,16 +14,16 @@ void main() {
     ),
   );
 
-  tapTest('extensions', config, (tester) async {
+  tapTest('extensions', config, (tt) async {
     // Ensure the app displays the expected screen (good general practice)
-    await tester.exists(_Keys.screen);
+    await tt.exists(_Keys.screen);
 
     // Verify initial state
-    await tester.expectText(_Keys.remoteTextLabel, 'Initial text');
+    await tt.expectText(_Keys.remoteTextLabel, 'Initial text');
 
     // Update and verify
-    await tester.updateRemoteText('Updated text');
-    await tester.expectText(_Keys.remoteTextLabel, 'Updated text');
+    await tt.updateRemoteText('Updated text');
+    await tt.expectText(_Keys.remoteTextLabel, 'Updated text');
   });
 }
 

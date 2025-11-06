@@ -9,21 +9,21 @@ void main() {
     ),
   );
 
-  tapTest('Animation', config, (tester) async {
-    await tester.exists(_Keys.screen);
-    await tester.expectText(_Keys.valueLabel, 'Value: 0.00');
+  tapTest('Animation', config, (tt) async {
+    await tt.exists(_Keys.screen);
+    await tt.expectText(_Keys.valueLabel, 'Value: 0.00');
 
-    await tester.tap(_Keys.startButton, sync: SyncType.skip);
-    await tester.expectText(_Keys.valueLabel, 'Value: 0.00');
+    await tt.tap(_Keys.startButton, sync: SyncType.skip);
+    await tt.expectText(_Keys.valueLabel, 'Value: 0.00');
 
-    await tester.wait(const Duration(milliseconds: 50));
-    await tester.expectText(_Keys.valueLabel, 'Value: 0.05');
+    await tt.wait(const Duration(milliseconds: 50));
+    await tt.expectText(_Keys.valueLabel, 'Value: 0.05');
 
-    await tester.wait(const Duration(milliseconds: 100));
-    await tester.expectText(_Keys.valueLabel, 'Value: 0.15');
+    await tt.wait(const Duration(milliseconds: 100));
+    await tt.expectText(_Keys.valueLabel, 'Value: 0.15');
 
-    await tester.settle();
-    await tester.expectText(_Keys.valueLabel, 'Value: 1.00');
+    await tt.settle();
+    await tt.expectText(_Keys.valueLabel, 'Value: 1.00');
   });
 }
 

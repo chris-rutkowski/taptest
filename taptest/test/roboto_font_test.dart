@@ -26,11 +26,11 @@ void main() {
     ),
   );
 
-  tapTest('Roboto font', config, (tester) async {
+  tapTest('Roboto font', config, (tt) async {
     // Ensure the app displays the expected screen (good general practice)
-    await tester.exists(key);
+    await tt.exists(key);
 
     // Verify fonts via snapshot
-    await tester.snapshot('screen');
+    await tt.snapshot('screen');
   });
 }

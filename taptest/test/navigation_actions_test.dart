@@ -7,44 +7,44 @@ void main() {
     builder: (params) => _NavApp(initialRoute: params.initialRoute),
   );
 
-  tapTest('flow', config, (tester) async {
+  tapTest('flow', config, (tt) async {
     // Ensure the app displays the expected screen (good general practice)
-    await tester.exists(_Keys.homeScreen);
+    await tt.exists(_Keys.homeScreen);
 
     // Navigate to edit screen by pressing button and go back
-    await tester.tap(_Keys.editButton);
-    await tester.exists(_Keys.editScreen);
-    await tester.pop();
-    await tester.exists(_Keys.homeScreen);
+    await tt.tap(_Keys.editButton);
+    await tt.exists(_Keys.editScreen);
+    await tt.pop();
+    await tt.exists(_Keys.homeScreen);
 
     // Navigate to edit screen by deeplink route
-    await tester.go('/edit');
-    await tester.exists(_Keys.editScreen);
+    await tt.go('/edit');
+    await tt.exists(_Keys.editScreen);
 
     // Makes unsaved changes
-    await tester.tap(_Keys.unsavedChangesCheckbox);
+    await tt.tap(_Keys.unsavedChangesCheckbox);
 
     // Attempt to go back, cancel the confirm exit dialog
-    await tester.pop();
-    await tester.exists(_Keys.confirmExitDialog);
-    await tester.tap(_Keys.dialogCancelButton);
-    await tester.absent(_Keys.confirmExitDialog);
-    await tester.exists(_Keys.editScreen);
+    await tt.pop();
+    await tt.exists(_Keys.confirmExitDialog);
+    await tt.tap(_Keys.dialogCancelButton);
+    await tt.absent(_Keys.confirmExitDialog);
+    await tt.exists(_Keys.editScreen);
 
     // Confirm exit dialog and go back to home screen
-    await tester.pop();
-    await tester.tap(_Keys.dialogConfirmButton);
-    await tester.absent(_Keys.editScreen);
-    await tester.exists(_Keys.homeScreen);
+    await tt.pop();
+    await tt.tap(_Keys.dialogConfirmButton);
+    await tt.absent(_Keys.editScreen);
+    await tt.exists(_Keys.homeScreen);
   });
 
-  tapTest('initial route', config.copyWith(initialRoute: '/edit'), (tester) async {
+  tapTest('initial route', config.copyWith(initialRoute: '/edit'), (tt) async {
     // starts immediately on edit screen
-    await tester.exists(_Keys.editScreen);
+    await tt.exists(_Keys.editScreen);
 
     // can pop to home screen
-    await tester.pop();
-    await tester.exists(_Keys.homeScreen);
+    await tt.pop();
+    await tt.exists(_Keys.homeScreen);
   });
 }
 

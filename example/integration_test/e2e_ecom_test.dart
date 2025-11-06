@@ -11,20 +11,20 @@ import '_utils/default_integration_tap_tester_config.dart';
 void main() {
   final config = defaultIntegrationTapTesterConfig.copyWith();
 
-  tapTest('flow', config, (tester) async {
-    await tester.info('On Welcome screen');
-    await tester.exists(WelcomeKeys.screen);
-    await tester.tap(WelcomeKeys.productsButton);
+  tapTest('flow', config, (tt) async {
+    await tt.info('On Welcome screen');
+    await tt.exists(WelcomeKeys.screen);
+    await tt.tap(WelcomeKeys.productsButton);
 
-    await tester.info('On Products screen');
-    await tester.exists(ProductScreenKeys.screen);
-    await tester.exists(ProductScreenKeys.tile(0));
+    await tt.info('On Products screen');
+    await tt.exists(ProductScreenKeys.screen);
+    await tt.exists(ProductScreenKeys.tile(0));
 
-    await tester.snapshot('http_screen');
+    await tt.snapshot('http_screen');
 
-    // await tester.pop();
+    // await tt.pop();
 
-    // await tester.snapshot('long_screen_popped');
+    // await tt.snapshot('long_screen_popped');
   });
 }
 

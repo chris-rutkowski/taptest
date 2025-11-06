@@ -30,21 +30,21 @@ All taptest actions follow consistent patterns:
 
 ### Async/Await
 ```dart
-await tester.tap(MyKeys.button);
-await tester.exists(MyKeys.result);
+await tt.tap(MyKeys.button);
+await tt.exists(MyKeys.result);
 ```
 
 ### Key-Based Targeting
 ```dart
 // Target widgets using keys
-await tester.tap(MyKeys.submitButton);
-await tester.exists(MyKeys.successMessage);
+await tt.tap(MyKeys.submitButton);
+await tt.exists(MyKeys.successMessage);
 ```
 
 ### Synchronization Options
 ```dart
 // Control timing with sync parameter
-await tester.tap(MyKeys.button, sync: SyncType.settled);
+await tt.tap(MyKeys.button, sync: SyncType.settled);
 ```
 
 ## Getting Started
@@ -57,18 +57,18 @@ To use actions in your tests:
 4. **Verify results** with assertion actions
 
 ```dart
-testWidgets('user flow example', (tester) async {
+testWidgets('user flow example', (tt) async {
   // Interaction
-  await tester.tap(MyKeys.loginButton);
+  await tt.tap(MyKeys.loginButton);
   
   // Verification
-  await tester.exists(MyKeys.loginForm);
+  await tt.exists(MyKeys.loginForm);
   
   // More interactions...
-  await tester.enterText(MyKeys.emailField, 'user@example.com');
-  await tester.tap(MyKeys.submitButton, sync: SyncType.settled);
+  await tt.enterText(MyKeys.emailField, 'user@example.com');
+  await tt.tap(MyKeys.submitButton, sync: SyncType.settled);
   
   // Final verification
-  await tester.exists(MyKeys.dashboard);
+  await tt.exists(MyKeys.dashboard);
 });
 ```

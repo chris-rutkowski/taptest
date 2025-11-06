@@ -23,25 +23,25 @@ void main() {
     ],
   );
 
-  tapTest('http', config, (tester) async {
-    await tester.info('On Welcome screen');
-    await tester.exists(WelcomeKeys.screen);
-    await tester.snapshot('welcome_screen');
-    await tester.tap(WelcomeKeys.httpButton);
+  tapTest('http', config, (tt) async {
+    await tt.info('On Welcome screen');
+    await tt.exists(WelcomeKeys.screen);
+    await tt.snapshot('welcome_screen');
+    await tt.tap(WelcomeKeys.httpButton);
 
-    await tester.info('On Http screen');
-    await tester.exists(HttpKeys.screen);
-    // await tester.snapshot('http_screen');
+    await tt.info('On Http screen');
+    await tt.exists(HttpKeys.screen);
+    // await tt.snapshot('http_screen');
 
-    // await tester.absent(LongKeys.cell(72));
-    // await tester.scrollTo([LongKeys.cell(72), LongKeys.cellTitle], scrollable: LongKeys.list);
-    // await tester.snapshot('long_screen_72');
-    await tester.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 1));
-    await tester.snapshot('http_screen');
+    // await tt.absent(LongKeys.cell(72));
+    // await tt.scrollTo([LongKeys.cell(72), LongKeys.cellTitle], scrollable: LongKeys.list);
+    // await tt.snapshot('long_screen_72');
+    await tt.exists(HttpKeys.cell(0), timeout: const Duration(seconds: 1));
+    await tt.snapshot('http_screen');
 
-    // await tester.pop();
+    // await tt.pop();
 
-    // await tester.snapshot('long_screen_popped');
+    // await tt.snapshot('long_screen_popped');
   });
 }
 
