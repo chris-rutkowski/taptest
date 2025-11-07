@@ -2,6 +2,8 @@
 
 In **Widget tests**, TapTest requires you to mock all network requests due to limitations in Flutter's underlying widget testing framework. In **Integration tests**, mocking is optional – you can mock all or part of your network layer to reduce dependency on external services.
 
+The mocking approach described in this guide works seamlessly with [**http**](https://pub.dev/packages/http), [**dio**](https://pub.dev/packages/dio), and most likely all other HTTP client libraries. TapTest intercepts requests at the very high level, so your choice of networking package doesn't affect how you write mocks.
+
 ## 🛠️ How to mock network requests?
 
 For each distinct webservice (or other network request), create a class that implements `MockHttpRequestHandler`. Here's an example of a simple GET request handler that returns a list of TODO items:
@@ -187,4 +189,53 @@ final config = Config(
   },
   builder: (params) => const MyApp(params: params),
 );
+```
+
+## 🎭 Creative mocks
+
+You can create versatile mocks that serve multiple testing purposes. The following `PostTodoHandler` works for happy path scenarios while also simulating errors like unauthorized access and validation failures based on user input:
+
+```dart
+final class PostTodoHandler implements MockHttpRequestHandler {
+  final GetTodosHandler getHandler;
+
+  const PostTodoHandler({
+    required this.getHandler,
+  });
+
+  @override
+  bool canHandle(Uri uri, HttpMethod method) => method == HttpMethod.post && uri.path == '/todos';
+
+  @override
+  FutureOr<MockHttpResponse>? handle(Uri uri, HttpHeaders headers, String? body) {
+    final todo = jsonDecode(body!)['content'] as String;
+
+    // Simulated errors based on todo content
+
+    if (todo == 'unauthorized') {
+      return MockHttpResponse(
+        statusCode: HttpStatus.unauthorized, // 401
+        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+        body: jsonEncode({'error': 'Unauthorized'}),
+      );
+    }
+
+    if (todo == 'bad') {
+      return MockHttpResponse(
+        statusCode: HttpStatus.badRequest, // 400
+        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+        body: jsonEncode({'error': 'Invalid TODO content'}),
+      );
+    }
+
+    // Success
+
+    getHandler.todos.insert(0, todo);
+
+    return MockHttpResponse(
+      statusCode: HttpStatus.created, // 201
+      headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+    );
+  }
+}
 ```
