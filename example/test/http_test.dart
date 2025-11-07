@@ -11,7 +11,7 @@ import '_utils/default_tap_tester_config.dart';
 
 void main() {
   final config = defaultTapTesterConfig.copyWith(
-    httpRequestHandlers: [
+    httpRequestHandlers: () => [
       const TodoHandler(
         todos: [
           TodoDto(id: 1, text: 'From test 1', completed: false),

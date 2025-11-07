@@ -33,7 +33,12 @@ extension TapTesterText on TapTester {
           }
 
           expect((elementWidget).controller!.text, text);
-        } else {}
+        } else {
+          throw TapTestFailure(
+            'Widget identified by key `${_formatKey(key)}` is neither Text nor RichText',
+            retriable: false,
+          );
+        }
 
         return Future.value();
       },
