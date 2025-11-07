@@ -5,7 +5,7 @@ import 'package:taptest/taptest.dart';
 
 void main() {
   test('no variants', () async {
-    expect(
+    await expectLater(
       () => validateConfig(
         Config(
           variants: [],

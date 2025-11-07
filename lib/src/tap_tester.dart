@@ -209,37 +209,34 @@ final class TapTester {
     Duration timeout, {
     Duration retryDelay = _singleFrameDuration,
   }) async {
-    final end = DateTime.now().add(timeout);
-    final totalSeconds = timeout.inMilliseconds / 1000.0;
-
+    var remaining = timeout;
     var firstCheck = true;
 
     while (true) {
-      final elapsed = timeout - end.difference(DateTime.now());
-      final elapsedSeconds = (elapsed.inMilliseconds / 1000);
-
       if (firstCheck) {
         logger.log(TapTesterLogType.stepInProgress, message);
       } else {
         logger.log(
           TapTesterLogType.stepInProgress,
-          '$message ${elapsedSeconds.toStringAsFixed(2)}s/${totalSeconds.toStringAsFixed(2)}s',
+          '$message (${remaining.inMilliseconds}ms remaining)',
         );
       }
 
       try {
         return await expectation();
       } catch (e) {
+        remaining -= retryDelay;
+
         if (e is TapTestFailure && !e.retriable) {
+          rethrow;
+        }
+
+        if (timeout <= Duration.zero || remaining.isNegative) {
           rethrow;
         }
 
         await widgetTester.pump(retryDelay);
         firstCheck = false;
-
-        if (DateTime.now().isAfter(end)) {
-          rethrow;
-        }
       }
     }
   }
