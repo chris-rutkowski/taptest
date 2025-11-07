@@ -1,6 +1,6 @@
 name: taptest
 description: "Lightning-fast Flutter testing framework for comprehensive E2E and granular tests with snapshot support."
-version: 0.0.10
+version: 0.0.11
 homepage: https://taptest.dev
 repository: https://github.com/chris-rutkowski/taptest
 

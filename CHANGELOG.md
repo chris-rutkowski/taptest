@@ -1,3 +1,3 @@
-## 0.0.10
+## 0.0.11
 
 Alpha release in progress, incremental updates.
