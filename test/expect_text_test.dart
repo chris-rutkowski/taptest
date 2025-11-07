@@ -26,7 +26,7 @@ void main() {
     await tt.expectText(_Keys.richTextWithWidget, 'This is ${objectReplacementCharacter}rich text');
 
     // `_Keys.screen` doesn't represent a textual widget, so this will throw an exception
-    expect(
+    await expectLater(
       () => tt.expectText(_Keys.screen, 'That will throw an exception'),
       throwsA(
         isA<TapTestFailure>().having((e) => e.retriable, '', false),

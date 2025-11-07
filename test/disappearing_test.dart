@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:taptest/taptest.dart';
 
 void main() {
@@ -8,11 +9,48 @@ void main() {
     ),
   );
 
-  tapTest('Disappearing', config, (tt) async {
+  tapTest('Disappearing - wait', config, (tt) async {
     await tt.exists(_Keys.screen);
     await tt.exists(_Keys.widget);
     await tt.wait(const Duration(seconds: 2));
-    await tt.absent(_Keys.widget);
+    await tt.absent(_Keys.widget, timeout: Duration.zero);
+  });
+
+  tapTest('Disappearing - absent timeout', config, (tt) async {
+    await tt.exists(_Keys.screen);
+    await tt.exists(_Keys.widget);
+    await tt.absent(_Keys.widget, timeout: Duration(seconds: 3));
+  });
+
+  tapTest('Disappearing - wait too short', config, (tt) async {
+    await tt.exists(_Keys.screen);
+    await tt.exists(_Keys.widget);
+    await tt.wait(const Duration(seconds: 1));
+
+    await expectLater(
+      () => tt.absent(_Keys.widget, timeout: Duration.zero),
+      throwsA(
+        isA<TestFailure>(),
+      ),
+    );
+
+    // depletes the pending timer
+    await tt.wait(const Duration(seconds: 1));
+  });
+
+  tapTest('Disappearing - absent timeout too short', config, (tt) async {
+    await tt.exists(_Keys.screen);
+    await tt.exists(_Keys.widget);
+
+    await expectLater(
+      () => tt.absent(_Keys.widget, timeout: Duration(seconds: 1)),
+      throwsA(
+        isA<TestFailure>(),
+      ),
+    );
+
+    // depletes the pending timer
+    await tt.wait(const Duration(seconds: 1));
   });
 }
 
