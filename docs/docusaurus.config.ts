@@ -110,18 +110,7 @@ const config: Config = {
         {
           title: 'Community',
           items: [
-            {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
+
           ],
         },
         {
@@ -132,8 +121,20 @@ const config: Config = {
               to: '/blog',
             },
             {
-              label: 'GitHub',
+              label: 'GitHub: taptest',
               href: 'https://github.com/chris-rutkowski/taptest',
+            },
+            {
+              label: 'pub.dev: taptest',
+              href: 'https://pub.dev/packages/taptest',
+            },
+            {
+              label: 'LinkedIn',
+              href: 'https://www.linkedin.com/in/chris-rutkowski/',
+            },
+            {
+              label: 'Buy Me A Coffee',
+              href: 'https://www.buymeacoffee.com/chrisrkw',
             },
           ],
         },
