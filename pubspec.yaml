@@ -23,7 +23,7 @@ dependencies:
   path: ^1.8.0
   platform: ^3.0.0
   qr: ^3.0.0
-  taptest_runtime: ^0.0.11
+  taptest_runtime: ^0.0.4
     # path: ../taptest_runtime
 
 dev_dependencies:

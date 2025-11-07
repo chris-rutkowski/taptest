@@ -35,8 +35,8 @@ dev_dependencies:
   json_serializable:
   riverpod_generator:
   riverpod_lint:
-  taptest: ^0.0.5
-    # path: ../taptest
+  taptest:
+    path: ../
   taptest_runtime: ^0.0.4
 
 flutter:
