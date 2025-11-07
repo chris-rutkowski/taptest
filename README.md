@@ -24,7 +24,7 @@ See [https://taptest.dev](https://taptest.dev) for tutorial, documentation, best
 void main() {
   final config = Config(
     variants: Variant.lightAndDarkVariants, // ☀️ 🌙
-    httpRequestHandlers: [
+    httpRequestHandlers: () => [
       // required for ultra fast Widget tests
       // optional for stable Integration tests
       MockRegistrationWebservice(success: true),
