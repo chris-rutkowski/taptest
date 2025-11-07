@@ -71,7 +71,7 @@ final class ProductsHandler implements MockHttpRequestHandler {
   });
 
   @override
-  bool canHandle(Uri uri, HttpMethod method, String path) {
+  bool canHandle(Uri uri, HttpMethod method) {
     return method == HttpMethod.get && uri.path == '/products';
   }
 
