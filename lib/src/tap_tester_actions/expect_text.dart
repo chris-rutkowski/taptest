@@ -21,6 +21,18 @@ extension TapTesterText on TapTester {
           expect((elementWidget).data, text);
         } else if (elementWidget is RichText) {
           expect((elementWidget).text.toPlainText(), text);
+        } else if (elementWidget is TextField) {
+          if (elementWidget.controller == null) {
+            throw _createNoTextEditingControllerFailure(key, elementWidget);
+          }
+
+          expect((elementWidget).controller!.text, text);
+        } else if (elementWidget is TextFormField) {
+          if (elementWidget.controller == null) {
+            throw _createNoTextEditingControllerFailure(key, elementWidget);
+          }
+
+          expect((elementWidget).controller!.text, text);
         } else {
           throw TapTestFailure(
             'Widget identified by key `${_formatKey(key)}` is neither Text nor RichText',
@@ -35,5 +47,12 @@ extension TapTesterText on TapTester {
     );
 
     logger.log(TapTesterLogType.stepSuccessful, 'Text of ${_formatKey(key)} matches "$text"');
+  }
+
+  TapTestFailure _createNoTextEditingControllerFailure(TapKey key, Widget widget) {
+    return TapTestFailure(
+      '${widget.runtimeType} identified by key `${_formatKey(key)}` does not have a TextEditingController assigned, cannot get its text',
+      retriable: false,
+    );
   }
 }

@@ -14,7 +14,7 @@ void main() {
   const imageUrl = 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg';
 
   final config = defaultTapTesterConfig.copyWith(
-    httpRequestHandlers: [
+    httpRequestHandlers: () => [
       const ProductsHandler(
         products: [
           ProductDto(
@@ -71,7 +71,7 @@ final class ProductsHandler implements MockHttpRequestHandler {
   });
 
   @override
-  bool canHandle(Uri uri, HttpMethod method, String path) {
+  bool canHandle(Uri uri, HttpMethod method) {
     return method == HttpMethod.get && uri.path == '/products';
   }
 

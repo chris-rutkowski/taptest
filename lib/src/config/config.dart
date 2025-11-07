@@ -8,6 +8,8 @@ import 'custom_font.dart';
 import 'snapshot_config.dart';
 import 'variant.dart';
 
+Iterable<MockHttpRequestHandler> _emptyHttpRequestHandlers() => [];
+
 final class Config {
   final TapTesterLoggerFactory loggerFactory;
   final double timeDilation;
@@ -16,7 +18,7 @@ final class Config {
   final double pixelDensity;
   final Iterable<CustomFont> customFonts;
   final SnapshotConfig snapshot;
-  final Iterable<MockHttpRequestHandler> httpRequestHandlers;
+  final Iterable<MockHttpRequestHandler> Function() httpRequestHandlers;
   final Iterable<ImageProvider> precachedImages;
   final Iterable<dynamic> extensions;
   final Widget Function(RuntimeParams params) builder;
@@ -29,7 +31,7 @@ final class Config {
     this.pixelDensity = 2.0,
     this.customFonts = const [],
     this.snapshot = const SnapshotConfig(),
-    this.httpRequestHandlers = const [],
+    this.httpRequestHandlers = _emptyHttpRequestHandlers,
     this.precachedImages = const [],
     this.extensions = const [],
     required this.builder,
@@ -47,7 +49,7 @@ final class Config {
     SnapshotConfig? snapshot,
     List<ThemeMode>? themeModes,
     List<Locale>? locales,
-    Iterable<MockHttpRequestHandler>? httpRequestHandlers,
+    Iterable<MockHttpRequestHandler> Function()? httpRequestHandlers,
     Iterable<ImageProvider>? precachedImages,
     Iterable<dynamic>? extensions,
     Widget Function(RuntimeParams)? builder,

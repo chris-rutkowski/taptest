@@ -5,6 +5,7 @@ extension TapTesterType on TapTester {
     TapKey key,
     String text, {
     bool secret = false,
+    bool submit = false,
     SyncType sync = SyncType.instant,
   }) async {
     final printText = secret ? '*' * text.length : text;
@@ -18,6 +19,10 @@ extension TapTesterType on TapTester {
 
     await widgetTester.enterText(finder, text);
     await _sync(sync);
+
+    if (submit) {
+      await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+    }
 
     logger.log(TapTesterLogType.stepSuccessful, 'Typed "$printText" into ${_formatKey(key)}');
   }

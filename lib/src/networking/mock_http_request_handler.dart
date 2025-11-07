@@ -10,7 +10,6 @@ abstract class MockHttpRequestHandler {
   bool canHandle(
     Uri uri,
     HttpMethod method,
-    String path,
   );
 
   FutureOr<MockHttpResponse?> handle(Uri uri, HttpHeaders headers, String? body);

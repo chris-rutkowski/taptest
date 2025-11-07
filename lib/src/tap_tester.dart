@@ -112,7 +112,7 @@ final class TapTester {
 
     HttpOverrides.global = MockableHttpOverrides(
       testType: testType,
-      handlers: config.httpRequestHandlers,
+      handlers: config.httpRequestHandlers(),
     );
 
     if (testType == TestType.widget) {

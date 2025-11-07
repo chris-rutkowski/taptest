@@ -11,7 +11,7 @@ import '_utils/default_tap_tester_config.dart';
 
 void main() {
   final config = defaultTapTesterConfig.copyWith(
-    httpRequestHandlers: [
+    httpRequestHandlers: () => [
       const TodoHandler(
         todos: [
           TodoDto(id: 1, text: 'From test 1', completed: false),
@@ -53,7 +53,7 @@ final class TodoHandler implements MockHttpRequestHandler {
   });
 
   @override
-  bool canHandle(Uri uri, HttpMethod method, String path) {
+  bool canHandle(Uri uri, HttpMethod method) {
     return method == HttpMethod.get && uri.path == '/todos';
   }
 
