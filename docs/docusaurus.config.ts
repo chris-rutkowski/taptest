@@ -78,7 +78,7 @@ const config: Config = {
       title: 'TapTest',
       logo: {
         alt: 'TapTest Logo',
-        src: 'img/logo.svg',
+        src: 'img/tap_test_logo.webp',
       },
       items: [
         {
