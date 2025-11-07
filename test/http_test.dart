@@ -45,6 +45,23 @@ void main() {
     await tt.verifyTodos(['Just added', 'Feed cat', 'Walk dog', 'Write tests', 'Buy milk']);
     await tt.expectText([_Keys.tile(4), _Keys.tileTitle], 'Buy milk');
   });
+
+  final faultyConfig = Config(
+    httpRequestHandlers: () => [
+      _GetTodosHandler(faulty: true, todos: []),
+      // no need for POST handler in this test
+    ],
+
+    builder: (params) => const MaterialApp(
+      home: _Screen(),
+    ),
+  );
+
+  tapTest('stateful http', faultyConfig, (tt) async {
+    // Ensure the app displays the expected screen (good general practice)
+    await tt.exists(_Keys.screen);
+    await tt.expectText(_Keys.errorLabel, 'HTTP Error: 500');
+  });
 }
 
 extension on TapTester {
@@ -64,6 +81,7 @@ abstract class _Keys {
   static const addTodoField = ValueKey('AddTodoField');
   static ValueKey<String> tile(int index) => ValueKey('Tile:$index');
   static const tileTitle = ValueKey('TileTitle');
+  static const errorLabel = ValueKey('ErrorLabel');
 }
 
 final class _Screen extends StatefulWidget {
@@ -135,7 +153,9 @@ final class _ScreenState extends State<_Screen> {
       appBar: AppBar(
         title: const Text('Todo app'),
       ),
-      body: todos == null
+      body: error != null
+          ? Center(child: Text(error!, key: _Keys.errorLabel))
+          : todos == null
           ? Center(child: CircularProgressIndicator())
           : Column(
               children: [
@@ -167,10 +187,12 @@ final class _ScreenState extends State<_Screen> {
 }
 
 final class _GetTodosHandler implements MockHttpRequestHandler {
+  final bool faulty;
   final List<String> todos;
 
   _GetTodosHandler({
     required this.todos,
+    this.faulty = false,
   });
 
   @override
@@ -180,6 +202,12 @@ final class _GetTodosHandler implements MockHttpRequestHandler {
 
   @override
   FutureOr<MockHttpResponse>? handle(Uri uri, HttpHeaders headers, String? body) {
+    if (faulty) {
+      return MockHttpResponse(
+        statusCode: HttpStatus.internalServerError,
+      );
+    }
+
     return MockHttpResponse(
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
