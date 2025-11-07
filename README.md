@@ -1,6 +1,12 @@
 # TapTest
 
-**TapTest** is a revolutionary testing framework built on top of Flutter tester that encourages writing useful, user-facing tests capable of surviving massive refactors. Tests interact with your app the way users do - by tapping buttons and interface elements, validating labels content, checking elements presence and capturing visual snapshots.
+**TapTest** is a revolutionary testing framework built on top of Flutter tester that encourages writing useful, user-facing E2E tests. Tests interact with your app the way users do - by tapping buttons and interface elements, validating labels content, checking elements presence and capturing visual snapshots.
+
+Because **TapTest** tests your app through its GUI, your tests are usually resilient to code refactors and implementation detail changes. Go wild, restructure your entire app, change state management, its architecture and as long as the user interface remains consistent, your tests will continue to give you confidence your app works!
+
+## 📚 Documentation and tutorial
+
+See [https://taptest.dev](https://taptest.dev) for tutorial, documentation, best practices and advanced guides.
 
 ## 🚀 Why TapTest?
 
@@ -8,11 +14,7 @@
 - **🛡️ Refactor-Proof** - Tests survive huge code refactors by focusing on user interactions not on implementation details.
 - **🎯 User-Focused** - Write tests that mirror real user behavior
 - **📸 Visual Regression** - Built-in snapshot testing for pixel-perfect UI validation
-- **🌐 Flexible** - Mock external resources like web services - required for widget tests, optional for integration tests
-
-## 📚 Documentation
-
-See [https://taptest.dev](https://taptest.dev) for tutorials and complete documentation.
+- **🌐 Flexible** - Mock external resources like webservices - required for widget tests, optional for non-flaky integration tests
 
 ## ✨ Quick Example
 
@@ -22,7 +24,7 @@ void main() {
     variants: Variant.lightAndDarkVariants, // ☀️ 🌙
     httpRequestHandlers: [
       // required for ultra fast Widget tests
-      // optional for Integration tests
+      // optional for stable Integration tests
       MockRegistrationWebservice(success: true),
     ],
     builder: (params) {
@@ -30,7 +32,7 @@ void main() {
     },
   );
 
-  tapTest('E2E test (with Page Object)', config, (tt) async {
+  tapTest('E2E test (with Page Objects)', config, (tt) async {
     await tt
         .onHomeScreen()
         .snapshot('HomeScreen_initial')
@@ -47,7 +49,7 @@ void main() {
         .snapshot('WelcomeScreen_JohnDoe');
   });
 
-  tapTest('E2E test (plain)', config, (tt) async {
+  tapTest('E2E test (without Page Objects)', config, (tt) async {
     await tt.expect(AppKeys.homeScreen);
     await tt.snapshot("HomeScreen_initial");
     await tt.type(AppKeys.usernameField, 'John Doe');
