@@ -22,5 +22,5 @@ If your screen had a dedicated close button with a key (like `AppKeys.closeButto
 
 ## 📚 Next steps
 
-- **[Continue to next page →](./pop-screen)**
+- **[Continue to next page →](./error-handling)**
 - **[Learn more about `pop` →](../actions/pop)**

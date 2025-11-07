@@ -101,3 +101,4 @@ If you run the test again you should see the following output:
 
 - **[Continue to next page →](./pop-screen)**
 - **[Learn more about `type` →](../actions/type)**
+- **[Learn more about `info` →](../actions/info)**
