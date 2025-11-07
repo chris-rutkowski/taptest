@@ -27,6 +27,7 @@ dependencies:
     # path: ../taptest_runtime
 
 dev_dependencies:
+  http: 1.5.0
   flutter_lints:
   go_router: ">=8.0.0 <17.0.0"
 
