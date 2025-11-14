@@ -27,7 +27,7 @@ jobs:
       run: npm install -g firebase-tools
 
     - name: Start Firebase Emulators
-      run: firebase emulators:exec
+      run: firebase emulators:start &
       working-directory: ./examples/firebase_riverpod
 
     - name: Get Flutter version
