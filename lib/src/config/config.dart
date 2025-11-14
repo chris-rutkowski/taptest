@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:taptest_runtime/taptest_runtime.dart';
 
@@ -21,7 +23,7 @@ final class Config {
   final Iterable<MockHttpRequestHandler> Function() httpRequestHandlers;
   final Iterable<ImageProvider> precachedImages;
   final Iterable<dynamic> extensions;
-  final Widget Function(RuntimeParams params) builder;
+  final FutureOr<Widget> Function(RuntimeParams params) builder;
 
   const Config({
     this.loggerFactory = defaultLoggerFactory,
@@ -52,7 +54,7 @@ final class Config {
     Iterable<MockHttpRequestHandler> Function()? httpRequestHandlers,
     Iterable<ImageProvider>? precachedImages,
     Iterable<dynamic>? extensions,
-    Widget Function(RuntimeParams)? builder,
+    FutureOr<Widget> Function(RuntimeParams)? builder,
   }) {
     return Config(
       loggerFactory: loggerFactory ?? this.loggerFactory,
