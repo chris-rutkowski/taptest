@@ -1,0 +1,14 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    - avoid_relative_lib_imports
+    - prefer_relative_imports
+
+analyzer:
+  plugins:
+    - custom_lint
+
+formatter:
+  page_width: 120
+  trailing_commas: preserve
