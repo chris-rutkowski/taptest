@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 concurrency:
-  group: integration_test-${{ github.ref }}
+  group: examples_integration_test-${{ github.ref }}
   cancel-in-progress: true       
 
 jobs:
