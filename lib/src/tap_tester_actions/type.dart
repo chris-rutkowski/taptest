@@ -4,6 +4,7 @@ extension TapTesterType on TapTester {
   Future<void> type(
     TapKey key,
     String text, {
+    bool tap = false,
     bool secret = false,
     bool submit = false,
     SyncType sync = SyncType.instant,
@@ -13,9 +14,10 @@ extension TapTesterType on TapTester {
 
     final finder = _finder(key);
 
-    // Focus the field first (if necessary)
-    // await _tester.tap(finder);
-    // await _tester.pump();
+    if (tap) {
+      await widgetTester.tap(finder);
+      await widgetTester.pump();
+    }
 
     await widgetTester.enterText(finder, text);
     await _sync(sync);

@@ -137,7 +137,7 @@ final class TapTester {
     await widgetTester.pumpWidget(
       AppWrapper(
         key: UniqueKey(),
-        child: config.builder(
+        child: await config.builder(
           RuntimeParams(
             themeMode: themeModeNotifier,
             locale: localeNotifier,
