@@ -137,12 +137,23 @@ final class TapTester {
     await widgetTester.pumpWidget(
       AppWrapper(
         key: UniqueKey(),
-        child: config.builder(
-          RuntimeParams(
-            themeMode: themeModeNotifier,
-            locale: localeNotifier,
-            initialRoute: config.initialRoute,
-            extensions: config.extensions,
+        child: TapTestRuntime(
+          themeMode: themeModeNotifier,
+          locale: localeNotifier,
+          initialRoute: config.initialRoute,
+          extensions: config.extensions,
+          child: Builder(
+            builder: (context) {
+              return config.builder(
+                context,
+                TapTestRuntimeData(
+                  themeMode: themeModeNotifier.value,
+                  locale: localeNotifier.value,
+                  initialRoute: config.initialRoute,
+                  extensions: config.extensions,
+                ),
+              );
+            },
           ),
         ),
       ),

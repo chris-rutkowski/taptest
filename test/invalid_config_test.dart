@@ -9,7 +9,7 @@ void main() {
       () => validateConfig(
         Config(
           variants: [],
-          builder: (params) => MaterialApp(),
+          builder: (context, _) => MaterialApp(),
         ),
       ),
       throwsA(isA<ArgumentError>()),

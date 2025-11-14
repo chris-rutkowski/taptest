@@ -5,8 +5,8 @@ import 'package:taptest_runtime/taptest_runtime.dart';
 void main() {
   final config = Config(
     variants: Variant.lightAndDarkVariants,
-    builder: (params) {
-      return _MyApp(params: params);
+    builder: (params, _) {
+      return _MyApp();
     },
   );
 
@@ -125,18 +125,15 @@ abstract class _AppKeys {
 }
 
 final class _MyApp extends StatelessWidget {
-  final RuntimeParams? params;
 
-  const _MyApp({
-    this.params,
-  });
+  const _MyApp();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: _HomeScreen(),
-      themeMode: params?.themeMode.value,
-      debugShowCheckedModeBanner: params == null,
+      themeMode: TapTestRuntime.of(context)?.themeMode,
+      debugShowCheckedModeBanner: TapTestRuntime.of(context) == null,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
     );

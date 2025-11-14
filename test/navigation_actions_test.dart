@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:taptest/taptest.dart';
+import 'package:taptest_runtime/taptest_runtime.dart';
 
 void main() {
   final config = Config(
-    builder: (params) => _NavApp(initialRoute: params.initialRoute),
+    builder: (context, _) => _NavApp(),
   );
 
   tapTest('flow', config, (tt) async {
@@ -30,6 +31,9 @@ void main() {
     await tt.tap(_Keys.dialogCancelButton);
     await tt.absent(_Keys.confirmExitDialog);
     await tt.exists(_Keys.editScreen);
+
+    // Changing theme to make sure router state is preserved across rebuilds
+    await tt.changeThemeMode(ThemeMode.dark);
 
     // Confirm exit dialog and go back to home screen
     await tt.pop();
@@ -60,32 +64,45 @@ abstract class _Keys {
   static const dialogConfirmButton = ValueKey('dialogConfirmButton');
 }
 
-final class _NavApp extends StatelessWidget {
-  final String? initialRoute;
+final class _NavApp extends StatefulWidget {
+  const _NavApp();
 
-  const _NavApp({
-    this.initialRoute,
-  });
+  @override
+  State<_NavApp> createState() => _NavAppState();
+}
+
+final class _NavAppState extends State<_NavApp> {
+  late final GoRouter router;
+
+  @override
+  void initState() {
+    super.initState();
+
+    router = GoRouter(
+      initialLocation: TapTestRuntime.read(context)?.initialRoute,
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const _HomeScreen(),
+          routes: [
+            GoRoute(
+              path: '/edit',
+              builder: (context, state) => const _EditScreen(),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      routerConfig: GoRouter(
-        initialLocation: initialRoute,
-        routes: [
-          GoRoute(
-            path: '/',
-            builder: (context, state) => const _HomeScreen(),
-            routes: [
-              GoRoute(
-                path: '/edit',
-                builder: (context, state) => const _EditScreen(),
-              ),
-            ],
-          ),
-        ],
-      ),
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: TapTestRuntime.of(context)?.themeMode,
+      routerConfig: router,
     );
   }
 }

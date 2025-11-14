@@ -3,7 +3,7 @@ import 'package:taptest/taptest.dart';
 
 void main() {
   final config = Config(
-    builder: (params) => const MaterialApp(
+    builder: (context, _) => const MaterialApp(
       home: _Screen(
         key: _Keys.screen,
       ),

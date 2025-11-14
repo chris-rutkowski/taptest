@@ -6,10 +6,10 @@ void main() {
     extensions: [
       _RemoteText('Initial text'),
     ],
-    builder: (params) => MaterialApp(
+    builder: (context, runtime) => MaterialApp(
       home: _Screen(
         key: _Keys.screen,
-        remoteText: params.extension<_RemoteText>()!,
+        remoteText: runtime.extension<_RemoteText>()!,
       ),
     ),
   );

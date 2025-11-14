@@ -27,7 +27,7 @@ final defaultTapTesterConfig = Config(
       return true;
     },
   ),
-  builder: (params) {
+  builder: (context, _) {
     SharedPreferences.setMockInitialValues({});
     // StubableNetworkImage.stubBuilder = defaultWidgetQRStubBuilder;
 
@@ -40,16 +40,7 @@ final defaultTapTesterConfig = Config(
 
     return UncontrolledProviderScope(
       container: providerContainer,
-      child: ListenableBuilder(
-        listenable: Listenable.merge([params.themeMode, params.locale]),
-        builder: (context, child) {
-          return ExampleApp(
-            themeMode: params.themeMode.value,
-            locale: params.locale.value,
-            debugShowCheckedModeBanner: false,
-          );
-        },
-      ),
+      child: const ExampleApp(),
     );
   },
 );

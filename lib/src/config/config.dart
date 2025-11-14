@@ -9,6 +9,7 @@ import 'snapshot_config.dart';
 import 'variant.dart';
 
 Iterable<MockHttpRequestHandler> _emptyHttpRequestHandlers() => [];
+typedef TapTestBuilder = Widget Function(BuildContext context, TapTestRuntimeData runtime);
 
 final class Config {
   final TapTesterLoggerFactory loggerFactory;
@@ -21,7 +22,7 @@ final class Config {
   final Iterable<MockHttpRequestHandler> Function() httpRequestHandlers;
   final Iterable<ImageProvider> precachedImages;
   final Iterable<dynamic> extensions;
-  final Widget Function(RuntimeParams params) builder;
+  final TapTestBuilder builder;
 
   const Config({
     this.loggerFactory = defaultLoggerFactory,
@@ -52,7 +53,7 @@ final class Config {
     Iterable<MockHttpRequestHandler> Function()? httpRequestHandlers,
     Iterable<ImageProvider>? precachedImages,
     Iterable<dynamic>? extensions,
-    Widget Function(RuntimeParams)? builder,
+    TapTestBuilder? builder,
   }) {
     return Config(
       loggerFactory: loggerFactory ?? this.loggerFactory,

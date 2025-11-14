@@ -3,6 +3,7 @@ description: "Lightning-fast Flutter testing framework for comprehensive E2E and
 version: 0.0.11
 homepage: https://taptest.dev
 repository: https://github.com/chris-rutkowski/taptest
+publish_to: "none"
 
 environment:
   sdk: ^3.9.2
@@ -23,8 +24,10 @@ dependencies:
   path: ^1.8.0
   platform: ^3.0.0
   qr: ^3.0.0
-  taptest_runtime: ^0.0.4
-    # path: ../taptest_runtime
+  taptest_runtime: # ^1.0.0
+    git:
+      url: https://github.com/chris-rutkowski/taptest_runtime.git
+      ref: inherited
 
 dev_dependencies:
   http: 1.5.0

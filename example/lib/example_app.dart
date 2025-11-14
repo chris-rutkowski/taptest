@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taptest_runtime/taptest_runtime.dart';
 
 import 'core/build_theme.dart';
 import 'core/router/router.dart';
 import 'l10n/app_localizations.dart';
 
 final class ExampleApp extends ConsumerWidget {
-  final ThemeMode? themeMode;
-  final Locale? locale;
-  final bool debugShowCheckedModeBanner;
-
-  const ExampleApp({
-    super.key,
-    this.themeMode,
-    this.locale,
-    this.debugShowCheckedModeBanner = true,
-  });
+  const ExampleApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,14 +17,14 @@ final class ExampleApp extends ConsumerWidget {
         applyHeightToLastDescent: false,
       ),
       child: MaterialApp.router(
-        debugShowCheckedModeBanner: debugShowCheckedModeBanner,
+        debugShowCheckedModeBanner: TapTestRuntime.of(context) != null,
         title: 'Taptest Example app',
-        locale: locale,
+        locale: TapTestRuntime.of(context)?.locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: buildTheme(context, Brightness.light),
         darkTheme: buildTheme(context, Brightness.dark),
-        themeMode: themeMode ?? ThemeMode.system,
+        themeMode: TapTestRuntime.of(context)?.themeMode,
         routerConfig: ref.read(routerProvider),
       ),
     );

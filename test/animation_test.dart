@@ -4,7 +4,7 @@ import 'package:taptest/taptest.dart';
 void main() {
   final config = Config(
     timeDilation: 1,
-    builder: (params) => MaterialApp(
+    builder: (context, _) => MaterialApp(
       home: AnimationScreen(),
     ),
   );

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:taptest/taptest.dart';
 
 void main() {
-  const key = ValueKey('screen');
+  const key = ValueKey('Screen');
 
   final config = Config(
-    builder: (params) => MaterialApp(
+    builder: (context, _) => MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         key: key,

@@ -29,7 +29,7 @@ void main() {
         postHandler,
       ];
     },
-    builder: (params) => const MaterialApp(
+    builder: (context, _) => const MaterialApp(
       home: _Screen(),
     ),
   );
@@ -52,7 +52,7 @@ void main() {
       // no need for POST handler in this test
     ],
 
-    builder: (params) => const MaterialApp(
+    builder: (context, _) => const MaterialApp(
       home: _Screen(),
     ),
   );

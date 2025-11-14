@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:taptest/taptest.dart';
+import 'package:taptest_runtime/taptest_runtime.dart';
 
 void main() {
   final config = Config(
-    builder: (params) => ListenableBuilder(
-      listenable: Listenable.merge([params.themeMode]),
-      builder: (context, child) {
-        return MaterialApp(
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
-          themeMode: params.themeMode.value,
-          home: _Screen(),
-        );
-      },
+    builder: (context, _) => MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: TapTestRuntime.of(context)?.themeMode,
+      home: _Screen(),
     ),
   );
 

@@ -28,7 +28,7 @@ final defaultIntegrationTapTesterConfig = Config(
     const Variant(name: 'es_light', locale: Locale('es')),
     const Variant(name: 'es_dark', locale: Locale('es'), themeMode: ThemeMode.dark),
   ],
-  builder: (params) {
+  builder: (context, _) {
     SharedPreferences.setMockInitialValues({});
 
     final providerContainer = ProviderContainer(
@@ -40,16 +40,7 @@ final defaultIntegrationTapTesterConfig = Config(
 
     return UncontrolledProviderScope(
       container: providerContainer,
-      child: ListenableBuilder(
-        listenable: Listenable.merge([params.themeMode, params.locale]),
-        builder: (context, child) {
-          return ExampleApp(
-            themeMode: params.themeMode.value,
-            locale: params.locale.value,
-            debugShowCheckedModeBanner: false,
-          );
-        },
-      ),
+      child: const ExampleApp(),
     );
   },
 );
