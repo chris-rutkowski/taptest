@@ -1,0 +1,51 @@
+name: Examples test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: examples_test-${{ github.ref }}
+  cancel-in-progress: true    
+
+jobs:
+  test:
+    runs-on: macos-15
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get Flutter version
+      id: flutter_version
+      run: echo "version=$(cat flutter-version.txt)" >> $GITHUB_OUTPUT
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutter_version.outputs.version }}
+        cache: true
+
+    - name: Get package dependencies
+      run: flutter pub get
+      working-directory: ./examples/firebase_riverpod
+
+    - name: Run tests
+      run: flutter test test
+      working-directory: ./examples/firebase_riverpod
+
+    - name: Check formatting
+      run: |
+        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
+      working-directory: ./examples/firebase_riverpod
+
+    - name: Check generated code
+      run: |
+        flutter packages pub run build_runner build --delete-conflicting-outputs
+        git diff --exit-code
+      working-directory: ./examples/firebase_riverpod
+
+    - name: Analyse
+      run: flutter analyze --fatal-infos
+      working-directory: ./examples/firebase_riverpod
