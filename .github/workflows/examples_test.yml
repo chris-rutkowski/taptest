@@ -1,0 +1,40 @@
+name: Examples test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: examples_test-${{ github.ref }}
+  cancel-in-progress: true    
+
+jobs:
+  test:
+    runs-on: macos-15
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get Flutter version
+      id: flutter_version
+      run: echo "version=$(cat flutter-version.txt)" >> $GITHUB_OUTPUT
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutter_version.outputs.version }}
+        cache: true
+
+    - name: Get package dependencies
+      run: flutter pub get
+      working-directory: ./examples/firebase_riverpod
+
+    - name: Run package tests
+      run: flutter test test
+      working-directory: ./examples/firebase_riverpod
+
+    - name: Run example tests
+      run: flutter test test
+      working-directory: ./examples/firebase_riverpod
