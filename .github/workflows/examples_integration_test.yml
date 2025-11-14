@@ -1,0 +1,52 @@
+name: Examples integration test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: integration_test-${{ github.ref }}
+  cancel-in-progress: true       
+
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 20
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Get Flutter version
+      id: flutter_version
+      run: echo "version=$(cat flutter-version.txt)" >> $GITHUB_OUTPUT
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.flutter_version.outputs.version }}
+        cache: true
+
+    - name: Get dependencies
+      run: flutter pub get
+      working-directory: ./examples/firebase_riverpod
+
+    - name: List available iOS simulators
+      run: xcrun simctl list devices
+
+    - name: Start iOS Simulator
+      uses: futureware-tech/simulator-action@v4
+      with:
+        model: 'iPhone 17 Pro'
+        os_version: '26.0'
+        wait_for_boot: true
+      id: simulator
+
+    - name: Prebuild app
+      run: flutter build ios --simulator --no-codesign
+      working-directory: ./examples/firebase_riverpod
+
+    - name: Run integration tests
+      run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
+      working-directory: ./examples/firebase_riverpod
