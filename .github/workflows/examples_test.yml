@@ -27,18 +27,6 @@ jobs:
         flutter-version: ${{ steps.flutter_version.outputs.version }}
         cache: true
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-
-    - name: Install Firebase CLI
-      run: npm install -g firebase-tools
-
-    - name: Start Firebase Emulators
-      run: firebase emulators:start
-      working-directory: ./examples/firebase_riverpod
-
     - name: Get package dependencies
       run: flutter pub get
       working-directory: ./examples/firebase_riverpod

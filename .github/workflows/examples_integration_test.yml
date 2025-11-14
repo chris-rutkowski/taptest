@@ -18,6 +18,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+
+    - name: Start Firebase Emulators
+      run: firebase emulators:start
+      working-directory: ./examples/firebase_riverpod
+
     - name: Get Flutter version
       id: flutter_version
       run: echo "version=$(cat flutter-version.txt)" >> $GITHUB_OUTPUT
