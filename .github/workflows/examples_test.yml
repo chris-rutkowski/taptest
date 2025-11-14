@@ -31,10 +31,20 @@ jobs:
       run: flutter pub get
       working-directory: ./examples/firebase_riverpod
 
-    - name: Run package tests
+    - name: Run tests
       run: flutter test test
       working-directory: ./examples/firebase_riverpod
 
-    - name: Run example tests
-      run: flutter test test
+    - name: Check formatting
+      run: |
+        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
+
+    - name: Check generated code
+      run: |
+        flutter packages pub run build_runner build --delete-conflicting-outputs
+        git diff --exit-code
+      working-directory: ./examples/firebase_riverpod
+
+    - name: Analyse
+      run: flutter analyze --fatal-infos
       working-directory: ./examples/firebase_riverpod

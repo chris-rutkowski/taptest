@@ -35,7 +35,7 @@ jobs:
 
     - name: Check formatting
       run: |
-        find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
+        find . -name "*.dart" ! -path "./.dart_tool/*" ! -path "./example/*" ! -path "./examples/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
 
     # - name: Check formatting - example
     #   run: |

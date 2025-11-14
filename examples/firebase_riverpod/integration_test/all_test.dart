@@ -56,10 +56,10 @@ void main() {
 
     await tt.info("We should be on Dashboard Screen without any memos");
     await tt.exists(DashboardKeys.screen);
-    await tt.snapshot('dashboard_empty');
     await tt.expectText(DashboardKeys.email, 'test@example.com');
     await tt.exists(DashboardKeys.noMemosTile);
     await tt.absent(DashboardKeys.memoTile(0));
+    await tt.snapshot('dashboard_empty');
 
     await tt.info("Let's add one memo, it should appear in the list and clears the input field");
     await tt.type(DashboardKeys.newMemoField, 'Buy milk', submit: true);

@@ -62,3 +62,12 @@ jobs:
     - name: Run integration tests
       run: flutter test integration_test -d ${{ steps.simulator.outputs.udid }}
       working-directory: ./examples/firebase_riverpod
+
+    - name: Upload snapshot failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: integration_test-failures-ios
+        path: |
+          ./examples/firebase_riverpod/integration_test/failures
+        retention-days: 1
