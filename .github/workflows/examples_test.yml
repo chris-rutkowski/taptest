@@ -38,6 +38,7 @@ jobs:
     - name: Check formatting
       run: |
         find . -name "*.dart" ! -path "./.dart_tool/*" ! -name "*.g.dart" ! -name "*.freezed.dart" | xargs dart format --set-exit-if-changed
+      working-directory: ./examples/firebase_riverpod
 
     - name: Check generated code
       run: |

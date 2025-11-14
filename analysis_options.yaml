@@ -6,6 +6,9 @@ linter:
     - prefer_relative_imports
 
 analyzer:
+  exclude:
+    - example/**
+    - examples/**
 
 formatter:
   page_width: 120
