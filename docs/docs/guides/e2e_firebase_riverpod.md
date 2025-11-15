@@ -1,29 +1,42 @@
 # E2E tests with Firebase (Riverpod)
 
-This guide will demonstrate how to mock Firebase services like Auth and Firestore in order to develop very fast end-to-end tests. We will also cover integration tests. This guide is universal, but the example app uses Riverpod for state management and dependency injection.
+Learn how to write lightning-fast end-to-end tests for Firebase apps using TapTest! This guide (and example app) demonstrates mocking Firebase Auth and Firestore for widget tests, while keeping integration tests flexible with real services or emulators.
 
-You can interact with the complete example app in this repository: [taptest/examples/firebase_riverpod](https://github.com/your-repo/taptest/examples/firebase_riverpod).
+**⏱️ Time to read:** 15 minutes  
+**🎯 State management:** Riverpod (patterns apply to any architecture)  
+**📦 Example app:** [taptest/examples/firebase_riverpod](https://github.com/chris-rutkowski/taptest/tree/main/examples/firebase_riverpod)
 
-You can freely use Firebase in integration tests (either emulator or real services). But for widget tests we will need to mock them.
+## 🚀 Comprehensive E2E test
 
-My suite of tests runs in 3 seconds and verifies complete user journeys including:
+The Widget Test in example app completes in **⏰ 3 seconds** and verifies complete user journeys, including:
 
-- pixel perfect design in light and dark themes of
-  - registration screen
-  - about screen
-  - dashboard - empty state and with data
-- error handling
-  - empty forms
-  - invalid password confirmation
-- registration
-- login
-- start app with logged in state
-- logout
-- saving and deleting memos
-- memos sorting logic
-- form behaviour (clearing field on submit)
-- deeplinks
-- route guards (preventing access to pages not accessible in current app state)
+**✨ Pixel-perfect design** (light & dark themes)
+- Registration screen
+- About screen  
+- Dashboard (empty state and with data)
+
+**🛡️ Error handling**
+- Empty form validation
+- Invalid password confirmation
+
+**🎭 User flows**
+- Registration
+- Login
+- Start app with logged-in state
+- Logout
+- Saving and deleting memos
+- Memos sorting logic
+- Form behavior (clearing fields on submit)
+
+**🧭 Navigation**
+- Deeplinks
+- Route guards (protecting authenticated routes)
+
+## 🎯 Testing strategy
+
+**Widget tests:** You have to use mocks for Firebase services. This gives you blazing-fast tests with complete control over data and edge cases.
+
+**Integration tests:** Your choice, use mocks, real Firebase project or Firebase Emulators.
 
 ## Dependency inversion principle
 
