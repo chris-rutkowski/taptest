@@ -121,9 +121,9 @@ await authRepository.login(
 - ✅ Can swap Firebase for another service
 - ✅ Firebase details contained in one place
 
-## Mock Firebase Auth
+## 🎭 Create mock implementation
 
-Now in your `test` folder let's create somewhere a mock implementation of `AuthRepository` for widget tests.
+Now that we have an interface, let's create a mock implementation for widget tests. Create this in your `test` folder:
 
 ```dart
 final class MockAuthRepository implements AuthRepository {
@@ -149,7 +149,11 @@ final class MockAuthRepository implements AuthRepository {
 }
 ```
 
-Check the mock_auth_repository.dart file in the example app for more information. Both MockAuthRepository as well as MockMemosRepository (mock for Firebase memos collection) use a very Simple `StreamStore` - a trivial implementation of a stream-backed value holder, feel free to reuse it:
+> 💡 **See the complete implementation:** Check [mock_auth_repository.dart](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/_utils/mock_auth_repository.dart) in the example app for all auth methods (login, logout, etc.)
+
+### 🔄 StreamStore helper
+
+Both `MockAuthRepository` and `MockMemosRepository` use a simple `StreamStore` - a lightweight stream-backed value holder:
 
 ```dart
 final class StreamStore<T> {
@@ -164,9 +168,34 @@ final class StreamStore<T> {
 }
 ```
 
-To elevate on dependency inversion principle, we also don't depend on `User` type from Firebase SDK directly, but have our own `AppUser` model. You can see the complete implementation of FirebaseAuthRepository how we convert between these two types.
+### 🎯 Custom user model
 
-This MockAuthRepository can be initialised with or without a user, to simulate both logged in and logged out states when the app starts if you need it. Your mocks, you are in full control.
+Following the dependency inversion principle, we don't depend on Firebase's `User` type directly. Instead, we define our own `AppUser` model:
+
+```dart
+class AppUser {
+  final String id;
+  final String email;
+  
+  AppUser({required this.id, required this.email});
+}
+```
+
+> 💡 See [FirebaseAuthRepository](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/lib/core/auth/firebase_auth_repository.dart) in the example for how to convert between `User` and `AppUser`.
+
+### ✨ Flexible initialization
+
+You can initialize `MockAuthRepository` with or without a user to test different scenarios:
+
+```dart
+// Test logged-out state
+MockAuthRepository()
+
+// Test logged-in state
+MockAuthRepository(user: AppUser(id: '123', email: 'test@example.com'))
+```
+
+**Your mocks, your control!** You decide the initial state, data, and behavior.
 
 ## Configure TapTest
 
