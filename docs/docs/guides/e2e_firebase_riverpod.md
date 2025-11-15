@@ -38,26 +38,35 @@ The Widget Test in example app completes in **⏰ 3 seconds** and verifies compl
 
 **Integration tests:** Your choice, use mocks, real Firebase project or Firebase Emulators.
 
-## Dependency inversion principle
+## 🏗️ Dependency Inversion
 
-It is one of the SOLD principles. Instead of tightly coupling your app to Firebase SDK, we will depend on abstraction, and Firebase will be one of many. Thanks to this approach you can easily swap Firebase with other service in the future, without refactoring your entire app. This approach is also architecture agnostic, whether you use MVVM, Clean Architecture or even no architecture at all.
+To enable fast, mockable tests, we'll apply the **Dependency Inversion Principle** (one of the SOLID principles). Instead of tightly coupling your app to the Firebase SDK, we'll depend on abstractions. This approach works with any architecture - MVVM, Clean Architecture, or none at all.
 
-Therefore, instead of tightly coupling **FirebaseAuth** in your View, ViewModel or similar, like this:
+### ❌ Before: Tight coupling
+
+Your code directly depends on Firebase SDK:
 
 ```dart
 final firebaseAuth = FirebaseAuth.instance;
 
 // try/catch ...
 
-final user = await firebaseAuth.createUserWithEmailAndPassword(
+await firebaseAuth.createUserWithEmailAndPassword(
   email: emailTextEditingController.text,
   password: passwordTextEditingController.text
 );
 
-// route to next screen...
-
+// route to next screen etc.
 ```
-create an interface (abstract class) and Firebase implementation as follows:
+
+**Problems:**
+- Hard to test (requires real Firebase)
+- Hard to swap implementations
+- Firebase details leak throughout your app
+
+### ✅ After: Dependency inversion
+
+Create an interface and Firebase implementation:
 
 ```dart
 abstract class AuthRepository {
@@ -65,7 +74,7 @@ abstract class AuthRepository {
   // other methods and accessors for current user
 }
 
-abstract class FirebaseAuthRepository {
+final class FirebaseAuthRepository {
   Future<void> register({required String email, required String password}) {
     return FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
@@ -75,10 +84,13 @@ abstract class FirebaseAuthRepository {
 }
 ```
 
-In **Riverpod** you should create a provider for `AuthRepository` that returns `FirebaseAuthRepository` in production code.
+### 🔌 Wire it up with Riverpod
+
+Create a provider that returns your Firebase implementation:
 
 ```dart
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 part 'auth_repository_provider.g.dart';
 
 @Riverpod(keepAlive: true)
@@ -87,21 +99,27 @@ AuthRepository authRepository(Ref ref) {
 }
 ```
 
-Now let's corrected code in your View, ViewModel or similar. You should use Riverpod for service discovery - obtain the  to provide `AuthRepository` without directly depending on `FirebaseAuthRepository` and it's implementation detail.
+### 🎯 Use the abstraction
+
+Now your code depends on the interface, not Firebase directly:
 
 ```dart
-
-final auth = ref.read(authRepositoryProvider);
+final authRepository = ref.read(authRepositoryProvider);
 
 // try/catch ...
 
-final user = await auth.login(
+await authRepository.login(
   email: emailTextEditingController.text,
   password: passwordTextEditingController.text
 );
 
-// route to next screen...
+// route to next screen etc.
 ```
+
+**Benefits:**
+- ✅ Easy to mock in tests
+- ✅ Can swap Firebase for another service
+- ✅ Firebase details contained in one place
 
 ## Mock Firebase Auth
 
