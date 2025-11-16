@@ -6,9 +6,6 @@ Learn how to write lightning-fast end-to-end tests for Firebase apps using TapTe
 **🎯 State management:** Riverpod (patterns apply to any architecture)  
 **📦 Example app:** [taptest/examples/firebase_riverpod](https://github.com/chris-rutkowski/taptest/tree/main/examples/firebase_riverpod)
 
-## 🚀 Comprehensive E2E test
-
-The Widget Test in example app completes in **⏰ 3 seconds** and verifies complete user journeys, including:
 
 <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
   <iframe 
@@ -20,6 +17,10 @@ The Widget Test in example app completes in **⏰ 3 seconds** and verifies compl
     allowFullScreen>
   </iframe>
 </div>
+
+## 🚀 Comprehensive E2E test
+
+The Widget Test in example app completes in **⏰ 3 seconds** and verifies complete user journeys, including:
 
 **✨ Pixel-perfect design** (light & dark themes)
 - Registration screen
