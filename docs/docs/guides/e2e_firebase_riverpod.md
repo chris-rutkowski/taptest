@@ -6,6 +6,12 @@ Learn how to write lightning-fast end-to-end tests for Firebase apps using TapTe
 **🎯 State management:** Riverpod (patterns apply to any architecture)  
 **📦 Example app:** [taptest/examples/firebase_riverpod](https://github.com/chris-rutkowski/taptest/tree/main/examples/firebase_riverpod)
 
+Consider cloning the [**TapTest**](https://github.com/chris-rutkowski/taptest) repository and opening the `examples/firebase_riverpod` project to explore the app and its tests. To run the app, you'll need Firebase Emulators installed and running:
+
+```bash
+cd examples/firebase_riverpod
+firebase emulators:start
+```
 
 <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
   <iframe 
@@ -287,9 +293,53 @@ void main() {
 
 The same pattern applies to Firestore collections. Create repository interfaces for your collections (e.g., `MemosRepository`), implement them with Firebase in production, and provide mock implementations in tests. The mock can use the same `StreamStore` pattern to simulate real-time listeners.
 
-See the complete Firestore mock implementation: [**mock_memos_repository.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/mocks/mock_memos_repository.dart)
+See these files in the example app:
 
-## 🚀 Integration tests
+- [**memos_repository.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/lib/features/memos/data_domain/memos_repository.dart)
+- [**firebase_memos_repository.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/lib/features/memos/data_domain/firebase_memos_repository.dart)
+- [**mock_memos_repository.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/mocks/mock_memos_repository.dart).
+
+### 🚀 Run the tests
+
+Run the widget test suite:
+
+```bash
+cd examples/firebase_riverpod
+flutter test test
+``` 
+
+This executes [**all_test.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/all_test.dart), which contains three tests covering different scenarios:
+
+- End-to-end user journey (registration → dashboard → memos add/delete → logout)
+- Deeplink navigation
+- Login journey
+- Starting with logged-in state
+
+Each test creates a customized `Config` to simulate different initial states. For example, the E2E test uses the default configuration:
+
+```dart
+tapTest('E2E', createConfig(), (tt) async {
+  // test steps...
+});
+```
+
+while the logged-in state test pre-configures `MockAuthRepository` with an existing user:
+
+```dart
+tapTest(
+  'Logged in user will immediately see Dashboard',
+  createConfig(
+    user: AppUser(id: '1', email: 'existing@example.com'),
+  ),
+  (tt) async {
+    await tt.exists(DashboardKeys.screen);
+  },
+);
+```
+
+This pattern lets you test any scenario by simply adjusting the initial state. See [**create_config.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/utils/create_config.dart) for the helper function implementation.
+
+## 📱 Integration tests
 
 Integration tests have no restrictions on Firebase usage - you can use real Firebase, emulators, or mocks. The choice is yours!
 
