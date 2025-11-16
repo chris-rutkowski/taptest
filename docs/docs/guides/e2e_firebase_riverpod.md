@@ -152,7 +152,7 @@ final class MockAuthRepository implements AuthRepository {
 }
 ```
 
-> 💡 **See the complete implementation:** Check [mock_auth_repository.dart](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/mocks/mock_auth_repository.dart) in the example app for all auth methods (login, logout, etc.)
+> 💡 **See the complete implementation:** Check [**mock_auth_repository.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/mocks/mock_auth_repository.dart) in the example app for all auth methods (login, logout, etc.)
 
 ### 🔄 StreamStore helper
 
@@ -271,9 +271,13 @@ void main() {
 
 **That's it!** Your app now uses `MockAuthRepository` instead of Firebase. Test any auth feature without touching Firebase servers.
 
-> 💡 **Firestore mocking:** Check the [complete example](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/e2e_test.dart) to see how to mock Firestore collections alongside Auth.
+### 🗄️ Firestore mocking
 
-## Integration tests
+The same pattern applies to Firestore collections. Create repository interfaces for your collections (e.g., `MemosRepository`), implement them with Firebase in production, and provide mock implementations in tests. The mock can use the same `StreamStore` pattern to simulate real-time listeners.
+
+See the complete Firestore mock implementation: [**mock_memos_repository.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/mocks/mock_memos_repository.dart)
+
+## 🚀 Integration tests
 
 As always, integration tests doesn't have any limitations. It is your call if you wish to mock Firebase services, or use as is. The example app contains the integration test, that uses the same implementation as "production" version of the app app. Well, in fact both production and integration tests use Firebase emulator, but again, it's your call if in integration test you want to use real implementation, mock, or emulator or mix approach.
 
