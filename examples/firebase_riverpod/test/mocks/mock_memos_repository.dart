@@ -4,7 +4,7 @@ import 'package:firebase_riverpod/features/memos/data_domain/memo.dart';
 import 'package:firebase_riverpod/features/memos/data_domain/memos_repository.dart';
 import 'package:uuid/uuid.dart';
 
-import 'stream_store.dart';
+import '../utils/stream_store.dart';
 
 final class MockMemosRepository implements MemosRepository {
   final StreamStore<List<Memo>> _store;

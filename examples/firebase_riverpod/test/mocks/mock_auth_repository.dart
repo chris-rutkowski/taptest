@@ -3,7 +3,7 @@ import 'package:firebase_riverpod/features/auth/data_domain/app_user.dart';
 import 'package:firebase_riverpod/features/auth/data_domain/auth_repository.dart';
 import 'package:uuid/uuid.dart';
 
-import 'stream_store.dart';
+import '../utils/stream_store.dart';
 
 final class AppUserWithPassword {
   final AppUser user;
