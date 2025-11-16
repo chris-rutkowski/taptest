@@ -10,6 +10,17 @@ Learn how to write lightning-fast end-to-end tests for Firebase apps using TapTe
 
 The Widget Test in example app completes in **⏰ 3 seconds** and verifies complete user journeys, including:
 
+<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%'}}>
+  <iframe 
+    style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
+    src="https://www.youtube.com/embed/WBp1UQmUahE" 
+    title="TapTest Firebase E2E Testing Demo" 
+    frameBorder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowFullScreen>
+  </iframe>
+</div>
+
 **✨ Pixel-perfect design** (light & dark themes)
 - Registration screen
 - About screen  
