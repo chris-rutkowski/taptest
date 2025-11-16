@@ -203,11 +203,15 @@ MockAuthRepository(user: AppUser(id: '123', email: 'test@example.com'))
 
 **Your mocks, your control!** You decide the initial state, data, and behavior.
 
-## Configure TapTest
+## ⚙️ Configure TapTest
 
-Production starting point of your app `main.dart` usually sets up Firebase, configure other essential services and runs app wrapped in `ProviderScope` for Riverpod. Something like this:
+Now let's wire everything together! We'll configure TapTest to use our mocks instead of real Firebase.
 
-```dart title="lib/main.dart" {1-11}
+### 📱 Production setup
+
+Your production `main.dart` typically initializes Firebase and wraps the app in `ProviderScope` (Riverpod):
+
+```dart title="lib/main.dart"
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: ...);
@@ -220,24 +224,28 @@ void main() async {
 }
 ```
 
-In Widget Tests the lib/main.dart is not used, but every test suite has it's `main()` function. Therefore, in the TapTests config builder, we need to setup Firebase, Riverpod and override the Firebase dependencies with our mocks.
+### 🧪 Test setup
 
-```dart title="test/e2e_test.dart" {3-20}
+Tests run their own `main()` function. That means we may need to repeat some setup and can also swap in test-specific services here - like our `MockAuthRepository`.
+
+
+```dart title="test/e2e_test.dart"
 // imports ...
+
 void main() {
   final config = Config(
     builder: (params) {
       final providerContainer = ProviderContainer(
         overrides: [
           authRepositoryProvider.overrideWithValue(
-            MockAuthRepository(),
+            MockAuthRepository(), // 👈 here
           ),
         ],
       );
 
       return UncontrolledProviderScope(
         container: providerContainer,
-        child: YourApp(params: params),
+        child: YourApp(params: params), // 👈 also RuntimeParams
       );
     },
   );
@@ -261,7 +269,9 @@ void main() {
 }
 ```
 
-Now you are free to interact with auth related features in your Widget Test. Again check my example to see how I pushed it forward with Firestore mock.
+**That's it!** Your app now uses `MockAuthRepository` instead of Firebase. Test any auth feature without touching Firebase servers.
+
+> 💡 **Firestore mocking:** Check the [complete example](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/e2e_test.dart) to see how to mock Firestore collections alongside Auth.
 
 ## Integration tests
 
