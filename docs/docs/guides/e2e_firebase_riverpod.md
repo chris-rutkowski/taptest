@@ -34,9 +34,8 @@ The Widget Test in example app completes in **⏰ 3 seconds** and verifies compl
 
 ## 🎯 Testing strategy
 
-**Widget tests:** You have to use mocks for Firebase services. This gives you blazing-fast tests with complete control over data and edge cases.
-
-**Integration tests:** Your choice, use mocks, real Firebase project or Firebase Emulators.
+- **Widget tests:** You have to use mocks for Firebase services. This gives you blazing-fast tests with complete control over data and edge cases.
+- **Integration tests:** Your choice, use mocks, real Firebase project or Firebase Emulators.
 
 ## 🏗️ Dependency Inversion
 
@@ -47,16 +46,18 @@ To enable fast, mockable tests, we'll apply the **Dependency Inversion Principle
 Your code directly depends on Firebase SDK:
 
 ```dart
-final firebaseAuth = FirebaseAuth.instance;
+Future<void> onFormSubmitted() async {
+  final firebaseAuth = FirebaseAuth.instance;
 
-// try/catch ...
+  // try/catch ...
 
-await firebaseAuth.createUserWithEmailAndPassword(
-  email: emailTextEditingController.text,
-  password: passwordTextEditingController.text
-);
+  await firebaseAuth.createUserWithEmailAndPassword(
+    email: emailTextEditingController.text,
+    password: passwordTextEditingController.text
+  );
 
-// route to next screen etc.
+  // route to next screen etc.
+}
 ```
 
 **Problems:**
@@ -104,16 +105,18 @@ AuthRepository authRepository(Ref ref) {
 Now your code depends on the interface, not Firebase directly:
 
 ```dart
-final authRepository = ref.read(authRepositoryProvider);
+Future<void> onFormSubmitted() async {
+  final authRepository = ref.read(authRepositoryProvider);
 
-// try/catch ...
+  // try/catch ...
 
-await authRepository.login(
-  email: emailTextEditingController.text,
-  password: passwordTextEditingController.text
-);
+  await authRepository.register(
+    email: emailTextEditingController.text,
+    password: passwordTextEditingController.text
+  );
 
-// route to next screen etc.
+  // route to next screen etc.
+}
 ```
 
 **Benefits:**
@@ -123,7 +126,7 @@ await authRepository.login(
 
 ## 🎭 Create mock implementation
 
-Now that we have an interface, let's create a mock implementation for widget tests. Create this in your `test` folder:
+Now that we have an interface, let's create a mock implementation for widget tests. Create this in `test/mocks` folder:
 
 ```dart
 final class MockAuthRepository implements AuthRepository {
@@ -149,11 +152,11 @@ final class MockAuthRepository implements AuthRepository {
 }
 ```
 
-> 💡 **See the complete implementation:** Check [mock_auth_repository.dart](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/_utils/mock_auth_repository.dart) in the example app for all auth methods (login, logout, etc.)
+> 💡 **See the complete implementation:** Check [mock_auth_repository.dart](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/mocks/mock_auth_repository.dart) in the example app for all auth methods (login, logout, etc.)
 
 ### 🔄 StreamStore helper
 
-Both `MockAuthRepository` and `MockMemosRepository` use a simple `StreamStore` - a lightweight stream-backed value holder:
+Both `MockAuthRepository` and `MockMemosRepository` ([source](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/mocks/mock_memos_repository.dart)) use a simple `StreamStore` - a lightweight stream-backed value holder that mimics Firebase's reactive behavior. This lets your tests observe and react to data changes just like the real Firebase SDK:
 
 ```dart
 final class StreamStore<T> {
@@ -173,15 +176,18 @@ final class StreamStore<T> {
 Following the dependency inversion principle, we don't depend on Firebase's `User` type directly. Instead, we define our own `AppUser` model:
 
 ```dart
-class AppUser {
+final class AppUser {
   final String id;
   final String email;
   
-  AppUser({required this.id, required this.email});
+  const AppUser({
+    required this.id, 
+    required this.email
+  });
 }
 ```
 
-> 💡 See [FirebaseAuthRepository](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/lib/core/auth/firebase_auth_repository.dart) in the example for how to convert between `User` and `AppUser`.
+> 💡 See [FirebaseAuthRepository](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/lib/features/auth/data_domain/firebase_auth_repository.dart) in the example for how to convert between `User` and `AppUser`.
 
 ### ✨ Flexible initialization
 
