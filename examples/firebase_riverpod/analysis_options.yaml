@@ -6,12 +6,9 @@ linter:
     - prefer_relative_imports
 
 analyzer:
-  exclude:
-    - example/**
-    - examples/**
+  plugins:
+    - custom_lint
 
 formatter:
   page_width: 120
   trailing_commas: preserve
-
-# TODO other rules, especially to prevent default values
