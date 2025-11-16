@@ -279,10 +279,17 @@ See the complete Firestore mock implementation: [**mock_memos_repository.dart**]
 
 ## 🚀 Integration tests
 
-As always, integration tests doesn't have any limitations. It is your call if you wish to mock Firebase services, or use as is. The example app contains the integration test, that uses the same implementation as "production" version of the app app. Well, in fact both production and integration tests use Firebase emulator, but again, it's your call if in integration test you want to use real implementation, mock, or emulator or mix approach.
+Integration tests have no restrictions on Firebase usage - you can use real Firebase, emulators, or mocks. The choice is yours!
 
-The only thing to note is statefulness. In WidgetTest our builder was always recreating the underlying data layer - `StreamStore`. If you rely on actual Firebase implementation once registered user is already registered, so you cannot register again with the same email. You can always create a helper function that returns random email, registers it and verifies that Dashboard screen shows the correct email, e.g.
+The example app uses Firebase Emulators for integration tests, giving you an almost-real Firebase experience without needing to maintain a live project for the sake of this demo.
 
+### ⚠️ Handling stateful data
+
+Unlike widget tests (which recreate mocks for each test), integration tests using real Firebase or emulators maintain state. Once you register a user, that user exists for subsequent operations.
+
+**Solutions for registration tests:**
+
+Option 1: Generate unique emails
 ```dart
 final randomEmail = '${Uuid().v4()}@example.com';
 await tt.type(RegisterKeys.emailField, randomEmail);
@@ -290,14 +297,15 @@ await tt.type(RegisterKeys.emailField, randomEmail);
 await tt.expectText(DashboardKeys.email, randomEmail);
 ```
 
-or use some tricks like, although. I find it a bit hacky, but it works:
-
+Option 2: Clean up between tests (use with caution)
 ```dart
 await FirebaseAuth.instance.currentUser?.delete();
 await tt.tap(DashboardKeys.logoutButton);
 ```
 
-If you want to verify login experience with real FirebaseAuth (inc. emulators), you can utilise the 
+### 🔧 Pre-configuring test data
+
+For testing login flows with real Firebase or emulators, prepare user accounts in the builder:
 
 ```dart  title="integration_test/e2e_test.dart"
 final config = Config(
@@ -319,3 +327,5 @@ final config = Config(
   },
 );
 ```
+
+This approach lets you test login screens with known credentials while maintaining realistic Firebase behavior.
