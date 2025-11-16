@@ -1,6 +1,6 @@
 # E2E tests with Firebase (Riverpod)
 
-Learn how to write lightning-fast end-to-end tests for Firebase apps using TapTest! This guide (and example app) demonstrates mocking Firebase Auth and Firestore for widget tests, while keeping integration tests flexible with real services or emulators.
+Learn how to write lightning-fast end-to-end tests for Firebase apps using **TapTest**! This guide (and example app) demonstrates mocking Firebase Auth and Firestore for widget tests, while keeping integration tests flexible with real services or emulators.
 
 **⏱️ Time to read:** 15 minutes  
 **🎯 State management:** Riverpod (patterns apply to any architecture)  
@@ -299,7 +299,7 @@ See these files in the example app:
 - [**firebase_memos_repository.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/lib/features/memos/data_domain/firebase_memos_repository.dart)
 - [**mock_memos_repository.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/mocks/mock_memos_repository.dart).
 
-### 🚀 Run the tests
+### 🚀 Run widget tests
 
 Run the widget test suite:
 
@@ -338,6 +338,18 @@ tapTest(
 ```
 
 This pattern lets you test any scenario by simply adjusting the initial state. See [**create_config.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/test/utils/create_config.dart) for the helper function implementation.
+
+### 📊 Code coverage
+
+The example includes a helper script to run tests with coverage and open the report:
+
+```bash
+./scripts/test_with_coverage.sh
+```
+
+> ⚠️ **Prerequisite:** Requires `genhtml` (install via `brew install lcov` on macOS)
+
+The widget tests achieve **75% code coverage** of the app. Uncovered lines are primarily in the Firebase implementation classes (which are substituted with mocks in widget tests). For even higher coverage, consider running integration tests with coverage enabled to validate the real Firebase implementations.
 
 ## 📱 Integration tests
 
@@ -391,3 +403,18 @@ final config = Config(
 ```
 
 This approach lets you test login screens with known credentials while maintaining realistic Firebase behavior.
+
+### 🚀 Run integration tests
+
+⚠️ **Prerequisites:**
+
+- Firebase Emulators must be running: `firebase emulators:start`
+- iPhone 17 Pro simulator must be running (snapshots were recorded on this device)
+
+```bash
+cd examples/firebase_riverpod
+firebase emulators:start
+flutter test integration_test
+```
+
+The integration tests in [**all_test.dart**](https://github.com/chris-rutkowski/taptest/blob/main/examples/firebase_riverpod/integration_test/all_test.dart) runs similar sets of tests as the widget test mentioned before.
