@@ -11,6 +11,7 @@ extension TapTesterSnapshot on TapTester {
     List<ThemeMode>? themeModes,
     List<Locale>? locales,
     double? acceptableDifference,
+    bool prePumpAndSettle = true,
   }) async {
     if (!variations && (themeModes != null || locales != null)) {
       _print(
@@ -59,7 +60,10 @@ extension TapTesterSnapshot on TapTester {
     final localesToUse = variations ? locales ?? config.locales : [startingLocale];
 
     final deviceName = await _getDeviceName();
-    await widgetTester.pumpAndSettle();
+    if (prePumpAndSettle) {
+      await widgetTester.pumpAndSettle();
+    }
+    
     await themeModesToUse.cycle(
       from: themeModesToUse.first,
       callback: (theme) async {
