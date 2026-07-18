@@ -38,9 +38,11 @@ final class WidgetQRStub extends StatelessWidget {
       'fit': fit?.toString(),
     });
 
-    final qrCode = QrCode.fromData(
-      data: sha1.convert(utf8.encode(payload)).toString().substring(0, 8),
-      errorCorrectLevel: QrErrorCorrectLevel.L,
+    final qrCode = QrCode(
+      payload: QrPayload.fromString(
+        sha1.convert(utf8.encode(payload)).toString().substring(0, 8),
+      ),
+      errorCorrectLevel: QrErrorCorrectLevel.low,
     );
 
     return SizedBox(
