@@ -22,7 +22,6 @@ dependencies:
   meta:
   path:
   platform:
-  qr: ^4.0.0
   taptest_runtime:
     path: ../taptest_runtime
 

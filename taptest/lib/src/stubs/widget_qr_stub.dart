@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:qr/qr.dart';
+import '../vendor/qr/qr.dart';
 
 Widget defaultWidgetQRStubBuilder(String src, double? width, double? height, BoxFit? fit) {
   return WidgetQRStub(

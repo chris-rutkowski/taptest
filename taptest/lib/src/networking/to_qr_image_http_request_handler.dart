@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:qr/qr.dart';
+import '../vendor/qr/qr.dart';
 
 import 'http_method.dart';
 import 'mock_http_request_handler.dart';
