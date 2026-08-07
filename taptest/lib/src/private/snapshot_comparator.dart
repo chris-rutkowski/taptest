@@ -29,4 +29,30 @@ final class SnapshotComparator extends LocalFileComparator {
     result.dispose();
     throw FlutterError(error);
   }
+
+  @override
+  Future<void> update(Uri golden, Uint8List imageBytes) async {
+    try {
+      final result = await GoldenFileComparator.compareLists(
+        imageBytes,
+
+        await getGoldenBytes(golden),
+      );
+
+      onResult(result);
+
+      final shouldUpdate = !result.passed && result.diffPercent > acceptableDifference;
+
+      result.dispose();
+
+      if (!shouldUpdate) {
+        return;
+      }
+    } catch (_) {
+      // Golden does not exist yet, or could not be read.
+      // Fall through and create/update it.
+    }
+
+    await super.update(golden, imageBytes);
+  }
 }
