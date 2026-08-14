@@ -41,6 +41,8 @@ typedef TapTesterCallback = Future<void> Function(TapTester tester);
 
 @isTest
 void tapTest(String description, Config config, TapTesterCallback callback) {
+  // Flutter 3.47 OverlayPortal / Forui MergeSemantics asserts fail pumpAndSettle.
+  // Opt in with tester.widgetTester.ensureSemantics().
   testWidgets(description, (widgetTester) async {
     timeDilation = 0.01;
 
@@ -53,7 +55,7 @@ void tapTest(String description, Config config, TapTesterCallback callback) {
     } finally {
       timeDilation = 1;
     }
-  });
+  }, semanticsEnabled: false);
 }
 
 final class TapTester {
