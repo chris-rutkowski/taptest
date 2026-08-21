@@ -7,7 +7,6 @@ linter:
 
 analyzer:
   exclude:
-    - lib/src/vendor/**
     - build/**
     - android/**
     - ios/**

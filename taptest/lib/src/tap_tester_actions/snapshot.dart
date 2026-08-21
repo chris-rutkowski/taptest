@@ -25,15 +25,17 @@ extension TapTesterSnapshot on TapTester {
       return;
     }
 
-    final previousGoldenFileComparator = goldenFileComparator;
-    addTearDown(() => goldenFileComparator = previousGoldenFileComparator);
-
     ComparisonResult? worstResult;
+    final threshold = acceptableDifference ?? config.snapshot.acceptableDifference;
+    assert(threshold >= 0 && threshold <= 1);
 
-    if (testType == TestType.widget) {
+    if (testType == TestType.widget && threshold > 0) {
+      final previousGoldenFileComparator = goldenFileComparator;
+      addTearDown(() => goldenFileComparator = previousGoldenFileComparator);
+
       goldenFileComparator = SnapshotComparator(
         Uri.parse('${(goldenFileComparator as LocalFileComparator).basedir}/dummy_file.dart'),
-        acceptableDifference ?? config.snapshot.acceptableDifference,
+        threshold,
         (result) {
           if (worstResult == null || result.diffPercent > worstResult!.diffPercent) {
             worstResult = result;

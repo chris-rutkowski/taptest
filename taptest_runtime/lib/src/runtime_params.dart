@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final class RuntimeParams {
   final ValueListenable<ThemeMode> themeMode;
   final ValueListenable<Locale> locale;
-  final String? initialRoute; // todo maybe '/'
+  final String? initialRoute;
   final Iterable<dynamic> extensions;
 
   T? extension<T>() => extensions.whereType<T>().firstOrNull;

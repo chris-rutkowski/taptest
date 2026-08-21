@@ -18,7 +18,7 @@ await tt.snapshot('current_only', variations: false);
 | `variations` | `true` | If `false`, uses the current theme and locale only |
 | `key` | full `AppWrapper` | Snapshot a subtree |
 | `themeModes` / `locales` | from `Config` | Must be subsets of config |
-| `acceptableDifference` | from `SnapshotConfig` | `0.0`–`1.0` |
+| `acceptableDifference` | from `SnapshotConfig` (default `0`) | Exact match at `0` (Flutter's stock comparator). Slack + skip rewrite when `> 0` |
 | `prePumpAndSettle` | `true` | Settle before the first frame |
 
 ## Path template

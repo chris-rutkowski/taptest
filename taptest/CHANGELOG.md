@@ -1,3 +1,8 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+First stable release of TapTest.
+
+* `tapTest` for widget and integration tests
+* Snapshot testing across theme modes and locales
+* HTTP request mocking for fast, deterministic widget tests
+* Companion `taptest_runtime` package for production-safe `RuntimeParams`

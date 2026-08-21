@@ -1,18 +1,24 @@
 name: taptest_runtime
-description: "A new Flutter package project."
-version: 0.0.1
-homepage:
+description: Production-safe runtime for TapTest. Exposes RuntimeParams so tests can drive theme, locale, and routing.
+version: 1.0.0
+homepage: https://taptest.dev
+repository: https://github.com/chris-rutkowski/taptest
+issue_tracker: https://github.com/chris-rutkowski/taptest/issues
+documentation: https://taptest.dev
+topics:
+  - testing
+  - flutter
 
 environment:
-  sdk: ^3.9.2
-  flutter: ">=1.17.0"
+  sdk: ^3.11.0
+  flutter: ">=3.35.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  flutter_lints:
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
 

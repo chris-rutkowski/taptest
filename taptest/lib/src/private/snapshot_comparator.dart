@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+/// Used only when [acceptableDifference] is greater than zero.
+///
+/// Adds a pixel-diff slack on verify, and skips `--update-goldens` writes
+/// when the existing PNG is already within the band.
 final class SnapshotComparator extends LocalFileComparator {
   final double acceptableDifference;
   final void Function(ComparisonResult result) onResult;

@@ -1,3 +1,5 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+First stable release.
+
+* `RuntimeParams` for theme mode, locale, initial route, and test extensions
