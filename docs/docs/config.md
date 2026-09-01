@@ -41,8 +41,12 @@ Listen to `params.themeMode` and `params.locale`. Snapshot tests change those no
 Narrow `themeModes` and `locales` if you do not want a full snapshot matrix on every test.
 
 ```dart
+import 'package:material_ui/material_ui.dart';
+
 config.copyWith(
   themeModes: const [ThemeMode.light],
   locales: const [Locale('en')],
 );
 ```
+
+`ThemeMode` is from `package:material_ui/material_ui.dart` — the same type as `MaterialApp.themeMode`.

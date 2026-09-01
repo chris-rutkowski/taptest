@@ -4,7 +4,8 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
 
 dependencies:
   collection:
@@ -18,10 +19,11 @@ dependencies:
   flutter_svg:
   flutter_web_plugins:
     sdk: flutter
-  go_router:
+  go_router: ^18.0.0
   http:
   intl:
   json_annotation:
+  material_ui: ^1.0.0
   riverpod_annotation:
   shared_preferences:
 

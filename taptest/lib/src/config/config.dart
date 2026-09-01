@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:taptest_runtime/taptest_runtime.dart';
 
 import '../networking/mock_http_request_handler.dart';

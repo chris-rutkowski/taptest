@@ -5,7 +5,7 @@ The full example app lives at the repository root: [`example/`](../../example/).
 Minimal usage:
 
 ```dart
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:taptest/taptest.dart';
 
 void main() {

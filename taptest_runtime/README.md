@@ -5,6 +5,7 @@ Production-safe companion to [taptest](https://pub.dev/packages/taptest).
 Add `taptest_runtime` to your app `dependencies` and `taptest` to `dev_dependencies`. Your app builder receives `RuntimeParams` (theme mode, locale, initial route, extensions) so widget tests can drive those without importing the test package.
 
 ```dart
+import 'package:material_ui/material_ui.dart';
 import 'package:taptest_runtime/taptest_runtime.dart';
 
 class MyApp extends StatelessWidget {

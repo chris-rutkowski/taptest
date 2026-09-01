@@ -3,6 +3,8 @@
 Sets `RuntimeParams.themeMode`. The value must be in `config.themeModes`.
 
 ```dart
+import 'package:material_ui/material_ui.dart';
+
 await tt.changeThemeMode(ThemeMode.dark);
 ```
 

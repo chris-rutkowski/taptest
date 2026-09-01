@@ -1,5 +1,5 @@
 import 'package:example/features/welcome/presentation/welcome_keys.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:taptest/taptest.dart';
 
 import '_utils/default_tap_tester_config.dart';

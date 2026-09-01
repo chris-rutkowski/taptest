@@ -5,7 +5,7 @@ const _headlessName = 'headless';
 
 extension TapTesterSnapshot on TapTester {
   Future<void> snapshot(
-    final String name, {
+    String name, {
     bool variations = true,
     TapKey key,
     List<ThemeMode>? themeModes,
@@ -65,7 +65,7 @@ extension TapTesterSnapshot on TapTester {
     if (prePumpAndSettle) {
       await widgetTester.pumpAndSettle();
     }
-    
+
     await themeModesToUse.cycle(
       from: themeModesToUse.first,
       callback: (theme) async {

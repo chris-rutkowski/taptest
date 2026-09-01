@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 ThemeData buildTheme(BuildContext context, Brightness brightness) {
   final base = brightness == Brightness.light ? ThemeData.light() : ThemeData.dark();
