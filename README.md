@@ -23,6 +23,8 @@ cd ../example && flutter pub get
 
 `taptest/pubspec_overrides.yaml` points `taptest_runtime` at the local path so package tests resolve without publishing.
 
+Committed `example/test/` goldens must be rasterized in the pinned linux/amd64 Flutter image. Use `scripts/containerised_test.sh` (or `--update-goldens` on that script) — never host `flutter test --update-goldens`. See [Updating goldens](https://taptest.dev/docs/snapshots#updating-goldens).
+
 ## Publish (1.0.0)
 
 Publish **runtime first**, then taptest:

@@ -38,4 +38,6 @@ void main() {
 
 `exists` and `expectText` retry for up to 5 seconds, so you usually do not need manual `wait` calls after a tap.
 
+To update snapshot PNGs, use the Linux Docker image — not host `flutter test --update-goldens`. See [Snapshots](./snapshots.md#updating-goldens).
+
 For a fuller app, see the [`example/`](https://github.com/chris-rutkowski/taptest/tree/main/example) directory in the repo.
